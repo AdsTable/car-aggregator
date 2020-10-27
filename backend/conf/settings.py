@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'cars',
 ]
 
 MIDDLEWARE = [
@@ -108,44 +109,44 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGS_ROOT = os.environ.get('LOGS_ROOT', 'logs')
+# LOGS_ROOT = os.environ.get('LOGS_ROOT', 'logs')
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'console_format': {
-            'format': '%(name)-12s %(levelname)-8s %(message)s'
-        },
-        'file_format': {
-            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
-        }
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'console_format'
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOGS_ROOT, 'django.log'),
-            'maxBytes': 1024 * 1024 * 15, # 15MB
-            'backupCount': 10,
-            'formatter': 'file_format'
-        },
-    },
-    'loggers': {
-        'django': {
-            'level': 'INFO',
-            'handlers': ['console', 'file'],
-            'propagate': False,
-        },
-        'apps': {
-            'level': 'DEBUG',
-            'handlers': ['console', 'file'],
-            'propagate': False,
-        }
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'console_format': {
+#             'format': '%(name)-12s %(levelname)-8s %(message)s'
+#         },
+#         'file_format': {
+#             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'console_format'
+#         },
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': os.path.join(LOGS_ROOT, 'django.log'),
+#             'maxBytes': 1024 * 1024 * 15, # 15MB
+#             'backupCount': 10,
+#             'formatter': 'file_format'
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'level': 'INFO',
+#             'handlers': ['console', 'file'],
+#             'propagate': False,
+#         },
+#         'apps': {
+#             'level': 'DEBUG',
+#             'handlers': ['console', 'file'],
+#             'propagate': False,
+#         }
+#     }
+# }

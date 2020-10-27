@@ -4,11 +4,16 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 django = "*"
 scrapy = "*"
 djangorestframework = "*"
+scrapy-djangoitem = "*"
+scrapyd = "*"
+python-scrapyd-api = "*"
+scrapy-user-agents = "*"
 
 [requires]
 python_version = "3.8"

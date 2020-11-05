@@ -39,16 +39,14 @@ class CopartSpider(scrapy.Spider):
             o['vin'] = item.get('fv')
             o['drive'] = item.get('drv')
             o['body_style'] = item.get('bstl')
-            # o['vehicle_type'] = item['']
             o['fuel'] = item.get('ft')
             o['engine'] = item.get('egn')
             o['transmission'] = item.get('tmtp')
-            # o['color'] = item['']
             o['location'] = item.get('syn')
             o['sale_date'] = datetime.fromtimestamp(item.get('ad')/1e3) if item.get('ad') else None
-            # o['sold'] = False
             o['current_price'] = item.get('hb')
-            yield o
+            yield scrapy.Request(f"https://www.copart.com/public/data/lotdetails/solr/lotImages/{o['offerId']}/USA", callback=self.parse_images, cb_kwargs=dict(car=o),
+            headers={'Host':'www.copart.com'})
 
 
 
@@ -56,6 +54,21 @@ class CopartSpider(scrapy.Spider):
             self.page+=1
             yield FormRequest(self.link, formdata=formdata(self.page), callback=self.parse)
 
+    def parse_images(self, response, car):
+        with open('test.json', 'wb') as f:
+            f.write(response.body)
+        data = response.json()
+        content = data['data']['imagesList']['FULL_IMAGE']
+        car['images'] = [x['url'] for x in content]
+        yield scrapy.Request(f"https://www.copart.com/public/data/lotdetails/solr/{car['offerId']}", callback=self.parse_details, cb_kwargs=dict(car=car),headers={'Host':'www.copart.com'})
 
+
+
+    def parse_details(self, response, car):
+        data = response.json()['data']['lotDetails']
+        car['color'] = data['clr']
+        car['vehicle_type'] = data['vehTypDesc']
+        car['sold'] = data['lotSold']
+        yield car
 
 

@@ -7,13 +7,25 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from django.db.utils import IntegrityError
+from cars.models import Offer
 
 
 class ScrapersPipeline:
     def process_item(self, item, spider):
-        try:
-            item.save()
-        except IntegrityError:
-            print("INTEGRITY ERROR")
+        if spider.name == 'copart_upload':
+            try:
+                offer = Offer.objects.get(offerId=item['offerId'])
+                for k,v in item.items():
+                    setattr(offer, k, v)
+                offer.save()  
+            except Offer.DoesNotExist:
+                print("[UPDATE] Offer doesn't exist")
+
+        elif spider.name == 'copart':
+            try:
+                item.save()
+            except IntegrityError:
+                print("[NEW] Item already in database")
+
+        return item              
         
-        return item

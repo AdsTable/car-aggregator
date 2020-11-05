@@ -1,5 +1,5 @@
 from django.db import models
-# from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Offer(models.Model):
@@ -22,7 +22,7 @@ class Offer(models.Model):
     location = models.CharField(max_length=70, null=True)
     sale_date = models.DateTimeField(null=True)
     sold = models.BooleanField(default=False)
-    # images = models.ArrayField(models.URLField())
+    images = ArrayField(models.URLField(), null=True)
     current_price = models.DecimalField(decimal_places=2, max_digits=10)
 
     def __str__(self):

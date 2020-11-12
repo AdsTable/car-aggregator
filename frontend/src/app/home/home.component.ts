@@ -13,30 +13,24 @@ import { CarService, Page, Car } from "../services/car.service";
 export class HomeComponent implements OnInit {
 
   @ViewChild('paginator') paginator: MatPaginator;
-  searchForm: FormGroup;
 
   cars: Car[];
-  next: string;
-  previous: string;
 
   length: number;
   itemsPerPage: number = 20;
   currentPage: number = 1;
   totalPages: number;
 
+  brand: string;
+
   constructor(private carService: CarService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.searchForm = this.fb.group({
-      'brand': [''],
-      'model': [''],
-    })
-
     this.getOffers(this.carService.baseLink, this.createFilterData());
   }
 
   createFilterData(
-    brand: string = this.searchForm.value['brand'],
+    brand: string = this.brand,
     size: number = this.itemsPerPage, 
     page: number = this.currentPage,
     ) {
@@ -54,9 +48,6 @@ export class HomeComponent implements OnInit {
       this.cars = page.results;
       this.length = page.count
 
-      this.next = page.next;
-      this.previous = page.previous;
-
       this.currentPage = page.page;
       this.totalPages = page.lastPage;
 
@@ -71,16 +62,13 @@ export class HomeComponent implements OnInit {
     console.log(event);
   }
 
-  onSubmit() {
+  changeSearch(form) {
     this.paginator.firstPage();
-    this.currentPage = 1;
+    this.brand = form['brand'];
     this.getOffers(this.carService.baseLink, this.createFilterData());
   }
 
-  resetForm() {
-    this.searchForm.reset();
-    this.getOffers(this.carService.baseLink, this.createFilterData());
-  }
+
 
 
 }

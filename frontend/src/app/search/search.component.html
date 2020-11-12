@@ -1,0 +1,13 @@
+<form class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <mat-form-field>
+        <input matInput type="text" placeholder="Marka" formControlName="brand">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="Model" formControlName="model">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">SZUKAJ</button>
+    <button mat-button (click)="resetForm()" color="warn">RESETUJ</button>
+
+</form>

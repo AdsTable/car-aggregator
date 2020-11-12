@@ -1,19 +1,5 @@
 <h1 class="title">Szukaj licytacji</h1>
-
-<form class="form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-        <input matInput type="text" placeholder="Marka" formControlName="brand">
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput type="text" placeholder="Model" formControlName="model">
-    </mat-form-field>
-
-    <button mat-raised-button color="primary">SZUKAJ</button>
-    <button mat-button (click)="resetForm()" color="warn">RESETUJ</button>
-
-</form>
-
+<search (search)="changeSearch($event)"></search>
 <li *ngFor="let car of cars">
         {{ car.brand }} {{ car.model }}
 </li>

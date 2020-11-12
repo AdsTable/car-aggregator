@@ -20,14 +20,23 @@ export class SearchComponent {
   }
 
   onSearch() {
+    const filtered = {};
     if (this.searchForm.valid) {
-      this.search.emit(this.searchForm.value);
+      for (let key in this.searchForm.value) {
+        if (this.searchForm.value[key]) {
+          filtered[key] = this.searchForm.value[key];
+        }
+      }
+      this.search.emit(filtered);
     }
   }
 
   resetForm() {
     this.searchForm.reset();
-    this.search.emit(this.searchForm.value);
+    this.search.emit({});
   }
+
+
+  
 
 }

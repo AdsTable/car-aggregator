@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number;
 
-  brand: string;
+  searchData: {};
 
   constructor(private carService: CarService, private fb: FormBuilder) { }
 
@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   createFilterData(
-    brand: string = this.brand,
     size: number = this.itemsPerPage, 
     page: number = this.currentPage,
     ) {
@@ -38,12 +37,13 @@ export class HomeComponent implements OnInit {
       params: {
         'page': page,
         'size': size,
-        'brand': brand || '',
+        ...this.searchData
       }
     }
   }
 
   getOffers(url: string, params?) {
+    console.log(params);
     this.carService.getCars(url, params).subscribe(page => {
       this.cars = page.results;
       this.length = page.count
@@ -58,13 +58,11 @@ export class HomeComponent implements OnInit {
     this.currentPage = +event.pageIndex+1;
     this.itemsPerPage = +event.pageSize;
     this.getOffers(this.carService.baseLink, this.createFilterData());
-
-    console.log(event);
   }
 
   changeSearch(form) {
     this.paginator.firstPage();
-    this.brand = form['brand'];
+    this.searchData = form;
     this.getOffers(this.carService.baseLink, this.createFilterData());
   }
 

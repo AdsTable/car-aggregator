@@ -1,10 +1,10 @@
-FROM node:15
+FROM node:12.8.1-alpine
 
 WORKDIR /opt/app
 
-COPY ./package*.json ./
+COPY ./package.json ./
 
-RUN npm install -g @angular/cli @angular-devkit/build-angular & npm install
+RUN npm install -g @angular/cli & npm install
 
 EXPOSE 4200
 

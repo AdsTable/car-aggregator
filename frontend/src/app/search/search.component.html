@@ -1,13 +1,23 @@
-<form class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
-    <mat-form-field>
+<form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <mat-form-field fxFlex class="form__field">
         <input matInput type="text" placeholder="Marka" formControlName="brand">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field fxFlex class="form__field">
         <input matInput type="text" placeholder="Model" formControlName="model">
     </mat-form-field>
 
-    <button mat-raised-button color="primary">SZUKAJ</button>
-    <button mat-button (click)="resetForm()" type="reset" color="warn">RESETUJ</button>
+    <div fxFlex></div>
+
+    <div fxFlex>
+        <button mat-raised-button color="primary" class="form__submit">SZUKAJ</button>
+    </div>
+
+    <div fxFlex>
+        <button mat-button (click)="resetForm()" type="reset" color="warn" class="form__submit">RESETUJ</button>
+
+    </div>
+
+
 
 </form>

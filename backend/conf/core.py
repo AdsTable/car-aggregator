@@ -32,8 +32,6 @@ class MyPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         return Response({
             'page': int(self.request.GET.get('page', DEFAULT_PAGE)),
-            'next': self.get_next_link(),
-            'previous': self.get_previous_link(),
             'size': int(self.request.GET.get('size', self.page_size)),
             'count': self.page.paginator.count,
             'lastPage': ceil(self.page.paginator.count / int(self.request.GET.get('size', self.page_size))),

@@ -24,5 +24,7 @@ body {
     line-height: mat-line-height($nga-typography, body-1);
     font-size: mat-font-size($nga-typography, body-1);
     height: 100%;
-    margin: 0;
+    max-width:960px; // default width
+    margin: 0 auto;
 }
+

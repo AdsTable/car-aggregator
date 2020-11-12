@@ -10,3 +10,9 @@ class OfferSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         data['images'] = data['images'][0]
         return data
+
+class OfferItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Offer
+        exclude = ('id', )

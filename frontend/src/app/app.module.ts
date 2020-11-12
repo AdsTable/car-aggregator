@@ -13,13 +13,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchComponent } from './search/search.component';
 import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';  
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HomeDetailsComponent } from './home/home-details/home-details.component';  
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './shared/custom-resuse-strategy';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
+    HomeDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCardModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

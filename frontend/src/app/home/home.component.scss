@@ -22,8 +22,6 @@
   }
 }
 
-.description {
-}
 
 .right {
   float:right;
@@ -40,7 +38,14 @@
 }
 
 
+a {
+  text-decoration: none;
+  outline: none;
+}
 
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
 
 .example-container {
     margin-top:20px;
@@ -52,6 +57,12 @@
     border-bottom-right-radius: 25px;
     box-shadow: 3px 4px 5px 0px rgba(204, 204, 204, 0.38);
     margin-bottom:20px;
+
+    &:hover {
+      @include mat-elevation(4);
+      transition: .3s;
+
+    }
 }
 
 img {

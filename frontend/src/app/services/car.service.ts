@@ -54,4 +54,8 @@ export class CarService {
     return this.http.get<Page>(`${this.configuration.apiUrl}${link}`);
   }
 
+  getCarById(id: number): Observable<Car> {
+    return this.http.get<Car>(`${this.configuration.apiUrl}/cars/${id}`);
+  }
+
 }

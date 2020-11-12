@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from cars.serializers import OfferSerializer
+from cars.serializers import OfferSerializer, OfferItemSerializer
 from rest_framework import generics
 from cars.models import Offer
 import django_filters.rest_framework
@@ -11,4 +11,8 @@ class OfferListView(generics.ListAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, OrderingFilter]
     filter_fields = ['brand']
     ordering_fields = ['current_price']
+
+class OfferRetrieveView(generics.RetrieveAPIView):
+    queryset = Offer.objects.all()
+    serializer_class = OfferItemSerializer
     

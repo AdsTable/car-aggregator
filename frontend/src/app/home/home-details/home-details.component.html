@@ -1,0 +1,6 @@
+<p>home-details works!</p>
+<h1>ID: {{carId}}</h1>
+<div *ngIf="car$ | async as car">
+    <h1>{{car.brand}} {{ car.model}}</h1>
+    <p>Engine <span>{{ car.engine }}</span></p>
+</div>

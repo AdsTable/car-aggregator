@@ -1,0 +1,3 @@
+@baseUrl = http://localhost:8000
+
+GET {{baseUrl}}/cars/list?limit=100

@@ -1,2 +1,22 @@
-<p>home works!</p>
-<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<h1 class="title">Szukaj licytacji</h1>
+
+<form class="form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <input matInput type="text" placeholder="Marka" formControlName="brand">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="Model" formControlName="model">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">SZUKAJ</button>
+    <button mat-button (click)="resetForm()" color="warn">RESETUJ</button>
+
+</form>
+
+<li *ngFor="let car of cars">
+        {{ car.brand }} {{ car.model }}
+</li>
+
+<mat-paginator #paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
+<!-- let news of (news$ | async)?.articles -->

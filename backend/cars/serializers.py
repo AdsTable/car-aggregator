@@ -5,5 +5,8 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        exclude = ('id',)
+        exclude = ('primary_damage', 'secondary_damage', 'vin', 'drive', 'body_style', 'fuel')
     
+    def to_internal_value(self, data):
+        data['images'] = data['images'][0]
+        return data

@@ -1,13 +1,11 @@
-FROM node:alpine
+FROM node:15
 
 WORKDIR /opt/app
 
-COPY ./package.json .
+COPY ./package*.json ./
 
-RUN npm install -g @angular/cli & npm install
-
-COPY . .
+RUN npm install -g @angular/cli @angular-devkit/build-angular & npm install
 
 EXPOSE 4200
 
-CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
+CMD ["npm", "start"]

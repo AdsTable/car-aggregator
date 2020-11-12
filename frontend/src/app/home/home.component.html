@@ -9,7 +9,32 @@
                 <img [attr.src]="car.images[0]" alt="Free image">
             </div>
           <div fxFlex>
-            <p>{{car.brand}}</p>
+            <div fxLayout="row wrap" fxLayou.lt-md="column" >
+              <div fxFlex class="description main">
+                  <h3 class="title">{{car.brand}} {{car.model}}</h3>
+                    <p>Numer aukcji
+                      <span class="right">{{car.offerId}}</span>
+                    </p>
+                    <p>Przebieg
+                      <span class="right">{{car.mileage}}</span>
+                    </p>
+
+                    <p>VIN
+                      <span class="right">{{car.vin}}</span>
+                    </p>
+
+              </div>
+              <div fxFlex class="description additional" fxLayoutAlign="end">
+                <div fxLayout="column">
+                  <p>{{car.sale_date | date:'medium'}}</p>
+                  <h4>{{car.location}}</h4>
+                  <h3>{{car.current_price | currency}}</h3>
+                  <button mat-raised-button color="primary" class="right">Licytuj</button>
+                </div>
+
+
+              </div>
+            </div>
           </div>
 
         </div>

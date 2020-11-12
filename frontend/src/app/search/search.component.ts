@@ -16,6 +16,7 @@ export class SearchComponent {
     this.searchForm = this.fb.group({
       'brand': [''],
       'model': [''],
+      'vin': [''],
     })
   }
 

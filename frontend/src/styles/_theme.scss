@@ -13,4 +13,14 @@ $nga-warn:    mat-palette($mat-red);
 $nga-theme:      mat-light-theme($nga-primary, $nga-accent, $nga-warn);
 $nga-background: map-get($nga-theme, background);
 $nga-foreground: map-get($nga-theme, foreground);
-$nga-typography: mat-typography-config();
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Hind Siliguri, sans-serif',
+    $headline: mat-typography-level(32px, 48px, 700),
+    $title: mat-typography-level(20px, 40px, 600),
+    $subheading-2: mat-typography-level(25px, 38px, 500),
+
+    $body-1: mat-typography-level(16px, 24px, 400),
+    $body-2: mat-typography-level(16px, 24px, 600),
+    $caption: mat-typography-level(12px, 18px, 200),
+);

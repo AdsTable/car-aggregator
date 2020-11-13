@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeDetailsComponent } from './home/home-details/home-details.component';  
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './shared/custom-resuse-strategy';
+import { MatCarouselModule } from '@ngbmodule/material-carousel';
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+
+registerLocaleData(localePl);
 
 @NgModule({
   declarations: [
@@ -36,10 +41,12 @@ import { CustomReuseStrategy } from './shared/custom-resuse-strategy';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatCarouselModule.forRoot(),
   ],
   providers: [
-    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy}
+    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
+    { provide: LOCALE_ID, useValue: "pl" }
   ],
   bootstrap: [AppComponent]
 })

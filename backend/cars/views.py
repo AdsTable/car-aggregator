@@ -9,8 +9,9 @@ class OfferListView(generics.ListAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, OrderingFilter]
-    filter_fields = ['brand']
+    filter_fields = ['brand', 'model', 'vin']
     ordering_fields = ['current_price']
+    ordering = ['-id']
 
 class OfferRetrieveView(generics.RetrieveAPIView):
     queryset = Offer.objects.all()

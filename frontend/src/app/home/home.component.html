@@ -29,7 +29,8 @@
                   <p>{{car.sale_date | date:'medium'}}</p>
                   <h4>{{car.location}}</h4>
                   <h3>{{car.current_price | currency}}</h3>
-                  <button mat-raised-button color="primary" class="right">Licytuj</button>
+                  <button *ngIf="!car.sold" mat-raised-button color="primary" class="right" [routerLink]="['car', car.id]">Licytuj</button>
+                  <button *ngIf="car.sold" mat-raised-button color="warn" disabled>Sprzedane</button>
                 </div>
 
 

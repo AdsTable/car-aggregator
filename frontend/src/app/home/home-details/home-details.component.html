@@ -1,6 +1,58 @@
-<p>home-details works!</p>
-<h1>ID: {{carId}}</h1>
 <div *ngIf="car$ | async as car">
-    <h1>{{car.brand}} {{ car.model}}</h1>
-    <p>Engine <span>{{ car.engine }}</span></p>
+
+  <div fxLayout="row">
+    <div fxFlex>
+      <h2 class="title">{{car.brand}} {{ car.model}} <span><strong>VIN</strong> {{car.vin}}</span></h2>
+    </div>
+  </div>
+
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px">
+    <div fxFlex="80%">
+        <mat-carousel class="carousel" timings="250ms ease-in" [autoplay]="true" interval="5000" color="primary" proportion="70"
+        maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false" [hideIndicators]="true" orientation="ltr">
+        <mat-carousel-slide #matCarouselSlide *ngFor="let image of car.images; let i = index" [hideOverlay]="true" [image]="image">
+        </mat-carousel-slide>
+      </mat-carousel>
+    </div>
+    <div class="description" fxFlex>
+
+      <div class="prices" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-evenly">
+        <div class="price" fxFlex>
+          <h3>{{car.estimated_retail_value | currency : 'USD' : 'symbol' : '1.0-0'  }}</h3>
+          <p>ERV</p>
+        </div>
+        
+        <div class="price" [style.background-color]="car.sold ? '#720d1b' : '#1a8631' " fxFlex>
+          <h3>{{ car.current_price | currency : 'USD' : 'symbol' : '1.0-0'  }}</h3>
+          <p>Current Price</p>
+        </div>
+
+      </div>
+
+      
+      <p>Rok produkcji <span>{{car.production_year}}</span></p>
+      <p>Silnik <span>{{ car.engine }}</span></p>
+      <p>Przebieg <span>{{ car.mileage | number}} mi</span></p>
+      <p>Głowne uszkodzenie <span>{{ car.primary_damage}}</span></p>
+      <p *ngIf="car.secondary_damage">Drugorzędne uszkodzenie <span>{{ car.secondary_damage}}</span></p>
+      <p>Napęd <span>{{car.drive}}</span></p>
+      <p>Nadwozie <span>{{car.body_style}}</span></p>
+      <p>Paliwo <span>{{car.fuel}}</span></p>
+      <p>Skrzynia biegów <span>{{car.transmission}}</span></p>
+      <p>Kolor <span>{{car.color}}</span></p>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px">
+    <div fxFlex>
+      <h3>Szczegóły sprzedaży</h3>
+      <div class="description">
+        <p>Numer oferty <span>#{{ car.offerId}}</span></p>
+        <p>Miejsce sprzedaży <span>{{car.location}}</span></p>
+        <p>Data licytacji <span>{{car.sale_date | date:'medium'}}</span></p>
+      </div>
+    </div>
+  </div>
+
 </div>

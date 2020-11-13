@@ -1,3 +1,6 @@
 @baseUrl = http://localhost:8000
 
-GET {{baseUrl}}/cars/list?limit=100
+GET {{baseUrl}}/cars/list?limit=100 HTTP/1.1
+
+
+

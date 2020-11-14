@@ -25,7 +25,8 @@
         
         <div class="price" [style.background-color]="car.sold ? '#720d1b' : '#1a8631' " fxFlex>
           <h3>{{ car.current_price | currency : 'USD' : 'symbol' : '1.0-0'  }}</h3>
-          <p>Current Price</p>
+          <p *ngIf="!car.sold">Aktualna cena</p>
+          <p *ngIf="car.sold">Sprzedane</p>
         </div>
 
       </div>

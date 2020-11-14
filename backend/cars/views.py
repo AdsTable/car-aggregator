@@ -2,19 +2,29 @@ from django.shortcuts import render
 from cars.serializers import OfferSerializer, OfferItemSerializer
 from rest_framework import generics
 from cars.models import Offer
-import django_filters.rest_framework
 from rest_framework.filters import OrderingFilter
 from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import F
+import django_filters
+
+class CarFilterSet(django_filters.FilterSet):
+    brand = django_filters.CharFilter(field_name='brand', lookup_expr="istartswith")
+    model = django_filters.CharFilter(field_name='model', lookup_expr="istartswith")
+    vin = django_filters.CharFilter(field_name='vin', lookup_expr="iexact")
+
+    class Meta:
+        model = Offer
+        fields = ['brand', 'model', 'vin']
 
 
 class OfferListView(generics.ListAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, OrderingFilter]
-    filter_fields = ['brand', 'model', 'vin']
+    # filter_fields = ['brand', 'model', 'vin']
+    filterset_class = CarFilterSet
     ordering_fields = ['current_price']
     ordering = ['-id']
 

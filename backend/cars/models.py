@@ -24,6 +24,10 @@ class Offer(models.Model):
     sold = models.BooleanField(default=False)
     images = ArrayField(models.URLField(), null=True)
     current_price = models.DecimalField(decimal_places=2, max_digits=10)
+    auction_site = models.CharField(default="copart", max_length=20)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.brand} {self.model} | {self.offerId}"

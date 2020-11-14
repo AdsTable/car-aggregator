@@ -26,7 +26,7 @@
               </div>
               <div fxFlex class="description additional" fxLayoutAlign="end">
                 <div fxLayout="column">
-                  <p>{{car.sale_date | date:'medium'}}</p>
+                  <p>{{car.sale_date | date:'medium':'pl'}}</p>
                   <h4>{{car.location}}</h4>
                   <h3>{{car.current_price | currency}}</h3>
                   <button *ngIf="!car.sold" mat-raised-button color="primary" class="right" [routerLink]="['car', car.id]">Licytuj</button>

@@ -39,6 +39,22 @@ export interface Car {
   current_price: number;
 }
 
+export interface FieldCount {
+  value: any;
+  count: number;
+}
+
+export interface CarMap {
+  brand: FieldCount[];
+  fuel: FieldCount[];
+  primary_damage: FieldCount[];
+  secondary_damage: FieldCount[];
+  body_style: FieldCount[];
+  transmission: FieldCount[];
+  drive: FieldCount[];
+  production_year: FieldCount[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +72,14 @@ export class CarService {
 
   getCarById(id: number): Observable<Car> {
     return this.http.get<Car>(`${this.configuration.apiUrl}/cars/${id}`);
+  }
+
+  getAvailableFields(): Observable<CarMap> {
+    return this.http.get<CarMap>(`${this.configuration.apiUrl}/cars/map`);
+  }
+
+  getAvailableModels(brand: string): Observable<FieldCount[]> {
+    return this.http.get<FieldCount[]>(`${this.configuration.apiUrl}/cars/map/${brand}`);
   }
 
 }

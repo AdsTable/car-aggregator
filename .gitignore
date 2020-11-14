@@ -25,3 +25,5 @@ assets/bundles/script-dev-main.js
 assets/bundles/script-dev-main.js.map
 
 **/.push.sh
+
+**/postgres-data

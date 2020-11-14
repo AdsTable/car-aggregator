@@ -1,14 +1,29 @@
 <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" placeholder="Marka" formControlName="brand">
+        <input matInput type="text" placeholder="Marka" formControlName="brand" [matAutocomplete]="brandAuto">
+        <mat-autocomplete  #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+            <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
+                {{brand}}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-error>Musisz wybrać markę z listy!</mat-error>
+
     </mat-form-field>
 
     <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" placeholder="Model" formControlName="model">
+        <input matInput type="text" placeholder="Model" formControlName="model" [matAutocomplete]="auto">
+        <mat-autocomplete  #auto="matAutocomplete">
+        <mat-option *ngFor="let model of filteredModels | async" [value]="model">
+            {{model}}
+        </mat-option>
+    </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" placeholder="VIN" formControlName="vin">
+        <input class="input-upper" matInput type="text" placeholder="VIN" formControlName="vin">
+        <mat-error>Nieprawidłowy numer VIN!</mat-error>
+
     </mat-form-field>
 
     <div fxFlex></div>
@@ -18,8 +33,7 @@
     </div>
 
     <div fxFlex>
-        <button mat-button (click)="resetForm()" type="reset" color="warn" class="form__submit">RESETUJ</button>
-
+        <button mat-button (click)="resetForm()" type="button" color="warn" class="form__submit">RESETUJ</button>
     </div>
 
 

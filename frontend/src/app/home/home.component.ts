@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
     console.log(params);
     this.carService.getCars(url, params).subscribe(page => {
       this.cars = page.results;
-      this.length = page.count
+      this.length = page.count;
 
       this.currentPage = page.page;
       this.totalPages = page.lastPage;
@@ -61,9 +61,10 @@ export class HomeComponent implements OnInit {
   }
 
   changeSearch(form) {
-    this.paginator.firstPage();
     this.searchData = form;
     this.getOffers(this.carService.baseLink, this.createFilterData());
+    this.paginator.firstPage();
+
   }
 
 

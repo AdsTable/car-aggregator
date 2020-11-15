@@ -1,4 +1,4 @@
-FROM python:3.8.2-slim
+FROM python:3.8
 
 RUN apt-get update
 RUN apt-get install git -y
@@ -16,3 +16,9 @@ RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
 
 RUN pipenv install --dev --ignore-pipfile --system
+
+COPY . .
+
+RUN python manage.py collectstatic --no-input
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000",  "conf.wsgi"]

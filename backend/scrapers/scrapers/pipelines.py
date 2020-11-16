@@ -12,7 +12,7 @@ from cars.models import Offer
 
 class ScrapersPipeline:
     def process_item(self, item, spider):
-        if spider.name == 'copart_upload':
+        if spider.name == 'copart_update':
             try:
                 offer = Offer.objects.get(offerId=item['offerId'])
                 for k,v in item.items():

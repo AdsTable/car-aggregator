@@ -70,10 +70,25 @@ img {
     border-bottom-right-radius: 15px;
     box-sizing: border-box;
     object-fit: cover;
-    width:100%
+    width:100%;
+    max-height: 200px;
 }
 
 .border {
   border: 1px solid black;
 }
+
+@media(max-width:450px) {
+  p {
+    font-size: 13px;
+  }
+
+  .title {
+    font-size:16px;
+    margin-bottom: 20px;
+  }
+
+
+}
+
 

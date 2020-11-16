@@ -1,7 +1,7 @@
 <form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <mat-form-field fxFlex class="form__field">
         <input matInput type="text" placeholder="Marka" formControlName="brand" [matAutocomplete]="brandAuto">
-        <mat-autocomplete  #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+        <mat-autocomplete  autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
             <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
                 {{brand}}
             </mat-option>

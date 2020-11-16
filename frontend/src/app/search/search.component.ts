@@ -38,12 +38,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.carService.getAvailableFields().pipe(take(1)).subscribe(data => {
       this.availableFields = data;
       this.brands = data.brand.map(v => v.value);
+      this.filteredBrands = this.searchForm.get('brand').valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value, this.brands))
+      );
     });
 
 
-    this.filteredBrands = this.searchForm.get('brand').valueChanges.pipe(
-      map(value => this._filter(value, this.brands))
-    );
+
   }
   
   brandSelected(e: MatAutocompleteSelectedEvent){
@@ -54,13 +56,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
       .pipe(take(1))
       .subscribe(data => {
         this.models = data.map(v => v.value);
+        this.filteredModels = this.searchForm.get('model').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value, this.models))
+        )
       })
-
-    this.filteredModels = this.searchForm.get('model').valueChanges.pipe(
-      map(value => this._filter(value, this.models))
-    )
-
-
   }
 
   ngAfterViewInit() {
@@ -68,8 +68,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
       .subscribe(e => {
         if (!(e && e.source)) {
           this.searchForm.controls['brand'].setValue(null);
-          this.trigger.closePanel();
+          this.searchForm.controls['model'].setValue(null);
           this.searchForm.controls['model'].disable();
+          this.trigger.closePanel();
         } 
       });
   }
@@ -96,6 +97,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   resetForm() {
     this.searchForm.reset();
+    this.searchForm.controls['model'].disable();
     this.search.emit({});
   }
 

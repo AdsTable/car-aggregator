@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Observable, range } from 'rxjs';
 import { filter, map, tap, toArray } from "rxjs/operators";
 import { CarService, Page, Car } from "../services/car.service";
+import { olderThanWeekAgo } from '../shared/core';
 
 @Component({
   selector: 'app-home',
@@ -55,6 +56,12 @@ export class HomeComponent implements OnInit {
       this.loading=false;
 
     });
+  }
+
+  isOld(date: Date) {
+    if(olderThanWeekAgo(date)) return true;
+    return false;
+
   }
 
   pageChangeEvent(event: PageEvent) {

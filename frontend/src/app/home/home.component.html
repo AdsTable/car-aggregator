@@ -34,8 +34,8 @@
                       <span class="right">{{car.mileage}} mi</span>
                     </p>
 
-                    <p>VIN
-                      <span class="right vin">{{car.vin}}</span>
+                    <p>Rok produkcji
+                      <span class="right vin">{{car.production_year}}</span>
                     </p>
 
               </div>
@@ -43,9 +43,10 @@
                 <div fxLayout="column" fxLayoutAlign="end end">
                   <p>{{car.sale_date | date:'medium':'pl'}}</p>
                   <h4>{{car.location}}</h4>
-                  <h3>{{car.current_price | currency}}</h3>
-                  <button *ngIf="!car.sold" mat-raised-button color="primary"  [routerLink]="['car', car.id]">Licytuj</button>
-                  <button *ngIf="car.sold" mat-raised-button color="warn"  disabled>Sprzedane</button>
+                  <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol' : '1.0-0'}}</h3>
+                  <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"  [routerLink]="['car', car.id]">Licytuj</button>
+                  <button *ngIf="car.sold" mat-stroked-button  color="primary"  >Sprzedane</button>
+                  <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button color="warn" >Niesprzedane</button>
                 </div>
 
 

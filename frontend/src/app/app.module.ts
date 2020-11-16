@@ -21,6 +21,10 @@ import { CustomReuseStrategy } from './shared/custom-resuse-strategy';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
 import { registerLocaleData } from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatIconModule} from '@angular/material/icon';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
 
@@ -50,6 +54,10 @@ registerLocaleData(localeEnUS, 'en');
     MatCardModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatIconModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

@@ -1,7 +1,22 @@
-<search (search)="changeSearch($event)"></search>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>search</mat-icon>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <search (search)="changeSearch($event)"></search>
+</mat-expansion-panel>
+
+<!-- <search fxShow fxHide.lt-md (search)="changeSearch($event)"></search> -->
+
 <div fxLayout="column">
 
-  <div fxFlexFill class="example-container">
+  <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+
+  <div fxFlexFill class="example-container" *ngIf="!loading">
     <div fxLayout="column" fxLayoutGap="20px" [style.height]="'100%'">
       <div class="card" *ngFor="let car of cars">
           <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
@@ -20,17 +35,17 @@
                     </p>
 
                     <p>VIN
-                      <span class="right">{{car.vin}}</span>
+                      <span class="right vin">{{car.vin}}</span>
                     </p>
 
               </div>
-              <div fxFlex class="description additional" fxLayoutAlign="end">
-                <div fxLayout="column">
+              <div fxFlex class="description additional" >
+                <div fxLayout="column" fxLayoutAlign="end end">
                   <p>{{car.sale_date | date:'medium':'pl'}}</p>
                   <h4>{{car.location}}</h4>
                   <h3>{{car.current_price | currency}}</h3>
-                  <button *ngIf="!car.sold" mat-raised-button color="primary" class="right" [routerLink]="['car', car.id]">Licytuj</button>
-                  <button *ngIf="car.sold" mat-raised-button color="warn" disabled>Sprzedane</button>
+                  <button *ngIf="!car.sold" mat-raised-button color="primary"  [routerLink]="['car', car.id]">Licytuj</button>
+                  <button *ngIf="car.sold" mat-raised-button color="warn"  disabled>Sprzedane</button>
                 </div>
 
 

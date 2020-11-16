@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('paginator') paginator: MatPaginator;
 
+  loading:boolean = true;
+
   cars: Car[];
 
   length: number;
@@ -43,13 +45,14 @@ export class HomeComponent implements OnInit {
   }
 
   getOffers(url: string, params?) {
-    console.log(params);
+    this.loading = true;
     this.carService.getCars(url, params).subscribe(page => {
       this.cars = page.results;
       this.length = page.count;
 
       this.currentPage = page.page;
       this.totalPages = page.lastPage;
+      this.loading=false;
 
     });
   }
@@ -58,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.currentPage = +event.pageIndex+1;
     this.itemsPerPage = +event.pageSize;
     this.getOffers(this.carService.baseLink, this.createFilterData());
+    window.scroll(0,0);
   }
 
   changeSearch(form) {

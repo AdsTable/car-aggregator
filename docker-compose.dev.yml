@@ -15,6 +15,7 @@ services:
         volumes:
             - ./backend:/code
             - ./backend/logs/web:/logs
+            - static_vol:/code/static
         ports:
             - 8000:8000
         env_file: 
@@ -28,6 +29,8 @@ services:
             context: ./nginx
         ports: 
             - 8080:80
+        volumes:
+            - static_vol:/var/www/static/
         depends_on: 
             - frontend
             - backend
@@ -42,3 +45,5 @@ services:
             - /opt/app/node_modules
             - ./frontend:/opt/app
             
+volumes:
+    static_vol:

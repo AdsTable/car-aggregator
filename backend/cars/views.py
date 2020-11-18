@@ -32,11 +32,20 @@ class OfferRetrieveView(generics.RetrieveAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferItemSerializer
 
-def get_available_options_for_field(field):
+def get_available_options_for_field_with_count(field):
     return list(Offer.objects.values(value=F(field)).filter(value__isnull=False).annotate(count=Count('value')).order_by("value"))
 
-def get_models_for_brand(brand):
+def get_models_for_brand_with_count(brand):
     return list(Offer.objects.filter(brand=brand).values(value=F('model')).annotate(count=Count('value')))
+
+
+def get_available_options_for_field(field):
+    options = list(Offer.objects.values_list(field, flat=True).distinct(field))
+    return list(filter(None, options))
+
+def get_models_for_brand(brand):
+    models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct('model'))
+    return list(filter(None, models))
 
 @api_view(['GET'])
 def count_available_fields(request):

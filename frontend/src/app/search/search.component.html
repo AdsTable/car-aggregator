@@ -1,41 +1,108 @@
-<form fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
-    <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" placeholder="Marka" formControlName="brand" [matAutocomplete]="brandAuto">
-        <mat-autocomplete  autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
-            <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
-                {{brand}}
+<form fxLayout="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutAlign="space-between stretch">
+
+        <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" placeholder="Marka" formControlName="brand" [matAutocomplete]="brandAuto">
+            <mat-autocomplete  autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+                <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
+                    {{brand}}
+                </mat-option>
+            </mat-autocomplete>
+    
+            <mat-error>Musisz wybrać markę z listy!</mat-error>
+    
+        </mat-form-field>
+    
+        <mat-form-field  fxFlex class="form__field">
+            <input matInput type="text" placeholder="Model" formControlName="model" [matAutocomplete]="auto">
+            <mat-autocomplete  #auto="matAutocomplete">
+            <mat-option *ngFor="let model of filteredModels | async" [value]="model">
+                {{model}}
             </mat-option>
         </mat-autocomplete>
-
-        <mat-error>Musisz wybrać markę z listy!</mat-error>
-
-    </mat-form-field>
-
-    <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" placeholder="Model" formControlName="model" [matAutocomplete]="auto">
-        <mat-autocomplete  #auto="matAutocomplete">
-        <mat-option *ngFor="let model of filteredModels | async" [value]="model">
-            {{model}}
-        </mat-option>
-    </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-form-field fxFlex class="form__field">
-        <input class="input-upper" matInput type="text" placeholder="VIN" formControlName="vin">
-        <mat-error>Nieprawidłowy numer VIN!</mat-error>
-
-    </mat-form-field>
-
-    <div fxFlex></div>
-
-    <div fxFlex>
-        <button mat-raised-button color="primary" class="form__submit">SZUKAJ</button>
+        </mat-form-field>
+    
+        <mat-form-field fxFlex  class="form__field">
+            <input class="input-upper" matInput type="text" placeholder="VIN" formControlName="vin">
+            <mat-error>Nieprawidłowy numer VIN!</mat-error>
+    
+        </mat-form-field>
     </div>
 
-    <div fxFlex>
-        <button mat-button (click)="resetForm()" type="button" color="warn" class="form__submit">RESETUJ</button>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="space-between stretch">
+
+            <mat-form-field fxFlex appearance="outline"  class="form__field">
+                <mat-label>Rok prod. od</mat-label>
+                <mat-select>
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field fxFlex appearance="outline" class="form__field">
+                <mat-label>Rok prod. do</mat-label>
+                <mat-select>
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+           
+
+            <mat-form-field fxFlex appearance="outline"  class="form__field">
+                <mat-label>Przebieg od</mat-label>
+                <mat-select>
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field fxFlex appearance="outline" class="form__field">
+                <mat-label>Przebieg do</mat-label>
+                <mat-select>
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
     </div>
 
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="space-between stretch">
+
+        <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Rodzaj paliwa</mat-label>
+            <mat-select>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Rodzaj uszkodzenia</mat-label>
+            <mat-select>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Skrzynia biegów</mat-label>
+            <mat-select>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Typ nadwozia</mat-label>
+            <mat-select>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="end stretch">
+        <div fxFlex>
+            <button mat-raised-button color="primary" class="form__submit">SZUKAJ</button>
+        </div>
+    
+        <div fxFlex>
+            <button mat-button (click)="resetForm()" type="button" color="warn" class="form__submit">RESETUJ</button>
+        </div> 
+    </div>
 
 
 </form>

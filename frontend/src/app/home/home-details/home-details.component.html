@@ -19,12 +19,12 @@
 
       <div class="prices" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-evenly">
         <div class="price" fxFlex>
-          <h3>{{car.estimated_retail_value | currency : 'USD' : 'symbol' : '1.0-0'  }}</h3>
+          <h3>{{car.estimated_retail_value | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</h3>
           <p>ERV</p>
         </div>
         
         <div class="price" [style.background-color]="car.sold ? '#720d1b' : '#1a8631' " fxFlex>
-          <h3>{{ car.current_price | currency : 'USD' : 'symbol' : '1.0-0'  }}</h3>
+          <h3>{{ car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</h3>
           <p *ngIf="!car.sold && !isOld(car.sale_date)">Aktualna cena</p>
           <p *ngIf="car.sold">Sprzedane</p>
           <p *ngIf="!car.sold && isOld(car.sale_date)">Niesprzedane</p>

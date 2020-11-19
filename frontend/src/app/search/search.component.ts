@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CarMap, CarService } from '../services/car.service';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ValidationErrors, Validators } from '@angular/forms';
+import { CarMap } from '../models/models';
 import { map, startWith, take } from "rxjs/operators";
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { CarService } from '../services/car.service';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'search',
@@ -14,6 +16,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatAutocompleteTrigger) trigger;
 
+  readonly matcher = new ShowOnFormInvalidStateMatcher();
+  readonly productionMatcher = new ProductionInvalidStateMatcher();
+
   @Output() search: EventEmitter<any> = new EventEmitter();
   availableFields: CarMap;
 
@@ -23,39 +28,50 @@ export class SearchComponent implements OnInit, AfterViewInit {
   models: string[];
   filteredModels: Observable<string[]>;
 
+
   searchForm: FormGroup;
 
-  constructor(private carService: CarService, private fb: FormBuilder) { 
+  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
+
+  constructor(private carService: CarService, private fb: FormBuilder) {
     this.searchForm = this.fb.group({
       brand: [''],
-      model: [{value:'', disabled:true}],
+      model: [{ value: '', disabled: true }],
       vin: ['', Validators.pattern(
         '^[A-HJ-NPR-Z\\d]{8}[\\dX][A-HJ-NPR-Z\\d]{2}\\d{6}$')],
+      year_min: [''],
+      year_max: [''],
+      mileage_min: ['', Validators.min(0)],
+      mileage_max: [''],
+      fuel: [''],
+      damage: [''],
+      transmission: [''],
+      bodyStyle: ['']
+    }, {
+      validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
     })
   }
 
   ngOnInit() {
     this.carService.getAvailableFields().pipe(take(1)).subscribe(data => {
       this.availableFields = data;
-      this.brands = data.brand.map(v => v.value);
+      this.brands = data.brand;
       this.filteredBrands = this.searchForm.get('brand').valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value, this.brands))
       );
     });
-
-
-
   }
-  
-  brandSelected(e: MatAutocompleteSelectedEvent){
+
+
+  brandSelected(e: MatAutocompleteSelectedEvent) {
     this.searchForm.controls['model'].setValue(null);
     this.searchForm.controls['model'].enable();
 
     this.carService.getAvailableModels(e.option.value)
       .pipe(take(1))
       .subscribe(data => {
-        this.models = data.map(v => v.value);
+        this.models = data;
         this.filteredModels = this.searchForm.get('model').valueChanges.pipe(
           startWith(''),
           map(value => this._filter(value, this.models))
@@ -71,7 +87,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
           this.searchForm.controls['model'].setValue(null);
           this.searchForm.controls['model'].disable();
           this.trigger.closePanel();
-        } 
+        }
       });
   }
 
@@ -82,10 +98,16 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   onSearch() {
-    console.debug(this.searchForm.value);
-
-    const filtered = {};
     if (this.searchForm.valid) {
+      console.debug(this.searchForm.value);
+
+      for (let field of this.multipleValuesField) {
+        if (this.searchForm.value[field]) {
+          this.searchForm.value[field] = this.searchForm.value[field].join(',');
+        }
+      }
+
+      const filtered = {};
       for (let key in this.searchForm.value) {
         if (this.searchForm.value[key]) {
           filtered[key] = this.searchForm.value[key];
@@ -93,6 +115,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       }
       this.search.emit(filtered);
     }
+
   }
 
   resetForm() {
@@ -106,7 +129,39 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
 
-
-  
-
 }
+
+export class ShowOnFormInvalidStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective): boolean {
+    return !!((control && control.invalid) || (form && form.hasError('minLessThanMaxMileage')));
+  }
+}
+
+export class ProductionInvalidStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective): boolean {
+    return !!((control && control.invalid) || (form && form.hasError('minLessThanMaxProduction')));
+  }
+}
+
+function minLessThanMaxMileageValidator(group: FormGroup): ValidationErrors | null {
+  const minMileage = group.controls['mileage_min'].value;
+  const maxMileage = group.controls['mileage_max'].value;
+
+  if (minMileage && maxMileage) {
+    return minMileage <= maxMileage ? null : { minLessThanMaxMileage: true };
+  } else {
+    return null;
+  }
+}
+
+function minLessThanMaxProductionValidator(group: FormGroup): ValidationErrors | null {
+  const minYear = group.controls['year_min'].value;
+  const maxYear = group.controls['year_max'].value;
+
+  if (minYear && maxYear) {
+    return minYear <= maxYear ? null : { minLessThanMaxProduction: true };
+  } else {
+    return null;
+  }
+}
+

@@ -34,31 +34,34 @@
 
             <mat-form-field fxFlex appearance="outline"  class="form__field">
                 <mat-label>Rok prod. od</mat-label>
-                <mat-select>
-                    <mat-option value="option">Option</mat-option>
+                <mat-select formControlName="year_min">
+                    <mat-option *ngFor="let fromYear of availableFields?.production_year" [value]="fromYear">{{fromYear}}</mat-option>
                 </mat-select>
             </mat-form-field>
     
             <mat-form-field fxFlex appearance="outline" class="form__field">
                 <mat-label>Rok prod. do</mat-label>
-                <mat-select>
-                    <mat-option value="option">Option</mat-option>
+                <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
+                    <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear" value="option">{{toYear}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="searchForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż minimalny</mat-error>
+
+                
             </mat-form-field>
            
 
-            <mat-form-field fxFlex appearance="outline"  class="form__field">
+            <mat-form-field fxFlex appearance="outline" class="form__field">
                 <mat-label>Przebieg od</mat-label>
-                <mat-select>
-                    <mat-option value="option">Option</mat-option>
-                </mat-select>
+                <input matInput type="number" formControlName="mileage_min">
+
+                <mat-error>Nie może byc mniejszy niż 0</mat-error>
             </mat-form-field>
     
             <mat-form-field fxFlex appearance="outline" class="form__field">
                 <mat-label>Przebieg do</mat-label>
-                <mat-select>
-                    <mat-option value="option">Option</mat-option>
-                </mat-select>
+                <input matInput type="number" formControlName="mileage_max" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="searchForm.hasError('minLessThanMaxMileage')">Przebieg maksymalny musi być mniejszy od minimalnego</mat-error>
+
             </mat-form-field>
     </div>
 
@@ -66,29 +69,29 @@
 
         <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Rodzaj paliwa</mat-label>
-            <mat-select>
-                <mat-option value="option">Option</mat-option>
+            <mat-select formControlName="fuel" multiple>
+                <mat-option *ngFor="let fuel of availableFields?.fuel" [value]="fuel">{{fuel}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Rodzaj uszkodzenia</mat-label>
-            <mat-select>
-                <mat-option value="option">Option</mat-option>
+            <mat-select formControlName="damage" multiple>
+                <mat-option *ngFor="let damage of availableFields?.primary_damage" [value]="damage">{{damage}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Skrzynia biegów</mat-label>
-            <mat-select>
-                <mat-option value="option">Option</mat-option>
+            <mat-select formControlName="transmission">
+                <mat-option *ngFor="let transmission of availableFields?.transmission" [value]="transmission">{{transmission}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Typ nadwozia</mat-label>
-            <mat-select>
-                <mat-option value="option">Option</mat-option>
+            <mat-select formControlName="bodyStyle" multiple>
+                <mat-option *ngFor="let body of availableFields?.body_style" [value]="body">{{body}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -96,7 +99,7 @@
 
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="end stretch">
         <div fxFlex>
-            <button mat-raised-button color="primary" class="form__submit">SZUKAJ</button>
+            <button mat-raised-button color="primary" class="form__submit" [disabled]="!searchForm.valid">SZUKAJ</button>
         </div>
     
         <div fxFlex>

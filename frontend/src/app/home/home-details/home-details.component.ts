@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Car, CarService } from 'src/app/services/car.service';
+import { Car } from 'src/app/models/models';
+import { CarService } from 'src/app/services/car.service';
 import { olderThanWeekAgo } from 'src/app/shared/core';
+
 
 @Component({
   selector: 'app-home-details',

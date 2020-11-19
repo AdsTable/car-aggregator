@@ -15,6 +15,12 @@
   <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 
+  <div fxLayout="column" fxLayoutAlign="center center" class="example-container" *ngIf="!loading && cars.length == 0">
+    <h1>Brak wyników</h1>
+    <p>Dla podanych parametrów wyszukiwania nie znaleziono żadnych wyników</p>
+
+  </div>
+
 
   <div fxFlexFill class="example-container" *ngIf="!loading">
     <div fxLayout="column" fxLayoutGap="20px" [style.height]="'100%'">
@@ -43,7 +49,7 @@
                 <div fxLayout="column" fxLayoutAlign="end end">
                   <p>{{car.sale_date | date:'medium':'pl'}}</p>
                   <h4>{{car.location}}</h4>
-                  <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol' : '1.0-0'}}</h3>
+                  <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
                   <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"  [routerLink]="['car', car.id]">Licytuj</button>
                   <button *ngIf="car.sold" mat-stroked-button  color="primary"  >Sprzedane</button>
                   <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button color="warn" >Niesprzedane</button>

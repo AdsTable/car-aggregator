@@ -6,17 +6,30 @@ from rest_framework.filters import OrderingFilter
 from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.db.models import F
+from django.db.models import F, Q
+from functools import reduce
 import django_filters
+from django_filters.fields import CSVWidget, MultipleChoiceField
+from django_filters import rest_framework as filters
+
+class CharInFilter(filters.BaseInFilter, filters.CharFilter):
+    pass
+
 
 class CarFilterSet(django_filters.FilterSet):
     brand = django_filters.CharFilter(field_name='brand', lookup_expr="istartswith")
     model = django_filters.CharFilter(field_name='model', lookup_expr="istartswith")
     vin = django_filters.CharFilter(field_name='vin', lookup_expr="iexact")
+    fuel = CharInFilter(field_name='fuel', lookup_expr="in")
+    damage = CharInFilter(field_name='primary_damage', lookup_expr="in")
+    transmission = django_filters.CharFilter(field_name='transmission', lookup_expr="iexact")
+    bodyStyle = CharInFilter(field_name='body_style', lookup_expr="in")
+    year = django_filters.RangeFilter(field_name="production_year")
+    mileage = django_filters.RangeFilter(field_name="mileage")
 
     class Meta:
         model = Offer
-        fields = ['brand', 'model', 'vin']
+        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage']
 
 
 class OfferListView(generics.ListAPIView):

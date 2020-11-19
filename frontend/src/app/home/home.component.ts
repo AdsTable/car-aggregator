@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Observable, range } from 'rxjs';
-import { filter, map, tap, toArray } from "rxjs/operators";
-import { CarService, Page, Car } from "../services/car.service";
+import { CarService } from "../services/car.service";
 import { olderThanWeekAgo } from '../shared/core';
+import { Car } from '../models/models';
 
 @Component({
   selector: 'app-home',

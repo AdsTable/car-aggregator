@@ -27,6 +27,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
+import { ReversePipe } from './shared/reverse.pipe';
 
 
 registerLocaleData(localePl, 'pl');
@@ -39,6 +40,7 @@ registerLocaleData(localeEnUS, 'en');
     HomeComponent,
     SearchComponent,
     HomeDetailsComponent,
+    ReversePipe,
   ],
   imports: [
     BrowserModule,

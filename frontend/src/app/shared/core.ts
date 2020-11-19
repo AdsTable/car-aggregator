@@ -1,3 +1,6 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+
 export function olderThanWeekAgo(sale_date: Date) {
     const dateWeekAgo = new Date();
     dateWeekAgo.setDate(dateWeekAgo.getDate()-7);
@@ -5,3 +8,5 @@ export function olderThanWeekAgo(sale_date: Date) {
 
     return saleDate < dateWeekAgo
 }
+
+

@@ -15,7 +15,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchComponent } from './search/search.component';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HomeDetailsComponent } from './home/home-details/home-details.component';  
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './shared/custom-resuse-strategy';
 import { MatCarouselModule } from '@ngbmodule/material-carousel';
@@ -28,6 +27,8 @@ import {MatIconModule} from '@angular/material/icon';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
 import { ReversePipe } from './shared/reverse.pipe';
+import { OfferComponent } from './offer/offer.component';
+import { OfferDetailsComponent } from './offer/offer-details/offer-details.component';
 
 
 registerLocaleData(localePl, 'pl');
@@ -39,8 +40,9 @@ registerLocaleData(localeEnUS, 'en');
     AppComponent,
     HomeComponent,
     SearchComponent,
-    HomeDetailsComponent,
     ReversePipe,
+    OfferComponent,
+    OfferDetailsComponent,
   ],
   imports: [
     BrowserModule,

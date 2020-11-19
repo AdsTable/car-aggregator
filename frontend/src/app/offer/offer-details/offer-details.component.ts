@@ -7,11 +7,11 @@ import { olderThanWeekAgo } from 'src/app/shared/core';
 
 
 @Component({
-  selector: 'app-home-details',
-  templateUrl: './home-details.component.html',
-  styleUrls: ['./home-details.component.scss']
+  selector: 'app-offer-details',
+  templateUrl: './offer-details.component.html',
+  styleUrls: ['./offer-details.component.scss']
 })
-export class HomeDetailsComponent implements OnInit {
+export class OfferDetailsComponent implements OnInit {
 
   carId: number;
   private sub: any;

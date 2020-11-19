@@ -1,15 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { HomeDetailsComponent } from './home/home-details/home-details.component';
+import { OfferDetailsComponent } from './offer/offer-details/offer-details.component';
+import { OfferComponent } from './offer/offer.component';
 
 
 
 const routes: Routes = [
-  { path: '' , component: HomeComponent, data: { shouldReuse: true} },
-  { path: 'car/:id', component: HomeDetailsComponent }, 
+  {
+    path: '', component: HomeComponent, data: {
+      shouldReuse: true,
+      reuseRoutesFrom: ['offers']
+    }
+  },
+  {
+    path: 'offers', component: OfferComponent, data: {
+      shouldReuse: true,
+      reuseRoutesFrom: ['offer/:id']
 
-  { path: '**', redirectTo: ''}
+    }
+  },
+  { path: 'offer/:id', component: OfferDetailsComponent },
+
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

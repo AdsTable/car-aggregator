@@ -5,7 +5,9 @@ import { map, startWith, take } from "rxjs/operators";
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { CarService } from '../services/car.service';
+import { SearchService } from '../services/search.service';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'search',
@@ -19,7 +21,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
   readonly matcher = new ShowOnFormInvalidStateMatcher();
   readonly productionMatcher = new ProductionInvalidStateMatcher();
 
-  @Output() search: EventEmitter<any> = new EventEmitter();
   availableFields: CarMap;
 
   brands: string[];
@@ -33,7 +34,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
 
-  constructor(private carService: CarService, private fb: FormBuilder) {
+  constructor(private carService: CarService, 
+    private searchService: SearchService, 
+    private fb: FormBuilder,
+    private router: Router) {
     this.searchForm = this.fb.group({
       brand: [''],
       model: [{ value: '', disabled: true }],
@@ -113,7 +117,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
           filtered[key] = this.searchForm.value[key];
         }
       }
-      this.search.emit(filtered);
+      this.searchService.sendSearchQuery(filtered);
+      this.router.navigate(['/offers'])
+      // this.search.emit(filtered);
     }
 
   }
@@ -121,11 +127,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
   resetForm() {
     this.searchForm.reset();
     this.searchForm.controls['model'].disable();
-    this.search.emit({});
+    this.searchService.resetForm();
+    // this.search.emit({});
   }
 
   ngOnDestroy() {
-    this.trigger.unsubscribe();
+    // this.trigger.unsubscribe();
   }
 
 

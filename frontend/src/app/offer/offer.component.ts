@@ -5,6 +5,8 @@ import { CarService } from "../services/car.service";
 import { olderThanWeekAgo } from '../shared/core';
 import { Car } from '../models/models';
 import { SearchService } from '../services/search.service';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-offer',
@@ -14,6 +16,10 @@ import { SearchService } from '../services/search.service';
 export class OfferComponent implements OnInit {
 
   @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('paginatorTop') paginatorTop: MatPaginator;
+
+  searchSubscription: Subscription;
+  carSubscription: Subscription;
 
   loading:boolean = true;
 
@@ -21,7 +27,7 @@ export class OfferComponent implements OnInit {
 
   length: number;
   itemsPerPage: number = 20;
-  currentPage: number = 1;
+  currentPage: number = 0;
   totalPages: number;
 
   searchData: {};
@@ -29,12 +35,10 @@ export class OfferComponent implements OnInit {
   constructor(private carService: CarService, private searchService: SearchService) { }
 
   ngOnInit(): void {
-    this.searchService.searchSubject.subscribe(res => {
+    this.searchSubscription = this.searchService.searchSubject.pipe(take(1)).subscribe(res => {
       this.searchData = res;
       this.getOffers(this.carService.baseLink, this.createFilterData());
     })
-
-
   }
 
   createFilterData(
@@ -43,7 +47,7 @@ export class OfferComponent implements OnInit {
     ) {
     return {
       params: {
-        'page': page,
+        'page': page+1,
         'size': size,
         ...this.searchData
       }
@@ -52,7 +56,7 @@ export class OfferComponent implements OnInit {
 
   getOffers(url: string, params?) {
     this.loading = true;
-    this.carService.getCars(url, params).subscribe(page => {
+    this.carSubscription = this.carService.getCars(url, params).subscribe(page => {
       this.cars = page.results;
       this.length = page.count;
 
@@ -70,12 +74,19 @@ export class OfferComponent implements OnInit {
   }
 
   pageChangeEvent(event: PageEvent) {
-    this.currentPage = +event.pageIndex+1;
+
+    this.currentPage = event.pageIndex;
     this.itemsPerPage = +event.pageSize;
+    this.paginatorTop.pageIndex = this.currentPage;
+    this.paginator.pageIndex = this.currentPage;
     this.getOffers(this.carService.baseLink, this.createFilterData());
     window.scroll(0,0);
   }
 
+  ngOnDestroy() {
+    this.searchSubscription.unsubscribe();
+    this.carSubscription.unsubscribe();
+  }
   // changeSearch(form) {
   //   this.searchData = form;
   //   this.getOffers(this.carService.baseLink, this.createFilterData());

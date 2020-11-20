@@ -8,21 +8,17 @@ import { OfferComponent } from './offer/offer.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent, data: {
-      shouldReuse: true,
-      reuseRoutesFrom: ['offers']
-    }
+    path: 'home', component: HomeComponent
   },
   {
     path: 'offers', component: OfferComponent, data: {
       shouldReuse: true,
       reuseRoutesFrom: ['offer/:id']
-
     }
   },
   { path: 'offer/:id', component: OfferDetailsComponent },
 
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

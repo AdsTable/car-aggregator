@@ -1,6 +1,8 @@
 
   
   <div fxLayout="column">
+    <mat-paginator #paginatorTop (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
+    [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
   
     <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

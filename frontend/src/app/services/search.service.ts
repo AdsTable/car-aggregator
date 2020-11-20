@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class SearchService {
 
 
-  searchSubject = new BehaviorSubject(null);
+  searchSubject = new ReplaySubject<{}>(1);
 
   sendSearchQuery(value: {}) {
     this.searchSubject.next(value);

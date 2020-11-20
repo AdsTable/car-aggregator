@@ -103,7 +103,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   onSearch() {
     if (this.searchForm.valid) {
-      console.debug(this.searchForm.value);
 
       for (let field of this.multipleValuesField) {
         if (this.searchForm.value[field]) {
@@ -117,9 +116,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
           filtered[key] = this.searchForm.value[key];
         }
       }
+
+ 
       this.searchService.sendSearchQuery(filtered);
       this.router.navigate(['/offers'])
-      // this.search.emit(filtered);
     }
 
   }
@@ -128,11 +128,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchForm.reset();
     this.searchForm.controls['model'].disable();
     this.searchService.resetForm();
-    // this.search.emit({});
   }
 
   ngOnDestroy() {
-    // this.trigger.unsubscribe();
   }
 
 

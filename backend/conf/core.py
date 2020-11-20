@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from collections import OrderedDict
 from math import ceil
 
-DEFAULT_PAGE = 1
+DEFAULT_PAGE = 0
 DEFAULT_PAGE_SIZE = 20
 
 class MyPagination(PageNumberPagination):

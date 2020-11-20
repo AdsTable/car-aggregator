@@ -3,8 +3,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$nga-primary: mat-palette($mat-cyan);
-$nga-accent:  mat-palette($mat-cyan, A200, A100, A400);
+$nga-primary:  mat-palette($mat-blue, 800, 400, 900);
+$nga-accent: mat-palette($mat-red, A700, A200, 800);
 
 // The warn palette is optional (defaults to red).
 $nga-warn:    mat-palette($mat-red);
@@ -14,7 +14,11 @@ $nga-theme:      mat-light-theme($nga-primary, $nga-accent, $nga-warn);
 $nga-background: map-get($nga-theme, background);
 $nga-foreground: map-get($nga-theme, foreground);
 
+
+
 $custom-typography: mat-typography-config(
-    $font-family: 'Hind Siliguri, sans-serif',
+    $font-family: 'Kanit, sans-serif',
+    $headline: mat-typography-level(28px, 36px, 500, 'Russo One'),
+    $input: mat-typography-level(14px, 1.125, 200, 'Kanit')
 
 );

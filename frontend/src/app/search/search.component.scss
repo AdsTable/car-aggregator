@@ -2,17 +2,32 @@
 
 
 .form {
-    font-size: 14px;
-  }
-  
+  font-size: 14px;
+  font-weight: 300;
+}
+
+
+
 .form__submit {
-  width: 100%;
+  min-width: 400px;
+  font-size: 18px;
+  padding: 10px 0px;
+}
+
+.form__submit-small {
+  min-width: 200px;
 }
 
 .mat-option {
-  font-size: 14px;
+  font-size: 12px;
 }
 
-.input-upper{
+.input-upper {
   text-transform: uppercase;
 }
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+
+}
+

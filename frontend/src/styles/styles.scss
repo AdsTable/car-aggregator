@@ -5,10 +5,11 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri');
+@import url('https://fonts.googleapis.com/css2?family=Kanit');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One');
 @include mat-core($custom-typography);
 
 @include angular-material-theme($nga-theme);
-
 
 
 html {
@@ -21,11 +22,29 @@ html {
 }
 
 body {
-    color: #212121;
-    background-color: #f3f3f3;
+    color: #495057;
+    background-color: #fff;
     font-size: mat-font-size($custom-typography, body-1);
     height: 100%;
     max-width:1500px; // default width
     margin: 0 auto;
 }
 
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.4em 0px }
+  mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1.5em; }
+  
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+      transform: translateY(-1.1em) scale(.75);
+      width: 133.33333%;
+  }
+  
+
+// .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
+// .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
+//   border-radius: 25px;
+// }

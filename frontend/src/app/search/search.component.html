@@ -1,9 +1,11 @@
-<form fxLayout="column" fxLayoutGap="15px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+<form fxLayout="column" fxLayoutGap="5px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
 
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutAlign="space-between stretch">
 
-        <mat-form-field fxFlex class="form__field">
-            <input matInput type="text" placeholder="Marka" formControlName="brand" [matAutocomplete]="brandAuto">
+        <mat-form-field appearance="outline" fxFlex class="form__field">
+            <mat-label>Marka</mat-label>
+            
+            <input matInput type="text"  formControlName="brand" [matAutocomplete]="brandAuto">
             <mat-autocomplete  autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
                 <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
                     {{brand}}
@@ -14,8 +16,10 @@
     
         </mat-form-field>
     
-        <mat-form-field  fxFlex class="form__field">
-            <input matInput type="text" placeholder="Model" formControlName="model" [matAutocomplete]="auto">
+        <mat-form-field  appearance="outline" fxFlex class="form__field">
+            <mat-label>Model</mat-label>
+
+            <input matInput type="text"  formControlName="model" [matAutocomplete]="auto">
             <mat-autocomplete  #auto="matAutocomplete">
             <mat-option *ngFor="let model of filteredModels | async" [value]="model">
                 {{model}}
@@ -23,8 +27,10 @@
         </mat-autocomplete>
         </mat-form-field>
     
-        <mat-form-field fxFlex  class="form__field">
-            <input class="input-upper" matInput type="text" placeholder="VIN" formControlName="vin">
+        <mat-form-field appearance="outline" fxFlex  class="form__field">
+            <mat-label>VIN</mat-label>
+
+            <input class="input-upper" matInput type="text" formControlName="vin">
             <mat-error>Nieprawidłowy numer VIN!</mat-error>
     
         </mat-form-field>
@@ -97,15 +103,9 @@
 
     </div>
 
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="end stretch">
-        <div fxFlex>
-            <button mat-raised-button color="primary" class="form__submit" [disabled]="!searchForm.valid">SZUKAJ</button>
-        </div>
-    
-        <div fxFlex>
-            <button mat-button (click)="resetForm()" type="button" color="warn" class="form__submit">RESETUJ</button>
-        </div> 
-    </div>
+    <div  fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="space-between stretch">
 
-
+            <button mat-raised-button color="accent" [ngClass.gt-sm]="'form__submit'" [disabled]="!searchForm.valid">SZUKAJ</button>
+            <!-- <button mat-button (click)="resetForm()" type="button" color="warn" [ngClass.gt-md]="'form__submit'">RESETUJ</button> -->
+</div>
 </form>

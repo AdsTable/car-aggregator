@@ -7,6 +7,13 @@ import { Car } from '../models/models';
 import { SearchService } from '../services/search.service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+
+
+interface SideNavConfig {
+  mode: "over" | "side" | "push"
+  opened: boolean;
+}
 
 @Component({
   selector: 'app-offer',
@@ -32,7 +39,33 @@ export class OfferComponent implements OnInit {
 
   searchData: {};
 
-  constructor(private carService: CarService, private searchService: SearchService) { }
+  sideNav: SideNavConfig = {
+    mode: "side",
+    opened: true
+  }
+
+  constructor(
+    private carService: CarService,
+    private searchService: SearchService,
+    private mediaObserver: MediaObserver
+  ) {
+    this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
+      this.sideNav = this.getSideNavMode(mediaChange);
+    }) 
+   }
+
+   getSideNavMode(mediaChange: MediaChange[]) {
+     if (this.mediaObserver.isActive('gt-sm')) {
+       return {
+        mode: "side",
+        opened: true
+       } as SideNavConfig;
+     } 
+     return {
+      mode: "over",
+      opened: false
+     } as SideNavConfig;
+   }
 
   ngOnInit(): void {
     this.searchSubscription = this.searchService.searchSubject.pipe(take(1)).subscribe(res => {

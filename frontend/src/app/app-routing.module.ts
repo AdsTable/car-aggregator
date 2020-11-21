@@ -3,22 +3,23 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { OfferDetailsComponent } from './offer/offer-details/offer-details.component';
 import { OfferComponent } from './offer/offer.component';
+import { LimitedGuard } from './shared/guards';
 
 
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: 'home', component: HomeComponent
   },
   {
     path: 'offers', component: OfferComponent, data: {
       shouldReuse: true,
       reuseRoutesFrom: ['offer/:id']
-    }
+    }, canActivate: [LimitedGuard]
   },
   { path: 'offer/:id', component: OfferDetailsComponent },
 
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

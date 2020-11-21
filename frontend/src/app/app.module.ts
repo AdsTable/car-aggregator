@@ -24,6 +24,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
 import { ReversePipe } from './shared/reverse.pipe';
@@ -62,6 +64,7 @@ registerLocaleData(localeEnUS, 'en');
     MatProgressBarModule,
     MatExpansionModule,
     MatIconModule,
+    MatSidenavModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),
@@ -69,6 +72,7 @@ registerLocaleData(localeEnUS, 'en');
   providers: [
     {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
     { provide: LOCALE_ID, useValue: "pl" },
+    LimitedGuard
   ],
   bootstrap: [AppComponent]
 })

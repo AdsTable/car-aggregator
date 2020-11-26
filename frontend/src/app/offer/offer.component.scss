@@ -23,8 +23,6 @@
 }
 
 
-
-
 .right {
   float:right;
 }
@@ -112,10 +110,20 @@ img {
   color: #1a8631;
 }
 
-.mat-side-nav{ width: auto !important }
 
+.mat-sidenav {
+  width: 300px;
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid  rgb(221, 221, 221);
+}
 
-
-
-
-
+@media(max-width:450px) {
+  .mat-sidenav {
+    width: 300px;
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 0px;
+  }
+}

@@ -25,12 +25,14 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
 import { ReversePipe } from './shared/reverse.pipe';
 import { OfferComponent } from './offer/offer.component';
 import { OfferDetailsComponent } from './offer/offer-details/offer-details.component';
+import { OfferFilterComponent } from './offer/offer-filter/offer-filter.component';
 
 
 registerLocaleData(localePl, 'pl');
@@ -45,6 +47,7 @@ registerLocaleData(localeEnUS, 'en');
     ReversePipe,
     OfferComponent,
     OfferDetailsComponent,
+    OfferFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ registerLocaleData(localeEnUS, 'en');
     MatExpansionModule,
     MatIconModule,
     MatSidenavModule,
+    MatListModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

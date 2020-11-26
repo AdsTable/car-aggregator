@@ -44,34 +44,40 @@ export class OfferComponent implements OnInit {
     opened: true
   }
 
+
   constructor(
     private carService: CarService,
     private searchService: SearchService,
     private mediaObserver: MediaObserver
   ) {
+    
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
       this.sideNav = this.getSideNavMode(mediaChange);
     }) 
    }
 
+
+
    getSideNavMode(mediaChange: MediaChange[]) {
      if (this.mediaObserver.isActive('gt-sm')) {
-       return {
-        mode: "side",
-        opened: false
-       } as SideNavConfig;
+        return {
+          mode: 'side',
+          opened: true
+        } as SideNavConfig;
      } 
-     return {
-      mode: "over",
-      opened: false
-     } as SideNavConfig;
+      return {
+        mode: 'over',
+        opened: false
+      } as SideNavConfig;
+     
    }
 
   ngOnInit(): void {
     this.searchSubscription = this.searchService.searchSubject.pipe(take(1)).subscribe(res => {
       this.searchData = res;
       this.getOffers(this.carService.baseLink, this.createFilterData());
-    })
+    });
+
   }
 
   createFilterData(
@@ -116,16 +122,21 @@ export class OfferComponent implements OnInit {
     window.scroll(0,0);
   }
 
+  onFilter(event) {
+    if (this.sideNav.mode === "over") this.sideNav.opened=false;
+    console.log(event);
+    this.currentPage = 0;
+    this.searchData = event;
+    this.paginator.firstPage();
+    this.getOffers(this.carService.baseLink, this.createFilterData())
+  }
+
   ngOnDestroy() {
     this.searchSubscription.unsubscribe();
     this.carSubscription.unsubscribe();
   }
-  // changeSearch(form) {
-  //   this.searchData = form;
-  //   this.getOffers(this.carService.baseLink, this.createFilterData());
-  //   this.paginator.firstPage();
 
-  // }
+  
 
 
 

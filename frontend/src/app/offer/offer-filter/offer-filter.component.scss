@@ -1,0 +1,58 @@
+@import '../../../styles/theme';
+
+
+.form {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+
+
+.form__submit {
+  min-width: 400px;
+  font-size: 18px;
+  padding: 10px 0px;
+}
+
+.form__submit-small {
+  min-width: 200px;
+}
+
+.mat-option {
+  font-size: 12px;
+}
+
+.input-upper {
+  text-transform: uppercase;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+}
+
+.app-nav-accordion {
+    .mat-expansion-panel {
+      border-radius: 0px !important;
+      box-shadow: none !important;
+      margin-bottom: 20px;
+
+      &.mat-expansion-panel-spacing {
+        margin: 20px 0px;
+      }
+  
+      .mat-expansion-panel-body {
+        padding: 0px;
+      }
+  
+      .mat-expansion-panel-header {
+        height: 40px;
+        // padding: 0px 24px 0px 16px;
+      }
+  
+      .mat-expansion-panel-header-title {
+        color: rgba(0,0,0,0.54);
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }

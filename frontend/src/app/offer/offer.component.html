@@ -1,77 +1,81 @@
 
-<mat-sidenav-container fxLayout="row">
-  <mat-sidenav [mode]="sideNav.mode" [(opened)]="sideNav.opened" fxFlex="40%">
-    Side Filtering
-  </mat-sidenav>
+    <div fxLayout="row" fxLayoutAlign="end">
+      <button mat-raised-button color="accent" (click)="sideNav.opened = !sideNav.opened;">Filtruj</button>
+    </div>
 
-  <mat-sidenav-content fxFlexFill>
-    <div fxLayout="column">
-      <mat-paginator #paginatorTop (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
-        [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
+    <mat-sidenav-container fxLayout="row">
+      <mat-sidenav fxFlex="grow" class="vehicle-filters" [opened]="sideNav.opened" [mode]="sideNav.mode">
+        <offer-filter *ngIf="searchData" (filter)="onFilter($event)" [search]="searchData"></offer-filter>
+      </mat-sidenav>
 
-      <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
-      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+      <mat-sidenav-content fxFlex="grow">
 
-      <div fxLayout="column" fxLayoutAlign="center center" class="example-container"
-        *ngIf="!loading && cars.length == 0">
-        <h1>Brak wyników</h1>
-        <p>Dla podanych parametrów wyszukiwania nie znaleziono żadnych wyników</p>
+        <mat-paginator #paginatorTop (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
+          [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
 
-      </div>
+        <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+        <div fxLayout="column" fxLayoutAlign="center center" class="example-container"
+          *ngIf="!loading && cars.length == 0">
+          <h1>Brak wyników</h1>
+          <p>Dla podanych parametrów wyszukiwania nie znaleziono żadnych wyników</p>
+
+        </div>
 
 
-      <div fxFlexFill class="example-container" *ngIf="!loading">
-        <div fxLayout="column" fxLayoutGap="20px" [style.height]="'100%'">
-          <div class="card" *ngFor="let car of cars">
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-              <div fxFlex="30%">
-                <a [routerLink]="['car', car.id]"><img [attr.src]="car.thumb_image" alt="Free image"></a>
-              </div>
-              <div fxFlex>
-                <div fxLayout="row wrap" fxLayou.lt-md="column">
-                  <div fxFlex class="description main">
-                    <h3 class="title"><a [routerLink]="['/offer', car.id]">{{car.brand}} {{car.model}}</a></h3>
-                    <p>Numer aukcji
-                      <span class="right">{{car.offerId}}</span>
-                    </p>
-                    <p>Przebieg
-                      <span class="right">{{car.mileage}} mi</span>
-                    </p>
+        <div fxFlexFill class="example-container" *ngIf="!loading">
+          <div fxLayout="column" fxLayoutGap="20px" [style.height]="'100%'">
+            <div class="card" *ngFor="let car of cars">
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+                <div fxFlex="30%">
+                  <a [routerLink]="['car', car.id]"><img [attr.src]="car.thumb_image" alt="Free image"></a>
+                </div>
+                <div fxFlex>
+                  <div fxLayout="row wrap" fxLayou.lt-md="column">
+                    <div fxFlex class="description main">
+                      <h3 class="title"><a [routerLink]="['/offer', car.id]">{{car.brand}} {{car.model}}</a></h3>
+                      <p>Numer aukcji
+                        <span class="right">{{car.offerId}}</span>
+                      </p>
+                      <p>Przebieg
+                        <span class="right">{{car.mileage}} mi</span>
+                      </p>
 
-                    <p>Rok produkcji
-                      <span class="right vin">{{car.production_year}}</span>
-                    </p>
+                      <p>Rok produkcji
+                        <span class="right vin">{{car.production_year}}</span>
+                      </p>
 
-                  </div>
-                  <div fxFlex class="description additional">
-                    <div fxLayout="column" fxLayoutAlign="end end">
-                      <p>{{car.sale_date | date:'medium':'pl'}}</p>
-                      <h4>{{car.location}}</h4>
-                      <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
-                      <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"
-                        [routerLink]="['', car.id]">Licytuj</button>
-                      <button *ngIf="car.sold" mat-stroked-button color="primary">Sprzedane</button>
-                      <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button
-                        color="warn">Niesprzedane</button>
                     </div>
+                    <div fxFlex class="description additional">
+                      <div fxLayout="column" fxLayoutAlign="end end">
+                        <p>{{car.sale_date | date:'medium':'pl'}}</p>
+                        <h4>{{car.location}}</h4>
+                        <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
+                        <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"
+                          [routerLink]="['', car.id]">Licytuj</button>
+                        <button *ngIf="car.sold" mat-stroked-button color="primary">Sprzedane</button>
+                        <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button
+                          color="warn">Niesprzedane</button>
+                      </div>
 
 
+                    </div>
                   </div>
                 </div>
+
               </div>
 
             </div>
-
           </div>
         </div>
-      </div>
 
 
 
-      <mat-paginator #paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
-        [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
-      <!-- let news of (news$ | async)?.articles -->
-    </div>
-  </mat-sidenav-content>
+        <mat-paginator #paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
+          [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
+        </mat-sidenav-content>
 
 </mat-sidenav-container>
+
+

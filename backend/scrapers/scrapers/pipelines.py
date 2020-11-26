@@ -12,7 +12,7 @@ from cars.models import Offer
 
 class ScrapersPipeline:
     def process_item(self, item, spider):
-        if spider.name == 'copart_update':
+        if spider.name in ['copart_update', 'iaai_update']:
             try:
                 offer = Offer.objects.get(offerId=item['offerId'])
                 for k,v in item.items():
@@ -21,7 +21,7 @@ class ScrapersPipeline:
             except Offer.DoesNotExist:
                 print("[UPDATE] Offer doesn't exist")
 
-        elif spider.name == 'copart':
+        elif spider.name in ['copart', 'iaai']:
             try:
                 item.save()
             except IntegrityError:

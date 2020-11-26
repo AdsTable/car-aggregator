@@ -11,6 +11,11 @@ from functools import reduce
 import django_filters
 from django_filters.fields import CSVWidget, MultipleChoiceField
 from django_filters import rest_framework as filters
+from cars.tasks import Scraper
+
+scraper = Scraper()
+
+
 
 class CharInFilter(filters.BaseInFilter, filters.CharFilter):
     pass
@@ -39,7 +44,7 @@ class OfferListView(generics.ListAPIView):
     # filter_fields = ['brand', 'model', 'vin']
     filterset_class = CarFilterSet
     ordering_fields = ['current_price']
-    ordering = ['-id']
+    ordering = ['sale_date', '-id']
 
 class OfferRetrieveView(generics.RetrieveAPIView):
     queryset = Offer.objects.all()
@@ -78,6 +83,15 @@ def count_available_fields(request):
 @api_view(['GET'])
 def available_models_for_brand(request, brand):
     return Response(get_models_for_brand(brand))
+
+@api_view(['GET'])
+def get_jobs(request):
+    return Response(scraper.get_all_jobs())
+
+@api_view(['GET'])
+def get_job(request, id):
+    return Response(scraper.get_status_of_job(id))
+
 
 
 

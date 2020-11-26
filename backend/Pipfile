@@ -17,6 +17,12 @@ scrapy-user-agents = "*"
 django-filter = "*"
 psycopg2-binary = "*"
 gunicorn = "*"
+python-dateutil = "*"
+pendulum = "*"
+celery = "*"
+django-redis = "*"
+redis = "*"
+django-celery-beat = "*"
 
 [requires]
 python_version = "3.8"

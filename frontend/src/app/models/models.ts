@@ -29,6 +29,7 @@ export interface Page {
     sale_date: Date;
     sold: boolean;
     images: string[];
+    thumb_image: string;
     current_price: number;
   }
   

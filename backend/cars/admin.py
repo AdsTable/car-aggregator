@@ -6,7 +6,7 @@ from .models import Offer
 class CarsAdmin(admin.ModelAdmin):
     list_display = ('offerId', 'brand', 'model', 'vin', 'production_year', 'sold', 'sale_date', 'created_at', 'updated_at')
     list_filter = ('sold', 'sale_date', 'created_at', 'fuel')
-    search_fields = ('brand', 'model')
+    search_fields = ['brand', 'model', 'vin']
     date_hierarchy = 'sale_date'
 
     

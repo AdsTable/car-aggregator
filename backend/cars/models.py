@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Offer(models.Model):
     offerId = models.IntegerField(unique=True)
+    iaaiId = models.IntegerField(unique=True, null=True)
     brand = models.CharField(max_length=30)
     model = models.CharField(max_length=50)
     production_year = models.IntegerField()
@@ -11,6 +12,7 @@ class Offer(models.Model):
     primary_damage = models.CharField(max_length=50, null=True)
     secondary_damage = models.CharField(max_length=50, null=True)
     estimated_retail_value = models.IntegerField(null=True)
+    estimated_repair_cost = models.DecimalField(decimal_places=2, max_digits=10, null=True)
     vin = models.CharField(max_length=17, null=True)
     drive = models.CharField(max_length=30, null=True)
     body_style = models.CharField(max_length=30, null=True)
@@ -22,9 +24,13 @@ class Offer(models.Model):
     location = models.CharField(max_length=70, null=True)
     sale_date = models.DateTimeField(null=True)
     sold = models.BooleanField(default=False)
+    thumb_image = models.URLField(max_length=500, null=True)
     images = ArrayField(models.URLField(), null=True)
     current_price = models.DecimalField(decimal_places=2, max_digits=10)
     auction_site = models.CharField(default="copart", max_length=20)
+    loss_type = models.CharField(max_length=30, null=True)
+    buy_now = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

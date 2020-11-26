@@ -58,7 +58,7 @@ export class OfferComponent implements OnInit {
      if (this.mediaObserver.isActive('gt-sm')) {
        return {
         mode: "side",
-        opened: true
+        opened: false
        } as SideNavConfig;
      } 
      return {

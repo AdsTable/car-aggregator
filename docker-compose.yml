@@ -16,6 +16,7 @@ services:
           - static_volume:/code/static
         ports:
             - 8000:8000
+            - 6800:6800
         env_file: 
             - ./backend/.env
         depends_on: 

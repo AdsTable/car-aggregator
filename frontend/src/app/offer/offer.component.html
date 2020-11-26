@@ -25,7 +25,7 @@
           <div class="card" *ngFor="let car of cars">
             <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
               <div fxFlex="30%">
-                <a [routerLink]="['car', car.id]"><img [attr.src]="car.images[0]" alt="Free image"></a>
+                <a [routerLink]="['car', car.id]"><img [attr.src]="car.thumb_image" alt="Free image"></a>
               </div>
               <div fxFlex>
                 <div fxLayout="row wrap" fxLayou.lt-md="column">

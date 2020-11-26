@@ -8,7 +8,7 @@ services:
             - POSTGRES_PASSWORD=postgres
         volumes:
             - ./postgres-data:/var/lib/postgresql/data
-    backend:
+    backend: &backend
         build:
             context: ./backend
             dockerfile: Dockerfile.dev
@@ -20,9 +20,32 @@ services:
             - 8000:8000
         env_file: 
             - ./backend/.env.dev
+        command: python manage.py runserver 0.0.0.0:8000
         depends_on: 
             - db
-        
+            - redis
+
+    scrapyd:
+        <<: *backend
+        ports:
+            - 6800:6800
+        tty: true
+        stdin_open: true
+        command: bash -c "cd scrapers && scrapyd"
+
+    redis: 
+        image: redis:latest
+    
+    celeryworker:
+        <<: *backend
+        ports: []
+        command: celery -A cars worker -l INFO
+
+    celerybeat:
+        <<: *backend
+        ports: []
+        command: celery -A cars beat -l INFO --pidfile= --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
     nginx:
         build:
             dockerfile: Dockerfile.dev

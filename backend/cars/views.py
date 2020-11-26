@@ -71,14 +71,16 @@ def count_available_fields(request):
         'brand': get_available_options_for_field('brand'),
         'fuel': get_available_options_for_field('fuel'),
         'primary_damage': get_available_options_for_field('primary_damage'),
-        'secondary_damage': get_available_options_for_field('secondary_damage'),
         'body_style': get_available_options_for_field('body_style'),
         'transmission': get_available_options_for_field('transmission'),
         'drive': get_available_options_for_field('drive'),
-        'production_year': get_available_options_for_field('production_year')
+        'production_year': get_available_options_for_field('production_year'),
+        'vehicle_type': get_available_options_for_field('vehicle_type'),
+        'location': get_available_options_for_field('location')
     }
 
     return Response(data=data)
+
 
 @api_view(['GET'])
 def available_models_for_brand(request, brand):

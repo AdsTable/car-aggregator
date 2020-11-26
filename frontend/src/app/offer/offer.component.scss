@@ -106,6 +106,7 @@ img {
 }
 
 .price {
+  font-size:24px;
   font-weight: 500;
   color: #1a8631;
 }
@@ -126,4 +127,19 @@ img {
     padding: 20px;
     border-radius: 0px;
   }
+
+  .mat-paginator {
+    .mat-select-value, .mat-option-text {
+      font-size:10px;
+
+    }
+  }
 }
+
+.mat-paginator {
+  background-color: inherit;
+}
+
+
+
+

@@ -38,9 +38,9 @@ export interface Page {
     brand: string[];
     fuel: string[];
     primary_damage: string[];
-    secondary_damage: string[];
     body_style: string[];
     transmission: string[];
     drive: string[];
     production_year: number[];
+    vehicle_type: string[];
   }

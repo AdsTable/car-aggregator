@@ -44,6 +44,10 @@ body {
   }
   
 
+  .mat-paginator-container {
+    flex-wrap: nowrap !important;
+  }
+
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
 //   border-radius: 25px;

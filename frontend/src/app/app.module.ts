@@ -25,6 +25,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatListModule } from '@angular/material/list';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
@@ -69,6 +70,7 @@ registerLocaleData(localeEnUS, 'en');
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatToolbarModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

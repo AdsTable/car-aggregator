@@ -24,6 +24,11 @@ export class OfferFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    for (let field of this.multipleValuesField) {
+      if (this.search[field]) {
+        this.search[field] = this.search[field].split(',');
+      }
+    }
     this.filterForm = this.fb.group({
       brand: [this.search['brand']],
       model: [this.search['model']],

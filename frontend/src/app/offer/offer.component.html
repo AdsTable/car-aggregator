@@ -1,7 +1,7 @@
 
-    <div fxLayout="row" fxLayoutAlign="end">
-      <button mat-raised-button color="accent" (click)="sideNav.opened = !sideNav.opened;">Filtruj</button>
-    </div>
+    <!-- <div fxLayout="row" fxLayoutAlign="end"> -->
+      <!-- <button mat-raised-button color="accent" (click)="sideNav.opened = !sideNav.opened;">Filtruj</button> -->
+    <!-- </div> -->
 
     <mat-sidenav-container fxLayout="row">
       <mat-sidenav fxFlex="grow" class="vehicle-filters" [opened]="sideNav.opened" [mode]="sideNav.mode">
@@ -10,9 +10,19 @@
 
       <mat-sidenav-content fxFlex="grow">
 
-        <mat-paginator #paginatorTop (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <button mat-mini-fab color="accent" (click)="sideNav.opened = !sideNav.opened;">
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <span fxFlex="5%"></span>
+            <mat-paginator [hidePageSize]="hidePageSize" fxFlex #paginatorTop (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
           [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
 
+          </mat-toolbar-row>
+        </mat-toolbar>
+
+        
         <!-- <mat-spinner fxFlex fxFlexAlign="center" *ngIf="loading"></mat-spinner> -->
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 
@@ -72,7 +82,7 @@
 
 
 
-        <mat-paginator #paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
+        <mat-paginator [hidePageSize]="hidePageSize" #paginator (page)="pageChangeEvent($event)" [length]="length" [pageSize]="itemsPerPage"
           [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
         </mat-sidenav-content>
 

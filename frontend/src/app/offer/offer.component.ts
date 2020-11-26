@@ -44,6 +44,8 @@ export class OfferComponent implements OnInit {
     opened: true
   }
 
+  hidePageSize: boolean = false;
+
 
   constructor(
     private carService: CarService,
@@ -53,10 +55,17 @@ export class OfferComponent implements OnInit {
     
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
       this.sideNav = this.getSideNavMode(mediaChange);
+      this.hidePageSize = this.getHidePageSize(mediaChange);
     }) 
    }
 
 
+   getHidePageSize(mediaChange) {
+     if (this.mediaObserver.isActive('gt-sm')){
+       return false;
+     }
+     return true;
+   }
 
    getSideNavMode(mediaChange: MediaChange[]) {
      if (this.mediaObserver.isActive('gt-sm')) {

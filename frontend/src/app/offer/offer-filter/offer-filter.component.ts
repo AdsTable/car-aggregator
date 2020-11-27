@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { CarMap } from 'src/app/models/models';
 import { CarService } from 'src/app/services/car.service';
-import { SearchService } from 'src/app/services/search.service';
+import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessThanMaxProductionValidator, minLessThanMaxMileageValidator} from '../../shared/validators';
+
 
 @Component({
   selector: 'offer-filter',
@@ -13,6 +14,9 @@ import { SearchService } from 'src/app/services/search.service';
 export class OfferFilterComponent implements OnInit {
   @Input() search: {};
   @Output() filter = new EventEmitter();
+
+  readonly matcher = new ShowOnFormInvalidStateMatcher();
+  readonly productionMatcher = new ProductionInvalidStateMatcher();
 
   availableFields: CarMap;
   filterForm: FormGroup;
@@ -33,15 +37,17 @@ export class OfferFilterComponent implements OnInit {
       brand: [this.search['brand']],
       model: [this.search['model']],
       vehicle_type: [],
-      location: [],
       bodyStyle: [this.search['body_style']],
       year_min: [this.search['year_min']],
       year_max: [this.search['year_max']],
-      mileage_min: [this.search['mileage_min']],
+      mileage_min: [this.search['mileage_min'], Validators.min(0)],
       mileage_max: [this.search['mileage_max']],
       fuel: [this.search['fuel']],
       damage: [this.search['damage']],
-      transmission: [this.search['transmission']]
+      transmission: [this.search['transmission']],
+      auction_site: [],
+    }, {
+      validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
     })
 
     this.carService.getAvailableFields().pipe(take(1)).subscribe(data => {
@@ -49,10 +55,6 @@ export class OfferFilterComponent implements OnInit {
     });
   }
 
-
-  // onFilter(): void {
-  //   console.log(this.filterForm.value);
-  // }
 
   onFilter() {
     if (this.filterForm.valid) {

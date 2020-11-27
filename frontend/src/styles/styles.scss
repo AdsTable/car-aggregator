@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri');
-@import url('https://fonts.googleapis.com/css2?family=Kanit');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Russo+One');
 @include mat-core($custom-typography);
 
@@ -30,6 +30,10 @@ body {
     margin: 0 auto;
 }
 
+
+
+
+
 .mat-form-field-appearance-outline .mat-form-field-outline {
     background-color: white;
     border-radius: 5px;
@@ -48,6 +52,10 @@ body {
     flex-wrap: nowrap !important;
   }
 
+  .mat-button-toggle-checked {
+    background-color: mat-color($nga-accent);
+    color: mat-color($nga-accent, default-contrast) !important;
+  }
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
 //   border-radius: 25px;

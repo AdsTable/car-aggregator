@@ -27,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatListModule } from '@angular/material/list';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
@@ -71,6 +72,7 @@ registerLocaleData(localeEnUS, 'en');
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
+    MatButtonToggleModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

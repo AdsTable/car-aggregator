@@ -31,10 +31,10 @@ class CarFilterSet(django_filters.FilterSet):
     bodyStyle = CharInFilter(field_name='body_style', lookup_expr="in")
     year = django_filters.RangeFilter(field_name="production_year")
     mileage = django_filters.RangeFilter(field_name="mileage")
-
+    auction_site = django_filters.CharFilter(field_name='auction_site', lookup_expr="iexact")
     class Meta:
         model = Offer
-        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage']
+        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site']
 
 
 class OfferListView(generics.ListAPIView):
@@ -75,8 +75,7 @@ def count_available_fields(request):
         'transmission': get_available_options_for_field('transmission'),
         'drive': get_available_options_for_field('drive'),
         'production_year': get_available_options_for_field('production_year'),
-        'vehicle_type': get_available_options_for_field('vehicle_type'),
-        'location': get_available_options_for_field('location')
+        'vehicle_type': get_available_options_for_field('vehicle_type')
     }
 
     return Response(data=data)

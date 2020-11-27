@@ -17,6 +17,7 @@ export interface Page {
     primary_damage: string;
     secondary_damage: string;
     estimated_retail_value: number;
+    estimated_repair_cost: number;
     vin: string;
     drive: string;
     body_style: string;
@@ -31,6 +32,9 @@ export interface Page {
     images: string[];
     thumb_image: string;
     current_price: number;
+    auction_site: string;
+    loss_type: string;
+    buy_now: string;
   }
   
   

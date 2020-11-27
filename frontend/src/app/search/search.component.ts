@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ValidationErrors, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarMap } from '../models/models';
 import { map, startWith, take } from "rxjs/operators";
 import { Observable } from 'rxjs';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { CarService } from '../services/car.service';
 import { SearchService } from '../services/search.service';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessThanMaxProductionValidator, minLessThanMaxMileageValidator} from '../shared/validators';
 
 @Component({
   selector: 'search',
@@ -136,37 +136,4 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
 }
 
-export class ShowOnFormInvalidStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective): boolean {
-    return !!((control && control.invalid) || (form && form.hasError('minLessThanMaxMileage')));
-  }
-}
-
-export class ProductionInvalidStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective): boolean {
-    return !!((control && control.invalid) || (form && form.hasError('minLessThanMaxProduction')));
-  }
-}
-
-function minLessThanMaxMileageValidator(group: FormGroup): ValidationErrors | null {
-  const minMileage = group.controls['mileage_min'].value;
-  const maxMileage = group.controls['mileage_max'].value;
-
-  if (minMileage && maxMileage) {
-    return minMileage <= maxMileage ? null : { minLessThanMaxMileage: true };
-  } else {
-    return null;
-  }
-}
-
-function minLessThanMaxProductionValidator(group: FormGroup): ValidationErrors | null {
-  const minYear = group.controls['year_min'].value;
-  const maxYear = group.controls['year_max'].value;
-
-  if (minYear && maxYear) {
-    return minYear <= maxYear ? null : { minLessThanMaxProduction: true };
-  } else {
-    return null;
-  }
-}
 

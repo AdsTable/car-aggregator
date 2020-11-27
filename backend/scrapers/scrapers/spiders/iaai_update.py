@@ -25,6 +25,8 @@ class IaaIUpdateSpider(scrapy.Spider):
 
     def parse(self, response):
         data = response.json()
+        if data.get('ErrorMessage'):
+            return 
 
         car = OfferItem()
         car['offerId'] = int(data.get("SaleInformation").get("SaleInfo").get("StockNumber"))

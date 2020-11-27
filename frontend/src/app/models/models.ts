@@ -34,7 +34,7 @@ export interface Page {
     current_price: number;
     auction_site: string;
     loss_type: string;
-    buy_now: string;
+    buy_now: number;
   }
   
   

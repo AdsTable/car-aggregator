@@ -4,7 +4,7 @@
     <!-- </div> -->
 
     <mat-sidenav-container fxLayout="row">
-      <mat-sidenav  fxFlex="grow" class="vehicle-filters" [opened]="sideNav.opened" [mode]="sideNav.mode">
+      <mat-sidenav  [fixedInViewport]="true" fxFlex="grow" class="vehicle-filters" [opened]="sideNav.opened" [mode]="sideNav.mode">
         <offer-filter *ngIf="searchData" (filter)="onFilter($event)" [search]="searchData"></offer-filter>
       </mat-sidenav>
 

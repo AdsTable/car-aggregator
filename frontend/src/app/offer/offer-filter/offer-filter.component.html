@@ -4,9 +4,9 @@
     <h3 matHeader>Filtruj</h3>
 
     <mat-button-toggle-group fxLayoutAlign="stretch" multiple="false" formControlName="auction_site" value="">
-      <mat-button-toggle fxFlex value="" checked>ALL</mat-button-toggle>
-      <mat-button-toggle fxFlex value="iaai">IAAI</mat-button-toggle>
-      <mat-button-toggle fxFlex value="copart">COPART</mat-button-toggle>
+      <mat-button-toggle (click)="onFilter()" fxFlex value="" checked>ALL</mat-button-toggle>
+      <mat-button-toggle (click)="onFilter()" fxFlex value="iaai">IAAI</mat-button-toggle>
+      <mat-button-toggle (click)="onFilter()" fxFlex value="copart">COPART</mat-button-toggle>
     </mat-button-toggle-group>
 
     <mat-expansion-panel class="mat-elevation-z0">

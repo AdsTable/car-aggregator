@@ -1,111 +1,80 @@
 <form fxLayout="column" fxLayoutGap="5px" class="form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
 
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutAlign="space-between stretch">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutAlign="space-between stretch">
 
-        <mat-form-field appearance="outline" fxFlex class="form__field">
-            <mat-label>Marka</mat-label>
-            
-            <input matInput type="text"  formControlName="brand" [matAutocomplete]="brandAuto">
-            <mat-autocomplete  autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
-                <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
-                    {{brand}}
-                </mat-option>
-            </mat-autocomplete>
-    
-            <mat-error>Musisz wybrać markę z listy!</mat-error>
-    
-        </mat-form-field>
-    
-        <mat-form-field  appearance="outline" fxFlex class="form__field">
-            <mat-label>Model</mat-label>
+    <mat-form-field appearance="outline" fxFlex class="form__field">
+      <mat-label>Marka</mat-label>
 
-            <input matInput type="text"  formControlName="model" [matAutocomplete]="auto">
-            <mat-autocomplete  #auto="matAutocomplete">
-            <mat-option *ngFor="let model of filteredModels | async" [value]="model">
-                {{model}}
-            </mat-option>
-        </mat-autocomplete>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" fxFlex  class="form__field">
-            <mat-label>VIN</mat-label>
+      <input matInput type="text" formControlName="brand" [matAutocomplete]="brandAuto">
+      <mat-autocomplete autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+        <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
+          {{brand}}
+        </mat-option>
+      </mat-autocomplete>
 
-            <input class="input-upper" matInput type="text" formControlName="vin">
-            <mat-error>Nieprawidłowy numer VIN!</mat-error>
-    
-        </mat-form-field>
-    </div>
+      <mat-error>Musisz wybrać markę z listy!</mat-error>
 
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="space-between stretch">
+    </mat-form-field>
 
-            <mat-form-field fxFlex appearance="outline"  class="form__field">
-                <mat-label>Rok prod. od</mat-label>
-                <mat-select formControlName="year_min">
-                    <mat-option *ngFor="let fromYear of availableFields?.production_year" [value]="fromYear">{{fromYear}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <mat-form-field fxFlex appearance="outline" class="form__field">
-                <mat-label>Rok prod. do</mat-label>
-                <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
-                    <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear" value="option">{{toYear}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="searchForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż minimalny</mat-error>
+    <mat-form-field appearance="outline" fxFlex class="form__field">
+      <mat-label>Model</mat-label>
 
-                
-            </mat-form-field>
-           
+      <input matInput type="text" formControlName="model" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let model of filteredModels | async" [value]="model">
+          {{model}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-            <mat-form-field fxFlex appearance="outline" class="form__field">
-                <mat-label>Przebieg od</mat-label>
-                <input matInput type="number" formControlName="mileage_min">
+    <mat-form-field fxFlex appearance="outline" class="form__field">
+        <mat-label>Rok prod. od</mat-label>
+        <mat-select formControlName="year_min">
+          <mat-option *ngFor="let fromYear of availableFields?.production_year.slice().reverse()" [value]="fromYear">{{fromYear}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field fxFlex appearance="outline" class="form__field">
+        <mat-label>Rok prod. do</mat-label>
+        <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
+          <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear"
+            value="option">{{toYear}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="searchForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż
+          minimalny</mat-error>
+      </mat-form-field>
 
-                <mat-error>Nie może byc mniejszy niż 0</mat-error>
-            </mat-form-field>
-    
-            <mat-form-field fxFlex appearance="outline" class="form__field">
-                <mat-label>Przebieg do</mat-label>
-                <input matInput type="number" formControlName="mileage_max" [errorStateMatcher]="matcher">
-                <mat-error *ngIf="searchForm.hasError('minLessThanMaxMileage')">Przebieg maksymalny musi być mniejszy od minimalnego</mat-error>
 
-            </mat-form-field>
-    </div>
+  </div>
 
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px" fxLayoutAlign="space-between stretch">
+  <!-- <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px"
+    fxLayoutAlign="space-between stretch">
 
-        <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Rodzaj paliwa</mat-label>
-            <mat-select formControlName="fuel" multiple>
-                <mat-option *ngFor="let fuel of availableFields?.fuel" [value]="fuel">{{fuel}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <mat-form-field fxFlex appearance="outline" class="form__field">
+      <mat-label>Rok prod. od</mat-label>
+      <mat-select formControlName="year_min">
+        <mat-option *ngFor="let fromYear of availableFields?.production_year" [value]="fromYear">{{fromYear}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Rodzaj uszkodzenia</mat-label>
-            <mat-select formControlName="damage" multiple>
-                <mat-option *ngFor="let damage of availableFields?.primary_damage" [value]="damage">{{damage}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <mat-form-field fxFlex appearance="outline" class="form__field">
+      <mat-label>Rok prod. do</mat-label>
+      <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
+        <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear"
+          value="option">{{toYear}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="searchForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż
+        minimalny</mat-error>
+    </mat-form-field>
+  </div> -->
 
-        <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Skrzynia biegów</mat-label>
-            <mat-select formControlName="transmission">
-                <mat-option *ngFor="let transmission of availableFields?.transmission" [value]="transmission">{{transmission}}</mat-option>
-            </mat-select>
-        </mat-form-field>
 
-        <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Typ nadwozia</mat-label>
-            <mat-select formControlName="bodyStyle" multiple>
-                <mat-option *ngFor="let body of availableFields?.body_style" [value]="body">{{body}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+  <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="space-between center"
+    fxLayoutAlign.lt-md="space-between stretch">
 
-    </div>
-
-    <div  fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="space-between stretch">
-
-            <button mat-raised-button color="accent" [ngClass.gt-sm]="'form__submit'" [disabled]="!searchForm.valid">SZUKAJ</button>
-            <!-- <button mat-button (click)="resetForm()" type="button" color="warn" [ngClass.gt-md]="'form__submit'">RESETUJ</button> -->
-</div>
+    <button mat-raised-button color="accent" [ngClass.gt-sm]="'form__submit'"
+      [disabled]="!searchForm.valid">SZUKAJ</button>
+  </div>
 </form>

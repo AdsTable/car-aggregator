@@ -19,6 +19,6 @@ $nga-foreground: map-get($nga-theme, foreground);
 $custom-typography: mat-typography-config(
     $font-family: 'Kanit, sans-serif',
     $headline: mat-typography-level(28px, 36px, 500, 'Russo One'),
-    $input: mat-typography-level(14px, 1.125, 200, 'Kanit')
+    $input: mat-typography-level(14px, 1.125, 300, 'Kanit')
 
 );

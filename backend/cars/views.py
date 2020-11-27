@@ -43,7 +43,7 @@ class OfferListView(generics.ListAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, OrderingFilter]
     # filter_fields = ['brand', 'model', 'vin']
     filterset_class = CarFilterSet
-    ordering_fields = ['current_price']
+    ordering_fields = ['current_price', 'sale_date', 'mileage', 'production_year']
     ordering = ['sale_date', '-id']
 
 class OfferRetrieveView(generics.RetrieveAPIView):

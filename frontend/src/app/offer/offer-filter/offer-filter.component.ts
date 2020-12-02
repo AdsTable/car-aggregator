@@ -22,9 +22,7 @@ export class OfferFilterComponent implements OnInit {
   filterForm: FormGroup;
   multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
 
-
   constructor(private carService: CarService, private fb: FormBuilder) { 
-
   }
 
   ngOnInit(): void {
@@ -34,6 +32,7 @@ export class OfferFilterComponent implements OnInit {
       }
     }
     this.filterForm = this.fb.group({
+      type: [],
       brand: [this.search['brand']],
       model: [this.search['model']],
       vehicle_type: [],

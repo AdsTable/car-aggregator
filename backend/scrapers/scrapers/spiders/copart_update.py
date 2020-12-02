@@ -18,6 +18,8 @@ class CopartSpider(scrapy.Spider):
         data = response.json()['data']['lotDetails']
 
         car = OfferItem()
+        if data.get('ess') != "Pure Sale":
+            car['sale_date'] = datetime.fromtimestamp(data.get('ad')/1e3) if data.get('ad') else None
         car['offerId'] = data['ln']
         car['sold'] = data['lotSold']
         car['current_price'] = data['hb']

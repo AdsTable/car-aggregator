@@ -128,3 +128,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_TIMEZONE = 'Europe/Warsaw'
+

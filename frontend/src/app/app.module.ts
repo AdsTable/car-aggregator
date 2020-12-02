@@ -8,7 +8,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +28,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatListModule } from '@angular/material/list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatMenuModule} from '@angular/material/menu';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
@@ -58,6 +59,7 @@ registerLocaleData(localeEnUS, 'en');
     MatSliderModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
 
     MatPaginatorModule,
     MatInputModule,
@@ -73,6 +75,7 @@ registerLocaleData(localeEnUS, 'en');
     MatListModule,
     MatToolbarModule,
     MatButtonToggleModule,
+    MatMenuModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

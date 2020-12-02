@@ -44,7 +44,8 @@ class CopartSpider(scrapy.Spider):
             o['engine'] = item.get('egn')
             o['transmission'] = item.get('tmtp', '').upper()
             o['location'] = item.get('syn')
-            o['sale_date'] = datetime.fromtimestamp(item.get('ad')/1e3) if item.get('ad') else None
+            if item.get('ess') != "Pure Sale":
+                o['sale_date'] = datetime.fromtimestamp(item.get('ad')/1e3) if item.get('ad') else None
             o['current_price'] = item.get('hb')
             yield scrapy.Request(f"https://www.copart.com/public/data/lotdetails/solr/lotImages/{o['offerId']}/USA", callback=self.parse_images, cb_kwargs=dict(car=o),
             headers={'Host':'www.copart.com'})

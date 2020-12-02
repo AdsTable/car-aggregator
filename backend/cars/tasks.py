@@ -20,7 +20,6 @@ class Scraper:
     def get_all_jobs(self):
         return self.client.list_jobs(self.project)
 
-scraper = Scraper()
 
 @shared_task
 def test_task():
@@ -28,18 +27,25 @@ def test_task():
 
 @shared_task
 def run_copart_scraper_everyday():
+    print('RUN COPART')
+    scraper = Scraper()
     scraper.schedule_spider('copart')
 
 @shared_task
 def run_iaai_scraper_weekly():
+    scraper = Scraper()
     print('RUN IAAI PER WEEK')
     scraper.schedule_spider('iaai')
 
 @shared_task
 def update_iaai():
+    scraper = Scraper()
+    print('RUN IAAI UPDATE')
     scraper.schedule_spider('iaai_update')
 
 @shared_task 
 def update_copart():
+    scraper = Scraper()
+    print('RUN COPART UPDATE')
     scraper.schedule_spider('copart_update')
 

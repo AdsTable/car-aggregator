@@ -32,7 +32,7 @@ services:
             - 6800:6800
         tty: true
         stdin_open: true
-        command: bash -c "cd scrapers && scrapyd"
+        command: bash -c "cd scrapers && scrapyd --pidfile="
 
     redis: 
         image: redis:latest

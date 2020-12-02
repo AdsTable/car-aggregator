@@ -7,7 +7,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { CarService } from '../services/car.service';
 import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
-import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessThanMaxProductionValidator, minLessThanMaxMileageValidator} from '../shared/validators';
+import {  ProductionInvalidStateMatcher, minLessThanMaxProductionValidator} from '../shared/validators';
 
 @Component({
   selector: 'search',
@@ -18,7 +18,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatAutocompleteTrigger) trigger;
 
-  readonly matcher = new ShowOnFormInvalidStateMatcher();
   readonly productionMatcher = new ProductionInvalidStateMatcher();
 
   availableFields: CarMap;
@@ -32,7 +31,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   searchForm: FormGroup;
 
-  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
 
   constructor(private carService: CarService, 
     private searchService: SearchService, 
@@ -45,14 +43,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
         '^[A-HJ-NPR-Z\\d]{8}[\\dX][A-HJ-NPR-Z\\d]{2}\\d{6}$')],
       year_min: [''],
       year_max: [''],
-      mileage_min: ['', Validators.min(0)],
-      mileage_max: [''],
-      fuel: [''],
-      damage: [''],
-      transmission: [''],
-      bodyStyle: ['']
     }, {
-      validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
+      validator: [minLessThanMaxProductionValidator]
     })
   }
 
@@ -104,11 +96,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
   onSearch() {
     if (this.searchForm.valid) {
 
-      for (let field of this.multipleValuesField) {
-        if (this.searchForm.value[field]) {
-          this.searchForm.value[field] = this.searchForm.value[field].join(',');
-        }
-      }
 
       const filtered = {};
       for (let key in this.searchForm.value) {
@@ -122,12 +109,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/offers'])
     }
 
-  }
-
-  resetForm() {
-    this.searchForm.reset();
-    this.searchForm.controls['model'].disable();
-    this.searchService.resetForm();
   }
 
   ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CarService } from "../services/car.service";
 import { olderThanWeekAgo } from '../shared/core';
@@ -38,6 +38,21 @@ export class OfferComponent implements OnInit {
   totalPages: number;
 
   searchData: {};
+
+  orderBy;
+  orderList = [
+    {icon: 'arrow_drop_down', name: 'Current Price', value: 'current_price'},
+    {icon: 'arrow_drop_up', name: 'Current Price', value: '-current_price'},
+
+    {icon: 'arrow_drop_down', name: 'Data licytacji', value: 'sale_date'},
+    {icon: 'arrow_drop_up', name: 'Data licytacji', value: '-sale_date'},
+
+    {icon: 'arrow_drop_down', name: 'Przebieg', value: 'mileage'},
+    {icon: 'arrow_drop_up', name: 'Przebieg', value: '-mileage'},
+
+    {icon: 'arrow_drop_down', name: 'Rocznik', value: 'production_year'},
+    {icon: 'arrow_drop_up', name: 'Rocznik', value: '-production_year'},
+  ]
 
   sideNav: SideNavConfig = {
     mode: "side",
@@ -82,10 +97,13 @@ export class OfferComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.orderBy = this.orderList[2];
+
     this.searchSubscription = this.searchService.searchSubject.pipe(take(1)).subscribe(res => {
       this.searchData = res;
       this.getOffers(this.carService.baseLink, this.createFilterData());
     });
+    
 
   }
 
@@ -97,6 +115,7 @@ export class OfferComponent implements OnInit {
       params: {
         'page': page+1,
         'size': size,
+        'ordering': this.orderBy.value,
         ...this.searchData
       }
     }
@@ -133,11 +152,17 @@ export class OfferComponent implements OnInit {
 
   onFilter(event) {
     if (this.sideNav.mode === "over") this.sideNav.opened=false;
-    console.log(event);
     this.currentPage = 0;
     this.searchData = event;
     this.paginator.firstPage();
     this.getOffers(this.carService.baseLink, this.createFilterData())
+  }
+
+  onOrderChange() {
+    this.currentPage = 0;
+    this.paginator.firstPage();
+    this.getOffers(this.carService.baseLink, this.createFilterData());
+
   }
 
   ngOnDestroy() {

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { map, startWith, take } from 'rxjs/operators';
 import { CarMap } from 'src/app/models/models';
 import { CarService } from 'src/app/services/car.service';
 import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessThanMaxProductionValidator, minLessThanMaxMileageValidator} from '../../shared/validators';
@@ -11,12 +13,21 @@ import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessTh
   templateUrl: './offer-filter.component.html',
   styleUrls: ['./offer-filter.component.scss']
 })
-export class OfferFilterComponent implements OnInit {
+export class OfferFilterComponent implements OnInit, AfterViewInit {
   @Input() search: {};
   @Output() filter = new EventEmitter();
 
+  @ViewChild(MatAutocompleteTrigger) trigger;
+
+
   readonly matcher = new ShowOnFormInvalidStateMatcher();
   readonly productionMatcher = new ProductionInvalidStateMatcher();
+
+  brands: string[];
+  filteredBrands: Observable<string[]>;
+
+  models: string[];
+  filteredModels: Observable<string[]>;
 
   availableFields: CarMap;
   filterForm: FormGroup;
@@ -32,10 +43,9 @@ export class OfferFilterComponent implements OnInit {
       }
     }
     this.filterForm = this.fb.group({
-      type: [],
       brand: [this.search['brand']],
-      model: [this.search['model']],
-      vehicle_type: [],
+      model: [{value: this.search['model'], disabled: true}],
+      vehicle_type: [''],
       bodyStyle: [this.search['body_style']],
       year_min: [this.search['year_min']],
       year_max: [this.search['year_max']],
@@ -45,13 +55,66 @@ export class OfferFilterComponent implements OnInit {
       damage: [this.search['damage']],
       transmission: [this.search['transmission']],
       auction_site: [],
+      hide_closed: [false],
     }, {
       validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
     })
 
     this.carService.getAvailableFields().pipe(take(1)).subscribe(data => {
       this.availableFields = data;
+      this.brands = data.brand;
+      this.filteredBrands = this.filterForm.get('brand').valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value, this.brands))
+      );
     });
+  }
+
+  ngAfterViewInit() {
+    this.trigger.panelClosingActions
+      .subscribe(e => {
+        if (!(e && e.source)) {
+          this.filterForm.controls['brand'].setValue(null);
+          this.filterForm.controls['model'].setValue(null);
+          this.filterForm.controls['model'].disable();
+          this.trigger.closePanel();
+        }
+      });
+  }
+
+  typeSelected(e: string) {
+    this.filterForm.controls['brand'].setValue(null);
+    this.filterForm.controls['model'].setValue(null);
+
+    this.carService.getAvailableBrands(e)
+      .pipe(take(1))
+      .subscribe(data => {
+        this.brands = data;
+        this.filteredBrands = this.filterForm.get('brand').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value, this.brands))
+        )
+      })
+  }
+
+  brandSelected(e: MatAutocompleteSelectedEvent) {
+    this.filterForm.controls['model'].setValue(null);
+    this.filterForm.controls['model'].enable();
+
+    this.carService.getAvailableModels(e.option.value)
+      .pipe(take(1))
+      .subscribe(data => {
+        this.models = data;
+        this.filteredModels = this.filterForm.get('model').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value, this.models))
+        )
+      })
+  }
+
+  private _filter(value: string, collection: string[]): string[] {
+    const filterValue = value?.toUpperCase();
+    return collection?.filter(item => item.toUpperCase().startsWith(filterValue));
   }
 
 

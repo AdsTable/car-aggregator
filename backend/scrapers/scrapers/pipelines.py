@@ -13,6 +13,12 @@ from cars.models import Offer
 class ScrapersPipeline:
     def process_item(self, item, spider):
         if spider.name in ['copart_update', 'iaai_update']:
+            if item['iaaiId']:
+                offer = Offer.objects.get(iaaiId=item['iaaiId'])
+                setattr(offer, 'closed', item['closed'])
+                offer.save()
+                return
+                
             try:
                 offer = Offer.objects.get(offerId=item['offerId'])
                 for k,v in item.items():

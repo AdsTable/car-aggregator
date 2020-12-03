@@ -29,6 +29,7 @@ import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatListModule } from '@angular/material/list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
@@ -76,6 +77,7 @@ registerLocaleData(localeEnUS, 'en');
     MatToolbarModule,
     MatButtonToggleModule,
     MatMenuModule,
+    MatCheckboxModule,
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

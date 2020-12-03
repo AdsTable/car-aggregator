@@ -35,4 +35,8 @@ export class CarService {
     return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/map/${brand}`);
   }
 
+  getAvailableBrands(vType: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/map/type/${vType}`);
+  }
+
 }

@@ -59,7 +59,7 @@
         <h3>SZCZEGÓŁY SPRZEDAŻY</h3>
         <p>Numer oferty <span>#{{car.offerId}}</span></p>
         <p>Miejsce sprzedaży <span>{{car.location}}</span></p>
-        <p>Data licytacji <span>{{car.sale_date | date:'medium'}}</span></p>
+        <p>Data licytacji <span *ngIf="car.sale_date">{{car.sale_date | date:'medium'}}</span><span *ngIf="!car.sale_date">FUTURE</span></p>
 
       </div>
     </div>

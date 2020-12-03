@@ -20,13 +20,17 @@ class IaaIUpdateSpider(scrapy.Spider):
         "DOWNLOAD_DELAY": 0.0,
     }
 
-    start_urls = [f"https://mapp.iaai.com/acserviceswebapi/api/GetVehicleDetailsV2/?itemId={x}&userId=&culturecode=en&devicetype=android" for x in list(Offer.objects.filter(sold=False, sale_date__gte=timezone.now()-timedelta(weeks=1)).values_list('iaaiId', flat=True))]
+    start_urls = [f"https://mapp.iaai.com/acserviceswebapi/api/GetVehicleDetailsV2/?itemId={x}&userId=&culturecode=en&devicetype=android" for x in list(Offer.objects.filter(closed=False, auction_site="iaai", sold=False, sale_date__gte=timezone.now()-timedelta(weeks=1)).values_list('iaaiId', flat=True))]
 
 
     def parse(self, response):
         data = response.json()
         if data.get('ErrorMessage'):
-            return 
+            car = OfferItem()
+            iaaiId = response.url[response.url.index('itemId'):]
+            car['iaaiId'] = int(iaaiId[iaaiId.index('=')+1:iaaiId.index('&')])
+            car['closed'] = True
+            yield car
 
         car = OfferItem()
         car['offerId'] = int(data.get("SaleInformation").get("SaleInfo").get("StockNumber"))

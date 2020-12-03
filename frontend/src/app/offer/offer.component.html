@@ -61,22 +61,23 @@
               <div fxLayout="row wrap" fxLayou.lt-md="column">
                 <div fxFlex class="description main">
                   <h3 class="title"><a [routerLink]="['/offer', car.id]">{{car.brand}} {{car.model}}</a></h3>
-                  <p>Numer aukcji
+                  <p><mat-icon>article</mat-icon>Numer aukcji
                     <span class="right">{{car.offerId}}</span>
                   </p>
-                  <p>Przebieg
+                  <p><mat-icon>speed</mat-icon>Przebieg 
                     <span class="right">{{car.mileage}} mi</span>
                   </p>
 
-                  <p>Rok produkcji
-                    <span class="right vin">{{car.production_year}}</span>
+                  <p><mat-icon>drive_eta</mat-icon>Rok produkcji
+                    <span class="right">{{car.production_year}}</span>
                   </p>
 
                 </div>
                 <div fxFlex class="description additional">
                   <div fxLayout="column" fxLayoutAlign="end end">
-                    <p>{{car.sale_date | date:'medium':'pl'}}</p>
-                    <h4>{{car.location}}</h4>
+                    <p *ngIf="car.sale_date"><mat-icon>insert_invitation</mat-icon>{{car.sale_date | date:'medium':'pl'}}</p>
+                    <p *ngIf="!car.sale_date"><mat-icon>insert_invitation</mat-icon>Future</p>
+                    <h4><mat-icon>place</mat-icon>{{car.location}}</h4>
                     <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
                     <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"
                       [routerLink]="['/offer', car.id]">Licytuj</button>

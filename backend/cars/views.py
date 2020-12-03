@@ -12,6 +12,8 @@ import django_filters
 from django_filters.fields import CSVWidget, MultipleChoiceField
 from django_filters import rest_framework as filters
 from cars.tasks import Scraper
+from django.utils import timezone
+from datetime import timedelta
 
 scraper = Scraper()
 
@@ -32,9 +34,23 @@ class CarFilterSet(django_filters.FilterSet):
     year = django_filters.RangeFilter(field_name="production_year")
     mileage = django_filters.RangeFilter(field_name="mileage")
     auction_site = django_filters.CharFilter(field_name='auction_site', lookup_expr="iexact")
+    vehicle_type = django_filters.CharFilter(field_name='vehicle_type', lookup_expr="iexact")
+    hide_closed = django_filters.BooleanFilter(field_name="closed", method="filter_closed")
+
     class Meta:
         model = Offer
-        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site']
+        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'hide_closed']
+    
+    def filter_closed(self, queryset, name, value):
+        ''' hide closed 
+            if true: hide closed offer
+            if false: show all offers
+        '''
+        if value: 
+            return queryset.filter(
+                Q(closed=False) & (Q(sale_date__gte=timezone.now()) | Q(sale_date__isnull=True))
+            )
+        return queryset
 
 
 class OfferListView(generics.ListAPIView):
@@ -65,6 +81,10 @@ def get_models_for_brand(brand):
     models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct('model'))
     return list(filter(None, models))
 
+def get_brand_for_type(vehicle_type):
+    models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct('brand'))
+    return list(filter(None, models))
+
 @api_view(['GET'])
 def count_available_fields(request):
     data = {
@@ -86,12 +106,20 @@ def available_models_for_brand(request, brand):
     return Response(get_models_for_brand(brand))
 
 @api_view(['GET'])
+def available_brands_for_type(request, vehicle_type):
+    return Response(get_brand_for_type(vehicle_type))
+
+@api_view(['GET'])
 def get_jobs(request):
     return Response(scraper.get_all_jobs())
 
 @api_view(['GET'])
 def get_job(request, id):
     return Response(scraper.get_status_of_job(id))
+
+@api_view(['GET'])
+def run_spider(request, spider):
+    return Response(scraper.schedule_spider(spider))
 
 
 

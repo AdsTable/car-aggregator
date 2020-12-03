@@ -11,7 +11,7 @@ from datetime import timedelta
 
 class CopartSpider(scrapy.Spider):
     name = "copart_update"
-    start_urls = [f"https://www.copart.com/public/data/lotdetails/solr/{x}" for x in list(Offer.objects.filter(sold=False, sale_date__gte=timezone.now()-timedelta(weeks=1)).values_list('offerId', flat=True))]
+    start_urls = [f"https://www.copart.com/public/data/lotdetails/solr/{x}" for x in list(Offer.objects.filter(closed=False, auction_site="copart", sold=False, sale_date__gte=timezone.now()-timedelta(weeks=1)).values_list('offerId', flat=True))]
 
 
     def parse(self, response):

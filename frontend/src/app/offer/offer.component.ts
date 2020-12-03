@@ -41,17 +41,17 @@ export class OfferComponent implements OnInit {
 
   orderBy;
   orderList = [
-    {icon: 'arrow_drop_down', name: 'Current Price', value: 'current_price'},
-    {icon: 'arrow_drop_up', name: 'Current Price', value: '-current_price'},
+    {icon: 'arrow_drop_down', name: 'Current Price', value: '-current_price'},
+    {icon: 'arrow_drop_up', name: 'Current Price', value: 'current_price'},
 
-    {icon: 'arrow_drop_down', name: 'Data licytacji', value: 'sale_date'},
-    {icon: 'arrow_drop_up', name: 'Data licytacji', value: '-sale_date'},
+    {icon: 'arrow_drop_down', name: 'Data licytacji', value: '-sale_date'},
+    {icon: 'arrow_drop_up', name: 'Data licytacji', value: 'sale_date'},
 
-    {icon: 'arrow_drop_down', name: 'Przebieg', value: 'mileage'},
-    {icon: 'arrow_drop_up', name: 'Przebieg', value: '-mileage'},
+    {icon: 'arrow_drop_down', name: 'Przebieg', value: '-mileage'},
+    {icon: 'arrow_drop_up', name: 'Przebieg', value: 'mileage'},
 
-    {icon: 'arrow_drop_down', name: 'Rocznik', value: 'production_year'},
-    {icon: 'arrow_drop_up', name: 'Rocznik', value: '-production_year'},
+    {icon: 'arrow_drop_down', name: 'Rocznik', value: '-production_year'},
+    {icon: 'arrow_drop_up', name: 'Rocznik', value: 'production_year'},
   ]
 
   sideNav: SideNavConfig = {

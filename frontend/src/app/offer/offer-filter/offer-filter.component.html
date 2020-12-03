@@ -11,6 +11,56 @@
 
     <mat-expansion-panel class="mat-elevation-z0">
       <mat-expansion-panel-header>
+        <mat-panel-title>Marka & Model</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      
+
+      <mat-nav-list>
+
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Typ Pojazdu</mat-label>
+            <mat-select formControlName="vehicle_type" (selectionChange)="typeSelected($event.value)">
+              <mat-option *ngFor="let type of availableFields?.vehicle_type" [value]="type">{{type}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Marka</mat-label>
+
+            <input matInput type="text" formControlName="brand" [matAutocomplete]="brandAuto">
+            <mat-autocomplete autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+              <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
+                {{brand}}
+              </mat-option>
+            </mat-autocomplete>
+      
+            <mat-error>Musisz wybrać markę z listy!</mat-error>
+          </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-label>Model</mat-label>
+
+            <input matInput type="text" formControlName="model" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let model of filteredModels | async" [value]="model">
+                {{model}}
+              </mat-option>
+            </mat-autocomplete>
+
+          </mat-form-field>
+        </mat-list-item>
+
+      </mat-nav-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
         <mat-panel-title>Rok produkcji</mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -19,7 +69,7 @@
           <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Rok prod. od</mat-label>
             <mat-select formControlName="year_min">
-              <mat-option *ngFor="let fromYear of availableFields?.production_year" [value]="fromYear">{{fromYear}}
+              <mat-option *ngFor="let fromYear of availableFields?.production_year.slice().reverse()" [value]="fromYear">{{fromYear}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -120,6 +170,14 @@
 
       </mat-nav-list>
     </mat-expansion-panel>
+
+    <mat-nav-list>
+      <mat-list-item>
+        <mat-checkbox formControlName="hide_closed" fxFlex appearance="outline" class="form__field" (change)="onFilter()">
+          Ukryj zakończone licytacje
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-nav-list>
 
 
 

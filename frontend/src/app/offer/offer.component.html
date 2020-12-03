@@ -11,14 +11,13 @@
   <mat-sidenav-content fxFlex="grow">
 
     <mat-toolbar>
-      <mat-toolbar-row>
+      <mat-toolbar-row fxLayoutGap="10px">
         <button mat-mini-fab color="accent" (click)="sideNav.opened = !sideNav.opened;">
           <mat-icon>filter_list</mat-icon>
         </button>
 
-        <div fxFlex="5%"></div>
 
-        <mat-form-field fxFlex appearance="fill" class="sort__field">
+        <mat-form-field  appearance="fill" class="sort__field">
               <mat-label>Sortuj</mat-label>
               <mat-select [(ngModel)]="orderBy" (selectionChange)="onOrderChange()">
                 <mat-select-trigger>
@@ -33,7 +32,7 @@
 
             </mat-form-field>
 
-        <mat-paginator [hidePageSize]="hidePageSize" fxFlex #paginatorTop (page)="pageChangeEvent($event)"
+        <mat-paginator fxHide.lt-sm="true" [hidePageSize]="hidePageSize" fxFlex #paginatorTop (page)="pageChangeEvent($event)"
           [length]="length" [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
 
       </mat-toolbar-row>
@@ -99,7 +98,7 @@
 
 
 
-    <mat-paginator [hidePageSize]="hidePageSize" #paginator (page)="pageChangeEvent($event)" [length]="length"
+    <mat-paginator  #paginator (page)="pageChangeEvent($event)" [length]="length"
       [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
   </mat-sidenav-content>
 

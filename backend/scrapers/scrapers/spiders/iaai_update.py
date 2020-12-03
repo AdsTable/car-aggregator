@@ -28,6 +28,7 @@ class IaaIUpdateSpider(scrapy.Spider):
         if data.get('ErrorMessage'):
             car = OfferItem()
             iaaiId = response.url[response.url.index('itemId'):]
+            car['auction_site'] = 'iaai'
             car['iaaiId'] = int(iaaiId[iaaiId.index('=')+1:iaaiId.index('&')])
             car['closed'] = True
             yield car
@@ -48,5 +49,6 @@ class IaaIUpdateSpider(scrapy.Spider):
             sold = bool(data.get('PrebidInformation').get('TimedAuctionSoldTime'))
         
         car['sold'] = sold
+        car['auction_site'] = 'iaai'
         yield car
 

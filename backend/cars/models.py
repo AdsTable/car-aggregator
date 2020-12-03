@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Offer(models.Model):
-    offerId = models.IntegerField(unique=True)
+    offerId = models.IntegerField()
     iaaiId = models.IntegerField(unique=True, null=True)
     brand = models.CharField(max_length=30)
     model = models.CharField(max_length=50)

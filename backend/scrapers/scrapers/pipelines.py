@@ -18,9 +18,9 @@ class ScrapersPipeline:
                 setattr(offer, 'closed', item['closed'])
                 offer.save()
                 return
-                
+
             try:
-                offer = Offer.objects.get(offerId=item['offerId'])
+                offer = Offer.objects.get(offerId=item['offerId'], auction_site=item['auction_site'])
                 for k,v in item.items():
                     setattr(offer, k, v)
                 offer.save()  

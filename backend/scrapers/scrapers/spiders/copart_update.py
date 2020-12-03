@@ -23,6 +23,7 @@ class CopartSpider(scrapy.Spider):
         car['offerId'] = data['ln']
         car['sold'] = data['lotSold']
         car['current_price'] = data['hb']
+        car['auction_site'] = 'copart'
         yield car
    
 

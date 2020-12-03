@@ -13,7 +13,7 @@ from cars.models import Offer
 class ScrapersPipeline:
     def process_item(self, item, spider):
         if spider.name in ['copart_update', 'iaai_update']:
-            if item['iaaiId']:
+            if item.get('iaaiId'):
                 offer = Offer.objects.get(iaaiId=item['iaaiId'])
                 setattr(offer, 'closed', item['closed'])
                 offer.save()
@@ -23,7 +23,7 @@ class ScrapersPipeline:
                 offer = Offer.objects.get(offerId=item['offerId'], auction_site=item['auction_site'])
                 for k,v in item.items():
                     setattr(offer, k, v)
-                offer.save()  
+                offer.save()    
             except Offer.DoesNotExist:
                 print("[UPDATE] Offer doesn't exist")
 

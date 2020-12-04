@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CarService } from "../services/car.service";
-import { olderThanWeekAgo } from '../shared/core';
+import { olderThanDayAgo } from '../shared/core';
 import { Car } from '../models/models';
 import { SearchService } from '../services/search.service';
 import { Subscription } from 'rxjs';
@@ -135,7 +134,8 @@ export class OfferComponent implements OnInit {
   }
 
   isOld(date: Date) {
-    if(olderThanWeekAgo(date)) return true;
+    if(!date) return false;
+    if(olderThanDayAgo(date)) return true;
     return false;
 
   }

@@ -6,6 +6,7 @@ from rest_framework.filters import OrderingFilter
 from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from django.db.models import F, Q
 from functools import reduce
 import django_filters
@@ -14,6 +15,8 @@ from django_filters import rest_framework as filters
 from cars.tasks import Scraper
 from django.utils import timezone
 from datetime import timedelta
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 scraper = Scraper()
 
@@ -85,20 +88,25 @@ def get_brand_for_type(vehicle_type):
     models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct('brand'))
     return list(filter(None, models))
 
-@api_view(['GET'])
-def count_available_fields(request):
-    data = {
-        'brand': get_available_options_for_field('brand'),
-        'fuel': get_available_options_for_field('fuel'),
-        'primary_damage': get_available_options_for_field('primary_damage'),
-        'body_style': get_available_options_for_field('body_style'),
-        'transmission': get_available_options_for_field('transmission'),
-        'drive': get_available_options_for_field('drive'),
-        'production_year': get_available_options_for_field('production_year'),
-        'vehicle_type': get_available_options_for_field('vehicle_type')
-    }
+class MappingData(APIView):
 
-    return Response(data=data)
+
+    @method_decorator(cache_page(60*60*24*7))
+    def get(self, request):
+        """
+        Return dict of available values for selected fields
+        """
+        data = {
+            'brand': get_available_options_for_field('brand'),
+            'fuel': get_available_options_for_field('fuel'),
+            'primary_damage': get_available_options_for_field('primary_damage'),
+            'body_style': get_available_options_for_field('body_style'),
+            'transmission': get_available_options_for_field('transmission'),
+            'drive': get_available_options_for_field('drive'),
+            'production_year': get_available_options_for_field('production_year'),
+            'vehicle_type': get_available_options_for_field('vehicle_type')
+        }
+        return Response(data=data)
 
 
 @api_view(['GET'])

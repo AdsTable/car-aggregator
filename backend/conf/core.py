@@ -3,32 +3,24 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 from rest_framework.response import Response
 from collections import OrderedDict
 from math import ceil
+from django.core.paginator import Paginator
+from django.utils.functional import cached_property
 
 DEFAULT_PAGE = 0
 DEFAULT_PAGE_SIZE = 20
 
+class FasterDjangoPaginator(Paginator):
+    @cached_property
+    def count(self):
+        return self.object_list.values('id').count()
+
+
 class MyPagination(PageNumberPagination):
+    django_paginator_class = FasterDjangoPaginator
     page = DEFAULT_PAGE
     page_size = DEFAULT_PAGE_SIZE
     page_size_query_param = 'size'
     
-
-    def get_next_link(self):
-        if not self.page.has_next():
-            return None
-        url = self.request.get_full_path()
-        page_number = self.page.next_page_number()
-        return replace_query_param(url, self.page_query_param, page_number)
-
-    def get_previous_link(self):
-        if not self.page.has_previous():
-            return None
-        url = self.request.get_full_path()
-        page_number = self.page.previous_page_number()
-        if page_number == 1:
-            return remove_query_param(url, self.page_query_param)
-        return replace_query_param(url, self.page_query_param, page_number)
-
     def get_paginated_response(self, data):
         return Response({
             'page': int(self.request.GET.get('page', DEFAULT_PAGE)),

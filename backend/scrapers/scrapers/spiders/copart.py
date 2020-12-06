@@ -54,6 +54,7 @@ class CopartSpider(scrapy.Spider):
 
         if content:
             self.page+=1
+            print(f'[DEBUG][PAGE] = {self.page}')
             yield FormRequest(self.link, formdata=formdata(self.page), callback=self.parse)
 
     def parse_images(self, response, car):

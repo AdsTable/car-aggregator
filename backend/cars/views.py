@@ -63,7 +63,6 @@ class OfferListView(generics.ListAPIView):
     # filter_fields = ['brand', 'model', 'vin']
     filterset_class = CarFilterSet
     ordering_fields = ['current_price', 'sale_date', 'mileage', 'production_year']
-    ordering = ['sale_date', '-id']
 
 class OfferRetrieveView(generics.RetrieveAPIView):
     queryset = Offer.objects.all()

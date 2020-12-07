@@ -14,8 +14,6 @@ services:
             dockerfile: Dockerfile
         volumes:
           - static_volume:/code/static
-        expose:
-            - "8000"
         env_file: 
             - ./backend/.env
         command: gunicorn --bind 0.0.0.0:8000 conf.wsgi
@@ -25,8 +23,6 @@ services:
     scrapyd:
         <<: *backend
         tty: true
-        expose:
-            - "6800"
         stdin_open: true
         command: bash -c "cd scrapers && scrapyd --pidfile="
 
@@ -43,8 +39,6 @@ services:
         ports: []
         command: celery -A cars beat -l INFO --pidfile= --scheduler django_celery_beat.schedulers:DatabaseScheduler
 
-        
-            
     frontend:
         build:
             context: ./frontend
@@ -52,7 +46,7 @@ services:
         volumes: 
             - static_volume:/usr/share/nginx/static
         ports:
-            - 80:80
+            - "80:80"
         depends_on:
             - backend
             - scrapyd

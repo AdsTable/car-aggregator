@@ -17,6 +17,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from conf.core import CustomOrdering
 
 scraper = Scraper()
 
@@ -59,7 +60,7 @@ class CarFilterSet(django_filters.FilterSet):
 class OfferListView(generics.ListAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, OrderingFilter]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, CustomOrdering]
     # filter_fields = ['brand', 'model', 'vin']
     filterset_class = CarFilterSet
     ordering_fields = ['current_price', 'sale_date', 'mileage', 'production_year']

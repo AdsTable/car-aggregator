@@ -3,20 +3,12 @@ from rest_framework.pagination import PageNumberPagination, LimitOffsetPaginatio
 from rest_framework.response import Response
 from collections import OrderedDict
 from math import ceil
-from django.core.paginator import Paginator
-from django.utils.functional import cached_property
 
 DEFAULT_PAGE = 0
 DEFAULT_PAGE_SIZE = 20
 
-class FasterDjangoPaginator(Paginator):
-    @cached_property
-    def count(self):
-        return self.object_list.values('id').count()
-
 
 class MyPagination(PageNumberPagination):
-    django_paginator_class = FasterDjangoPaginator
     page = DEFAULT_PAGE
     page_size = DEFAULT_PAGE_SIZE
     page_size_query_param = 'size'

@@ -14,8 +14,8 @@ services:
             dockerfile: Dockerfile
         volumes:
           - static_volume:/code/static
-        ports:
-            - 8000:8000
+        expose:
+            - "8000"
         env_file: 
             - ./backend/.env
         command: gunicorn --bind 0.0.0.0:8000 conf.wsgi
@@ -24,9 +24,9 @@ services:
 
     scrapyd:
         <<: *backend
-        ports:
-            - 6800:6800
         tty: true
+        expose:
+            - "6800"
         stdin_open: true
         command: bash -c "cd scrapers && scrapyd --pidfile="
 
@@ -55,6 +55,7 @@ services:
             - 80:80
         depends_on:
             - backend
+            - scrapyd
 
 
 

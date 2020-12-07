@@ -1,5 +1,5 @@
 from django.urls import path
-from cars.views import MappingData ,OfferListView, OfferRetrieveView, run_spider,count_available_fields,available_models_for_brand, available_brands_for_type, get_jobs, get_job
+from cars.views import MappingData ,OfferListView, OfferRetrieveView, run_spider,available_models_for_brand, available_brands_for_type, get_jobs, get_job
 
 urlpatterns = [
     path('list', OfferListView.as_view(), name='offer-list'),

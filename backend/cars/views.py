@@ -39,18 +39,19 @@ class CarFilterSet(django_filters.FilterSet):
     mileage = django_filters.RangeFilter(field_name="mileage")
     auction_site = django_filters.CharFilter(field_name='auction_site', lookup_expr="iexact")
     vehicle_type = django_filters.CharFilter(field_name='vehicle_type', lookup_expr="iexact")
-    hide_closed = django_filters.BooleanFilter(field_name="closed", method="filter_closed")
+    include_closed = django_filters.BooleanFilter(field_name="closed", method="filter_closed")
 
     class Meta:
         model = Offer
-        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'hide_closed']
-    
+        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'include_closed']
+
+
     def filter_closed(self, queryset, name, value):
-        ''' hide closed 
-            if true: hide closed offer
-            if false: show all offers
+        ''' include closed 
+            if true: show all offers
+            if false: hide closed offers
         '''
-        if value: 
+        if not value: 
             return queryset.filter(
                 Q(closed=False) & (Q(sale_date__gte=timezone.now()) | Q(sale_date__isnull=True))
             )

@@ -33,6 +33,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
   filterForm: FormGroup;
   multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
 
+
   keyMap = {
     'brand': 'Marka',
     'model': 'Model',
@@ -70,7 +71,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
       damage: [this.search['damage']],
       transmission: [this.search['transmission']],
       auction_site: [],
-      hide_closed: [false],
+      include_closed: [this.search['include_closed']],
     }, {
       validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
     })
@@ -95,6 +96,14 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
           this.trigger.closePanel();
         }
       });
+  }
+
+  splitDescription(value) {
+    if (typeof(value) === "string"){
+      return value.split(',');
+    }
+
+    return [value];
   }
 
   typeSelected(e: string) {
@@ -133,6 +142,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
   }
 
 
+
   onFilter() {
     console.log(this.filterForm.value);
     if (this.filterForm.valid) {
@@ -145,12 +155,11 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
       const filtered = {};
       for (let key in this.filterForm.value) {
-        if (this.filterForm.value[key]) {
+        if (this.filterForm.value[key] || this.filterForm.value[key]===false) {
           filtered[key] = this.filterForm.value[key];
         }
-      }
 
- 
+      }
       this.filter.emit(filtered);
     }
   }
@@ -158,7 +167,6 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
   deleteFilter(key: string) {
     console.log(key);
     this.filterForm.controls[key].setValue(null);
-
     this.onFilter();
   }
 }

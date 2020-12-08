@@ -43,6 +43,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
         '^[A-HJ-NPR-Z\\d]{8}[\\dX][A-HJ-NPR-Z\\d]{2}\\d{6}$')],
       year_min: [''],
       year_max: [''],
+      include_closed: [false]
     }, {
       validator: [minLessThanMaxProductionValidator]
     })
@@ -99,12 +100,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
       const filtered = {};
       for (let key in this.searchForm.value) {
-        if (this.searchForm.value[key]) {
+        if (this.searchForm.value[key] || this.searchForm.value[key]===false) {
           filtered[key] = this.searchForm.value[key];
         }
+
       }
 
- 
+      
+
       this.searchService.sendSearchQuery(filtered);
       this.router.navigate(['/offers'])
     }

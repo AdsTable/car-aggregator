@@ -47,7 +47,6 @@ class CustomOrdering(OrderingFilter):
     def filter_queryset(self, request, queryset, view):
 
         ordering = self.get_ordering(request, queryset, view)
-        print(f"[ORDERING]={ordering}")
         if ordering:
             ordering.append('-id')
 

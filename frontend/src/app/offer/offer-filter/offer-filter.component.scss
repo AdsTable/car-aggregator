@@ -35,6 +35,16 @@
     h1, h2, h3, h4, p, a {
       padding: 0px 20px;
     }
+
+
+    .mat-list-item h1, h2, h3, h4, p {
+      margin-bottom: 0px;
+    }
+
+    .mat-list-item p {
+      font-size: 12px;
+    }
+
     .mat-expansion-panel {
       background-color: #eee;
       border-radius: 0px !important;

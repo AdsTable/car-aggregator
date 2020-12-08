@@ -59,6 +59,15 @@ body {
 
   }
 
+  .mat-chip {
+    font-size:10px;
+  }
+
+  .mat-list .mat-list-item .mat-line{
+    word-wrap: break-word;
+   white-space: pre-wrap;
+}
+
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
 //   border-radius: 25px;

@@ -1,7 +1,23 @@
 <form fxLayout="column" fxLayoutGap="5px" class="form" [formGroup]="filterForm" (ngSubmit)="onFilter()">
 
-  <mat-accordion class="app-nav-accordion">
-    <h3 matHeader>Filtruj</h3>
+  <mat-accordion class="app-nav-accordion my-filter">
+    <h3 matHeader>Aktualne filtry</h3>
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+      <ng-container *ngFor="let filter of filterForm.value | keyvalue">
+        <mat-list-item (click)="deleteFilter(filter.key)" *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed'">
+          <p>{{keyMap[filter.key]}}: <mat-chip>{{filter.value}}</mat-chip></p>
+          <mat-icon matListIcon>close</mat-icon>
+        </mat-list-item>
+      </ng-container>
+    </mat-nav-list>
+
+    <!-- <ng-container *ngFor="let filter of filterForm.value | keyvalue">
+      
+      <p *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed'">{{keyMap[filter.key]}}: <mat-chip>{{filter.value}}</mat-chip></p>
+    </ng-container> -->
+
 
     <mat-button-toggle-group fxLayoutAlign="stretch" multiple="false" formControlName="auction_site" value="">
       <mat-button-toggle (click)="onFilter()" fxFlex value="" checked>ALL</mat-button-toggle>
@@ -183,6 +199,6 @@
 
 
   </mat-accordion>
-  <button mat-raised-button color="accent" [disabled]="!filterForm.valid">FILTRUJ</button>
+  <button class="submit__button" mat-raised-button color="accent" [disabled]="!filterForm.valid">FILTRUJ</button>
 
 </form>

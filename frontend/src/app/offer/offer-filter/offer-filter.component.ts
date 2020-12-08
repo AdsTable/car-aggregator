@@ -33,6 +33,21 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
   filterForm: FormGroup;
   multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
 
+  keyMap = {
+    'brand': 'Marka',
+    'model': 'Model',
+    'vehicle_type': 'Typ pojazdu',
+    'bodyStyle': 'Rodzaj nadwozia',
+    'year_min': 'Rok prod. od',
+    'year_max': 'Rok prod. do',
+    'mileage_min': 'Przebieg od',
+    'mileage_max': 'Przebieg do',
+    'fuel': 'Rodzaj paliwa',
+    'damage': 'Uszkodzenie',
+    'transmission': 'Skrzynia biegów',
+
+  }
+
   constructor(private carService: CarService, private fb: FormBuilder) { 
   }
 
@@ -119,6 +134,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
 
   onFilter() {
+    console.log(this.filterForm.value);
     if (this.filterForm.valid) {
 
       for (let field of this.multipleValuesField) {
@@ -137,6 +153,12 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
  
       this.filter.emit(filtered);
     }
+  }
 
+  deleteFilter(key: string) {
+    console.log(key);
+    this.filterForm.controls[key].setValue(null);
+
+    this.onFilter();
   }
 }

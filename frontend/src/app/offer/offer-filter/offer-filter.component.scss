@@ -31,21 +31,31 @@
 }
 
 .app-nav-accordion {
+
+    h1, h2, h3, h4, p, a {
+      padding: 0px 20px;
+    }
     .mat-expansion-panel {
+      background-color: #eee;
       border-radius: 0px !important;
       box-shadow: none !important;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
+      border-bottom: 1px solid rgb(206, 204, 204);
 
       &.mat-expansion-panel-spacing {
-        margin: 20px 0px;
+        margin: 0px 0px;
       }
   
       .mat-expansion-panel-body {
         padding: 0px;
+        background-color: rgb(241, 240, 240) !important;
+
       }
+      
   
       .mat-expansion-panel-header {
         height: 40px;
+        font-weight: 500;
         // padding: 0px 24px 0px 16px;
       }
   
@@ -59,5 +69,13 @@
 
   mat-button-toggle-group {
    flex: 0 0 100%;
+   margin: 10px 16px;
    margin-bottom:20px;
+  }
+
+
+
+  .submit__button {
+    margin: 0px 16px;
+    padding: 10px 0px;
   }

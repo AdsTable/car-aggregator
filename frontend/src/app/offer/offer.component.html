@@ -8,7 +8,7 @@
     <offer-filter *ngIf="searchData" (filter)="onFilter($event)" [search]="searchData"></offer-filter>
   </mat-sidenav>
 
-  <mat-sidenav-content fxFlex="grow">
+  <mat-sidenav-content [ngClass.gt-sm]="'big-sidenav'" fxFlex="grow">
 
     <mat-toolbar>
       <mat-toolbar-row fxLayoutGap="10px">

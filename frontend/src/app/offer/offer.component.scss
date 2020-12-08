@@ -119,9 +119,13 @@ img {
 .mat-sidenav {
   width: 300px;
   background-color: #eee;
-  padding: 20px;
-  border-radius: 10px;
   border: 1px solid  rgb(221, 221, 221);
+}
+
+
+
+.big-sidenav {
+  padding: 0px 30px;
 }
 
 @media(max-width:450px) {

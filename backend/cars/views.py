@@ -77,19 +77,18 @@ def get_models_for_brand_with_count(brand):
 
 
 def get_available_options_for_field(field):
-    options = list(Offer.objects.values_list(field, flat=True).distinct(field))
+    options = list(Offer.objects.values_list(field, flat=True).distinct().order_by(field))
     return list(filter(None, options))
 
 def get_models_for_brand(brand):
-    models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct('model'))
+    models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct().order_by('model'))
     return list(filter(None, models))
 
 def get_brand_for_type(vehicle_type):
-    models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct('brand'))
+    models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct().order_by('brand'))
     return list(filter(None, models))
 
 class MappingData(APIView):
-
 
     @method_decorator(cache_page(60*60*24*7))
     def get(self, request):

@@ -52,6 +52,13 @@ body {
     background-color: mat-color($nga-accent);
     color: mat-color($nga-accent, default-contrast) !important;
   }
+
+  .my-filter .mat-expansion-panel-body {
+    padding: 10px 5px;
+    background-color: rgb(247, 247, 247);
+
+  }
+
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
 //   border-radius: 25px;

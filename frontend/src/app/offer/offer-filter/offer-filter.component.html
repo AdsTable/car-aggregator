@@ -1,37 +1,85 @@
 <form fxLayout="column" fxLayoutGap="5px" class="form" [formGroup]="filterForm" (ngSubmit)="onFilter()">
 
-  <mat-accordion class="app-nav-accordion my-filter">
+  <mat-accordion fxLayout="column" class="app-nav-accordion my-filter">
     <h3 matHeader>Aktualne filtry</h3>
     <mat-divider></mat-divider>
+    <!-- CURRENT  FILTERS  -->
+    <mat-list class="filter-list" fxFlex>
+      <ng-container *ngFor="let filter of usedFilters | keyvalue">
+        <mat-list-item class="used-filters"
+          *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed' && filter.key!='include_closed'">
+          <div matLine>
+            <h4>{{keyMap[filter.key]}}: <span>{{filter.value}}</span></h4>
+          </div>
 
-    <mat-list>
-      <ng-container  *ngFor="let filter of filterForm.value | keyvalue">
-        <mat-list-item *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed' && filter.key!='include_closed'">
-          <h4 matLine>{{keyMap[filter.key]}}</h4>
-          <p matLine>{{filter.value}}</p>
           <mat-icon matListIcon (click)="deleteFilter(filter.key)">close</mat-icon>
         </mat-list-item>
       </ng-container>
     </mat-list>
 
-    <!-- <ng-container *ngFor="let filter of filterForm.value | keyvalue">
-      
-      <p *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed'">{{keyMap[filter.key]}}: <mat-chip>{{filter.value}}</mat-chip></p>
-    </ng-container> -->
 
-
+    <!-- SWITCH AUCTION SITE -->
     <mat-button-toggle-group fxLayoutAlign="stretch" multiple="false" formControlName="auction_site" value="">
       <mat-button-toggle (click)="onFilter()" fxFlex value="" checked>ALL</mat-button-toggle>
       <mat-button-toggle (click)="onFilter()" fxFlex value="iaai">IAAI</mat-button-toggle>
       <mat-button-toggle (click)="onFilter()" fxFlex value="copart">COPART</mat-button-toggle>
     </mat-button-toggle-group>
 
+    <!-- PRODUCTION YEAR INLINE -->
+    <mat-list fxFlex class="form_inline">
+      <mat-list-item>
+        <h4 matLine>Rok produkcji</h4>
+        <div matLine>
+          <mat-form-field fxFlex="42%" appearance="outline">
+            <mat-select formControlName="year_min">
+              <mat-option *ngFor="let fromYear of availableFields?.production_year.slice().reverse()"
+                [value]="fromYear">{{fromYear}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxFlex="16%" class="separator"><span>do</span></div>
+
+          <mat-form-field fxFlex="42%" appearance="outline">
+            <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
+              <mat-option *ngFor="let fromYear of availableFields?.production_year.slice().reverse()"
+                [value]="fromYear">{{fromYear}}</mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="filterForm.hasError('minLessThanMaxProduction')">&lt; Minimum</mat-error>
+
+          </mat-form-field>
+        </div>
+
+      </mat-list-item>
+    </mat-list>
+
+    <!-- MILEAGE INLINE -->
+    <mat-list fxFlex class="form_inline">
+      <mat-list-item>
+        <h4 matLine>Przebieg</h4>
+        <div matLine>
+          <mat-form-field fxFlex="42%" appearance="outline" class="form__field">
+            <input matInput type="number" formControlName="mileage_min">
+            <mat-error>&lt; 0</mat-error>
+          </mat-form-field>
+          <div fxFlex="16%" class="separator"><span>do</span></div>
+
+          <mat-form-field fxFlex="42%" appearance="outline" class="form__field">
+            <input matInput type="number" formControlName="mileage_max" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="filterForm.hasError('minLessThanMaxMileage')">&lt; Minimum</mat-error>
+
+          </mat-form-field>
+        </div>
+
+      </mat-list-item>
+    </mat-list>
+
+    <!-- ## EXPANSION PANEL ## -->
+    <!-- VEHICLE TYPE -->
     <mat-expansion-panel class="mat-elevation-z0">
       <mat-expansion-panel-header>
-        <mat-panel-title>Marka & Model</mat-panel-title>
+        <mat-panel-title>Typ pojazdu</mat-panel-title>
       </mat-expansion-panel-header>
-
-      
 
       <mat-list>
         <mat-list-item>
@@ -42,25 +90,42 @@
             </mat-select>
           </mat-form-field>
         </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
 
+    <!-- BRAND -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Marka</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
         <mat-list-item>
           <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Marka</mat-label>
 
             <input matInput type="text" formControlName="brand" [matAutocomplete]="brandAuto">
-            <mat-autocomplete autoActiveFirstOption #brandAuto="matAutocomplete" (optionSelected)="brandSelected($event)">
+            <mat-autocomplete autoActiveFirstOption #brandAuto="matAutocomplete"
+              (optionSelected)="brandSelected($event)">
               <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
                 {{brand}}
               </mat-option>
             </mat-autocomplete>
-      
+
             <mat-error>Musisz wybrać markę z listy!</mat-error>
           </mat-form-field>
         </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
 
+    <!-- MODEL -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Model</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
         <mat-list-item>
           <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Model</mat-label>
 
             <input matInput type="text" formControlName="model" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
@@ -71,110 +136,16 @@
 
           </mat-form-field>
         </mat-list-item>
-
       </mat-list>
     </mat-expansion-panel>
 
+    <!-- BODY STYLE -->
     <mat-expansion-panel class="mat-elevation-z0">
       <mat-expansion-panel-header>
-        <mat-panel-title>Rok produkcji</mat-panel-title>
+        <mat-panel-title>Styl nadwozia</mat-panel-title>
       </mat-expansion-panel-header>
 
       <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Rok prod. od</mat-label>
-            <mat-select formControlName="year_min">
-              <mat-option *ngFor="let fromYear of availableFields?.production_year.slice().reverse()" [value]="fromYear">{{fromYear}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Rok prod. do</mat-label>
-            <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
-              <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear"
-                value="option">{{toYear}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="filterForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż minimalny</mat-error>
-
-          </mat-form-field>
-        </mat-list-item>
-
-      </mat-list>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel class="mat-elevation-z0">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Przebieg</mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Od</mat-label>
-            <input matInput type="number" formControlName="mileage_min">
-            <mat-error>Nie może byc mniejszy niż 0</mat-error>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Do</mat-label>
-            <input matInput type="number" formControlName="mileage_max" [errorStateMatcher]="matcher">
-            <mat-error *ngIf="filterForm.hasError('minLessThanMaxMileage')">Przebieg maksymalny musi być mniejszy od minimalnego</mat-error>
-
-          </mat-form-field>
-        </mat-list-item>
-
-      </mat-list>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel class="mat-elevation-z0">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Paliwo & Skrzynia biegów</mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Paliwo</mat-label>
-            <mat-select formControlName="fuel" multiple>
-              <mat-option *ngFor="let fuel of availableFields?.fuel" [value]="fuel">{{fuel}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Skrzynia biegów</mat-label>
-            <mat-select formControlName="transmission">
-              <mat-option *ngFor="let transmission of availableFields?.transmission" [value]="transmission">
-                {{transmission}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel class="mat-elevation-z0">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Uszkodzenie & Nadwozie</mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Rodzaj uszkodzenia</mat-label>
-            <mat-select formControlName="damage" multiple>
-              <mat-option *ngFor="let damage of availableFields?.primary_damage" [value]="damage">{{damage}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-
         <mat-list-item>
           <mat-form-field fxFlex appearance="outline" class="form__field">
             <mat-label>Typ nadwozia</mat-label>
@@ -183,13 +154,77 @@
             </mat-select>
           </mat-form-field>
         </mat-list-item>
-
       </mat-list>
     </mat-expansion-panel>
 
+    <!-- DRIVE TRAIN -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Napęd</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-select formControlName="drive" multiple>
+              <mat-option *ngFor="let drive of availableFields?.drive" [value]="drive">{{drive}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+
+    <!-- DRIVE TRAIN -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Skrzynia biegów</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-select formControlName="transmission" multiple>
+              <mat-option *ngFor="let t of availableFields?.transmission" [value]="t">{{t}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+
+    <!-- FUEL -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Paliwo</mat-panel-title>
+      </mat-expansion-panel-header>
+
+            <mat-selection-list formControlName="fuel">
+              <mat-list-option *ngFor="let t of availableFields?.fuel" [value]="t">{{t}}</mat-list-option>
+            </mat-selection-list>
+    </mat-expansion-panel>
+
+    <!-- DAMAGE -->
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Uszkodzenie</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field fxFlex appearance="outline" class="form__field">
+            <mat-select formControlName="damage" multiple>
+              <mat-option *ngFor="let damage of availableFields?.primary_damage" [value]="damage">{{damage}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+
+  
     <mat-list>
       <mat-list-item>
-        <mat-checkbox formControlName="include_closed" fxFlex appearance="outline" class="form__field" (change)="onFilter()">
+        <mat-checkbox formControlName="include_closed" fxFlex appearance="outline" class="form__field"
+          (change)="onFilter()">
           Dołącz sprzedane
         </mat-checkbox>
       </mat-list-item>

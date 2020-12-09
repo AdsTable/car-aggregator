@@ -41,6 +41,8 @@
       margin-bottom: 0px;
     }
 
+
+
     .mat-list-item p {
       font-size: 12px;
     }
@@ -88,4 +90,53 @@
   .submit__button {
     margin: 0px 16px;
     padding: 10px 0px;
+  }
+
+  .form_inline {
+    vertical-align: middle;
+    text-align: center;
+
+    h4 {
+      text-align: left;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0px;
+    }
+
+    .separator {
+      padding-top:8px;
+    }
+
+    span {
+      vertical-align:middle;
+      font-size: 13px;
+      font-weight: 400;
+    }
+  }
+
+  .used-filters {
+    span {
+      font-size:12px;
+      font-weight:300;
+    }
+
+    .mat-icon {
+      font-size: 12px;
+      width:12px;
+      height:12px;
+    }
+
+    h1, h2, h3, h4, p, a {
+      padding: 0px;
+    }
+  }
+
+  .mat-selection-list {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .mat-list-option {
+    font-size: 10px;
   }

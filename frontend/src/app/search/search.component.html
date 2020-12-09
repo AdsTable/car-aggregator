@@ -48,27 +48,7 @@
 
   </div>
 
-  <!-- <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px"
-    fxLayoutAlign="space-between stretch">
 
-    <mat-form-field fxFlex appearance="outline" class="form__field">
-      <mat-label>Rok prod. od</mat-label>
-      <mat-select formControlName="year_min">
-        <mat-option *ngFor="let fromYear of availableFields?.production_year" [value]="fromYear">{{fromYear}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field fxFlex appearance="outline" class="form__field">
-      <mat-label>Rok prod. do</mat-label>
-      <mat-select formControlName="year_max" [errorStateMatcher]="productionMatcher">
-        <mat-option *ngFor="let toYear of availableFields?.production_year.slice().reverse()" [value]="toYear"
-          value="option">{{toYear}}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="searchForm.hasError('minLessThanMaxProduction')">Maksymalny rok produkcji musi być mniejszy niż
-        minimalny</mat-error>
-    </mat-form-field>
-  </div> -->
 
 
   <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="space-between center"

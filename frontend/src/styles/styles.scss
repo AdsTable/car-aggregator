@@ -53,20 +53,33 @@ body {
     color: mat-color($nga-accent, default-contrast) !important;
   }
 
-  .my-filter .mat-expansion-panel-body {
-    padding: 10px 5px;
-    background-color: rgb(247, 247, 247);
+  .my-filter {
+    .mat-expansion-panel-body {
+      padding: 10px 5px;
+      background-color: rgb(247, 247, 247);
+    }
 
+    .mat-list-option {
+      height:35px !important;
+    }
+  
   }
+
+
 
   .mat-chip {
     font-size:10px;
   }
 
-  .mat-list .mat-list-item .mat-line{
-    word-wrap: break-word;
-   white-space: pre-wrap;
-}
+  .filter-list .mat-list-item {
+    height: 30px !important;
+  }
+
+//   .mat-list .mat-list-item .mat-line{
+//     word-wrap: break-word;
+//    white-space: pre-wrap;
+// }
+
 
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
 // .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {

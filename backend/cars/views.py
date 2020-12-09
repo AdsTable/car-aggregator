@@ -19,6 +19,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from conf.core import CustomOrdering
 
+
 scraper = Scraper()
 
 
@@ -40,10 +41,12 @@ class CarFilterSet(django_filters.FilterSet):
     auction_site = django_filters.CharFilter(field_name='auction_site', lookup_expr="iexact")
     vehicle_type = django_filters.CharFilter(field_name='vehicle_type', lookup_expr="iexact")
     include_closed = django_filters.BooleanFilter(field_name="closed", method="filter_closed")
+    drive = CharInFilter(field_name="drive", lookup_expr="in")
+    # location = CharInFilter(field_name="location", lookup_expr="in")
 
     class Meta:
         model = Offer
-        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'include_closed']
+        fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'include_closed', 'drive']
 
 
     def filter_closed(self, queryset, name, value):
@@ -104,7 +107,7 @@ class MappingData(APIView):
             'transmission': get_available_options_for_field('transmission'),
             'drive': get_available_options_for_field('drive'),
             'production_year': get_available_options_for_field('production_year'),
-            'vehicle_type': get_available_options_for_field('vehicle_type')
+            'vehicle_type': get_available_options_for_field('vehicle_type'),
         }
         return Response(data=data)
 

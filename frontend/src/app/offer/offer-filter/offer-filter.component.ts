@@ -31,7 +31,9 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
   availableFields: CarMap;
   filterForm: FormGroup;
-  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle']
+  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle', 'drive']
+
+  usedFilters;
 
 
   keyMap = {
@@ -46,6 +48,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     'fuel': 'Rodzaj paliwa',
     'damage': 'Uszkodzenie',
     'transmission': 'Skrzynia biegów',
+    'drive': 'Napęd'
 
   }
 
@@ -60,7 +63,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     }
     this.filterForm = this.fb.group({
       brand: [this.search['brand']],
-      model: [{value: this.search['model'], disabled: true}],
+      model: [{value: this.search['model'], disabled: this.search['model'] ? false : true}],
       vehicle_type: [''],
       bodyStyle: [this.search['body_style']],
       year_min: [this.search['year_min']],
@@ -70,11 +73,19 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
       fuel: [this.search['fuel']],
       damage: [this.search['damage']],
       transmission: [this.search['transmission']],
+      drive: [this.search['drive']],
       auction_site: [],
       include_closed: [this.search['include_closed']],
     }, {
       validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
     })
+
+    this.usedFilters = {
+      'brand': this.search['brand'],
+      'model': this.search['model'],
+      'year_min': this.search['year_min'],
+      'year_max': this.search['year_max']
+    }
 
     this.carService.getAvailableFields().pipe(take(1)).subscribe(data => {
       this.availableFields = data;
@@ -144,8 +155,12 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
 
   onFilter() {
-    console.log(this.filterForm.value);
     if (this.filterForm.valid) {
+
+      this.usedFilters = this.filterForm.value;
+      if (this.filterForm.get('model').value) {
+        this.filterForm.value['model'] = this.filterForm.get('model').value;
+      }
 
       for (let field of this.multipleValuesField) {
         if (this.filterForm.value[field]) {
@@ -158,6 +173,8 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
         if (this.filterForm.value[key] || this.filterForm.value[key]===false) {
           filtered[key] = this.filterForm.value[key];
         }
+
+
 
       }
       this.filter.emit(filtered);

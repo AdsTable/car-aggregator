@@ -83,6 +83,7 @@
                     <button *ngIf="car.sold" mat-stroked-button color="primary">Sprzedane</button>
                     <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button
                       color="warn">Niesprzedane</button>
+                    <a class="dialog_button" [routerLink]="" (click)="openDialog(car)">Zapytaj o ten pojazd</a>
                   </div>
 
 

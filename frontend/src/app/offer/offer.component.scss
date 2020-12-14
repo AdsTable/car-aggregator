@@ -39,6 +39,10 @@
 .additional {
   text-align: right;
   padding-right:20px;
+  p {
+    color: #424242;
+
+  }
 }
 
 
@@ -155,4 +159,8 @@ img {
 
 .mat-icon {
   vertical-align: middle;
+}
+
+.dialog_button {
+  margin: 10px 0px;
 }

@@ -7,6 +7,8 @@ import { SearchService } from '../services/search.service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { OfferBidComponent } from './offer-details/offer-bid/offer-bid.component';
 
 
 interface SideNavConfig {
@@ -32,7 +34,7 @@ export class OfferComponent implements OnInit {
   cars: Car[];
 
   length: number;
-  itemsPerPage: number = 20;
+  itemsPerPage: number = 10;
   currentPage: number = 0;
   totalPages: number;
 
@@ -64,7 +66,8 @@ export class OfferComponent implements OnInit {
   constructor(
     private carService: CarService,
     private searchService: SearchService,
-    private mediaObserver: MediaObserver
+    private mediaObserver: MediaObserver,
+    private dialog: MatDialog
   ) {
     
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
@@ -104,6 +107,17 @@ export class OfferComponent implements OnInit {
     });
     
 
+  }
+
+  openDialog(event: Car) {
+    const dialogConfig = new MatDialogConfig();
+
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = event;
+    dialogConfig.width = "500px"
+
+    this.dialog.open(OfferBidComponent, dialogConfig);
   }
 
   createFilterData(

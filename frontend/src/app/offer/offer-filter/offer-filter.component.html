@@ -104,6 +104,7 @@
           <mat-form-field fxFlex appearance="outline" class="form__field">
 
             <input matInput type="text" formControlName="brand" [matAutocomplete]="brandAuto">
+            <mat-icon matSuffix>arrow_drop_down</mat-icon>
             <mat-autocomplete autoActiveFirstOption #brandAuto="matAutocomplete"
               (optionSelected)="brandSelected($event)">
               <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
@@ -128,6 +129,7 @@
           <mat-form-field fxFlex appearance="outline" class="form__field">
 
             <input matInput type="text" formControlName="model" [matAutocomplete]="auto">
+            <mat-icon matSuffix>arrow_drop_down</mat-icon>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let model of filteredModels | async" [value]="model">
                 {{model}}

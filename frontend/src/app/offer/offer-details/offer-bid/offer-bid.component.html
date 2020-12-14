@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Formularz kontaktowy</h2>
+
+<mat-dialog-content class="mat-typography" fxLayout="column" [formGroup]="carForm">
+
+    <h4>{{car.brand}} {{car.model}}</h4>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Imię i nazwisko</mat-label>
+        <input matInput formControlName="fullname">
+        <mat-error>*Wymagane</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="carForm.get('email').hasError('required')">*Wymagane</mat-error>
+        <mat-error *ngIf="carForm.get('email').hasError('email')">Nieprawidłowy email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Wiadomość</mat-label>
+        <textarea rows="5" matInput formControlName="message"></textarea>
+        <mat-error>Wpisz minimum 10 znaków</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phoneNumber">
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" fxLayout="row" fxLayoutGap="10px">
+    <button mat-raised-button (click)="close()">Anuluj</button>
+    <button mat-raised-button color="primary" [disabled]="!carForm.valid" (click)="save()">Wyślij</button> 
+</mat-dialog-actions>

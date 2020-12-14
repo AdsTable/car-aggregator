@@ -30,7 +30,7 @@ import { MatListModule } from '@angular/material/list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
@@ -38,6 +38,7 @@ import { ReversePipe } from './shared/reverse.pipe';
 import { OfferComponent } from './offer/offer.component';
 import { OfferDetailsComponent } from './offer/offer-details/offer-details.component';
 import { OfferFilterComponent } from './offer/offer-filter/offer-filter.component';
+import { OfferBidComponent } from './offer/offer-details/offer-bid/offer-bid.component';
 
 
 registerLocaleData(localePl, 'pl');
@@ -53,6 +54,7 @@ registerLocaleData(localeEnUS, 'en');
     OfferComponent,
     OfferDetailsComponent,
     OfferFilterComponent,
+    OfferBidComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,11 +81,14 @@ registerLocaleData(localeEnUS, 'en');
     MatButtonToggleModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatChipsModule,
+    MatDialogModule,
     
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),
+  ],
+  entryComponents: [
+    OfferBidComponent
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},

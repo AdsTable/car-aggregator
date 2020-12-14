@@ -1,68 +1,66 @@
-<div *ngIf="car$ | async as car">
+<div [ngClass.gt-md]="'detail_container'">
+  <div *ngIf="car">
 
-  <div fxLayout="row">
-    <div fxFlex>
-      <h2 class="title">{{car.brand}} {{ car.model}}</h2>
-    </div>
-  </div>
-
-
-  <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="30px">
-    <div fxFlex="50%" >
-      <mat-carousel class="carousel" timings="250ms ease-in" [autoplay]="true" interval="5000" color="primary"
-        proportion="70" maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false" [hideIndicators]="true"
-        orientation="ltr">
-        <mat-carousel-slide #matCarouselSlide *ngFor="let image of car.images; let i = index" [hideOverlay]="true"
-          [image]="image">
-        </mat-carousel-slide>
-      </mat-carousel>
-    </div>
-
-    <div fxLayout="column" fxFlex fxLayoutGap="20px">
-      <div class="description">
-        <h3>SZCZEGÓŁY AUKCJI</h3>
-
-        <p *ngIf="car.estimated_retail_value">Szacunkowa wartość
-          <span>{{ car.estimated_retail_value | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</span></p>
-        <p *ngIf="car.estimated_repair_cost">Szacunkowe koszty naprawy
-          <span>{{ car.estimated_repair_cost | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</span></p>
-        <p>Przebieg <span>{{car.mileage | number}} mi</span></p>
-        <p>Główne uszkodzenie <span>{{car.primary_damage}}</span></p>
-        <p *ngIf="car.loss_type">Przyczyna uszkodzenia <span>{{car.loss_type}}</span></p>
-        <p>VIN <span>{{car.vin}}</span></p>
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="15px">
+      <div fxFlex="50%" class="vehicle_carousel">
+        <mat-carousel class="carousel" timings="250ms ease-in" [autoplay]="true" interval="5000" color="primary"
+          proportion="70" maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false" [hideIndicators]="true"
+          orientation="ltr">
+          <mat-carousel-slide #matCarouselSlide *ngFor="let image of car.images; let i = index" [hideOverlay]="true"
+            [image]="image">
+          </mat-carousel-slide>
+        </mat-carousel>
       </div>
 
-      <div class="description">
-        <h3>SZCZEGÓŁY POJAZDU</h3>
-        <p>Nadwozie <span>{{car.body_style}}</span></p>
-        <p>Rok produkcji <span>{{car.production_year}}</span></p>
-        <p>Silnik <span>{{ car.engine }}</span></p>
-        <p>Napęd <span>{{car.drive}}</span></p>
-        <p>Paliwo <span>{{car.fuel}}</span></p>
-        <p>Skrzynia biegów <span>{{car.transmission}}</span></p>
-        <p *ngIf="car.color">Kolor <span>{{car.color}}</span></p>
-      </div>
-    </div>
 
-    <div fxLayout="column" fxFlex fxLayoutGap="20px">
-      <div class="bid-info">
-        <h3>LICYTACJA</h3>
-        <p>AKTUALNA CENA LICYTACJI</p>
-        <p class="price">{{ car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</p>
-        <div *ngIf="car.buy_now">
-          <p>KUP TERAZ</p>
-          <p class="price">{{ car.buy_now | currency : 'USD' : 'symbol-narrow' : '1.0-0'  }}</p>
+      <div fxLayout="column" class="vehicle_info" fxFlex>
+        <h2>{{car.brand}} {{ car.model}}</h2>
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px">
+          <div class="vehicle_data" fxLayout="column" fxFlex="60%">
+            <h3>DANE AUKCJI</h3>
+            <p>Marka<span>{{car.brand}}</span></p>
+            <p>Model<span>{{car.model}}</span></p>
+            <p>Rok produkcji<span>{{car.production_year}}</span></p>
+            <p>Przebieg<span>{{car.mileage | number}} mi</span></p>
+            <p>Rodzaj uszkodzenia<span>{{car.primary_damage}}</span></p>
+            <p>VIN<span>{{car.vin}}</span></p>
+            <p>Napęd<span>{{car.drive}}</span></p>
+            <p>Rodzaj nadwozia<span>{{car.body_style}}</span></p>
+            <p>Rodzaj paliwa<span>{{car.fuel}}</span></p>
+            <p>Silnik<span>{{car.engine}}</span></p>
+            <p>Skrzynia biegów<span>{{car.transmission}}</span></p>
+            <p>Kolor<span>{{car.color}}</span></p>
+          </div>
+
+          <div class="vehicle_saleinfo" fxLayout="column" fxFlex="40%" fxLayoutAlign="space-between stretch">
+            <h3>AKTUALNA CENA</h3>
+
+            <p class="price">Aktualna cena<span> $ {{ car.current_price | number: '1.0-0'
+                }}</span></p>
+            <p *ngIf="car.buy_now" class="price">Cena "Kup teraz"<span>{{ car.buy_now | currency : 'USD' :
+                'symbol-narrow' : '1.0-0'
+                }}</span></p>
+
+            <mat-divider></mat-divider>
+            <h3>SZCZEGÓŁY SPRZEDAŻY</h3>
+            <p>Miejsce komisu<span>{{car.location}}</span></p>
+            <p *ngIf="car.sale_date">Data licytacji<span>{{car.sale_date | date:'medium'}}</span></p>
+            <p *ngIf="!car.sale_date">Data licytacji<span>FUTURE</span></p>
+
+            <button class="bid_button" *ngIf="!car.sold" mat-raised-button color="primary" (click)="openDialog()">Licytuj</button>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="description">
-        <h3>SZCZEGÓŁY SPRZEDAŻY</h3>
-        <p>Numer oferty <span>#{{car.offerId}}</span></p>
-        <p>Miejsce sprzedaży <span>{{car.location}}</span></p>
-        <p>Data licytacji <span *ngIf="car.sale_date">{{car.sale_date | date:'medium'}}</span><span *ngIf="!car.sale_date">FUTURE</span></p>
+    <div fxLayout="row">
+      <fieldset fxFlex>
+        <legend>KALKULATOR IMPORTU</legend>
+      </fieldset>
+    </div>
 
-      </div>
+    <div class="similiar_cars" fxLayout="row">
+      <h3 fxFlex><span>PODOBNE AUKCJE</span></h3>
     </div>
   </div>
-
 </div>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import {  Subscription } from 'rxjs';
 import { Car } from 'src/app/models/models';
 import { CarService } from 'src/app/services/car.service';
 import { olderThanWeekAgo } from 'src/app/shared/core';
+import { OfferBidComponent } from './offer-bid/offer-bid.component';
 
 
 @Component({
@@ -13,11 +15,12 @@ import { olderThanWeekAgo } from 'src/app/shared/core';
 })
 export class OfferDetailsComponent implements OnInit {
 
-  carId: number;
+  private carSubscription: Subscription;
+  private carId: number;
   private sub: any;
-  car$: Observable<Car>;
+  car: Car;
 
-  constructor(private route: ActivatedRoute, private carService: CarService) { 
+  constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) { 
   }
 
   ngOnInit(): void {
@@ -25,7 +28,11 @@ export class OfferDetailsComponent implements OnInit {
       this.carId = +params['id'];
     });
 
-    this.car$ = this.carService.getCarById(this.carId);
+    this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
+      this.car = item;
+    });
+
+
   }
 
   isOld(date: Date) {
@@ -34,8 +41,20 @@ export class OfferDetailsComponent implements OnInit {
 
   }
 
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this.car;
+    dialogConfig.width = "500px"
+
+    this.dialog.open(OfferBidComponent, dialogConfig);
+  }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    this.carSubscription.unsubscribe();
   }
 
 }

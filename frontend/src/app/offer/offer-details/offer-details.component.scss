@@ -1,61 +1,39 @@
-.title {
-    color: #30316e;
+.detail_container {
+  margin-top: 40px;
+  padding: 0px 20px;
+}
+
+
+  
+  
+  
+  h2  {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .vehicle_data {
+    margin-top: 24px;
+  }
+
+
+
+  .vehicle_carousel {
     margin-bottom: 20px;
-    border-bottom: 1px solid #30316e;
-  
-    span {
-      float: right;
-      font-size: 14px;
-      font-weight: 300;
-    }
   }
-  
-  .bid-info {
-    background-color: rgb(240, 239, 239);
-    border: 1px solid rgb(216, 216, 216);
-    h3 {
-      color: white;
-      background-color:#073a6d;;
-      padding: 10px;
-      margin-bottom:0px;
-    }
 
-    p {
-      padding:10px;
-      text-align: center;
-      font-size:16px;
-      margin-bottom: 0px;
-      font-weight: 200;
-    }
-
-    .price {
-      font-size:20px;
-      font-weight: 400;
-      color: rgb(27, 207, 81);
-      border: 1px solid rgb(218, 217, 217);
-      background-color: white;
-      padding:20px;
-    }
-    
-  }
-  
-  .description {
-    border: 1px solid rgb(216, 216, 216);
-  
-    h3 {
-      color: white;
-      background-color:#073a6d;;
-      padding: 10px;
-      margin-bottom:0px;
-    }
-
+  .vehicle_info {
+    padding: 0px 18px;
     p {
       color: #636363;
-      padding: 10px;
-      // padding-bottom: 10px;
-      border-bottom: 1px solid #c2c2c2;
       font-weight: 300;
-      margin-bottom: 0px;
+      font-size: 14px;
     }
 
   
@@ -65,28 +43,61 @@
       font-weight: 400;
     }
   }
-  
-  .prices {
-    text-align: center;
-    margin-bottom: 40px;
-  
-    p {
-      border-bottom: none;
-      color: #d6d6d6;
+
+  .vehicle_saleinfo {
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    padding: 24px;
+
+    p span {
+      color: #313131;
+      display:block;
+      float: none;
+      font-weight: 500;
     }
-  
-    .price {
-      padding:20px;
-      // background-color: #ffffff;
-      background-color: #19125c;
-      color: #f1f1f1;
-      border-radius: 0 0 15px 15px;
-      box-shadow: 3px 4px 5px 0px rgba(204, 204, 204, 0.38);
-    }
-  
-    .current {
-      background-color: #720d1b;
+
+      .price span {
+        color: #93C327;
+        font-size:28px;
+        font-weight: 500;
+        margin-top:8px;
+      }
+  }
+
+  .bid_button {
+    margin: 24px 0px;
+  }
+
+  mat-divider {
+    margin: 10px 0px;
+  }
+
+  fieldset {
+    min-height: 200px;
+    border-radius: 20px;
+    border: 1px solid #c9c9c9;
+
+    legend {
+      margin-left: 20px;
+      padding: 20px;
+      font-size: 20px;
+      font-weight: 500;
     }
   }
-  
-  
+
+
+  .similiar_cars {
+    margin-top: 50px;
+    h3 {
+      font-size:20px;
+      text-align: center;
+      border-bottom: 1px solid #c9c9c9;
+      line-height:0.1em;
+      margin: 10px 0 20px;
+    }
+
+    h3 span {
+      background: #fff;
+      padding: 0 40px;
+    }
+  }

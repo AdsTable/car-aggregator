@@ -34,8 +34,11 @@ services:
         stdin_open: true
         command: bash -c "cd scrapers && scrapyd --pidfile="
 
-    redis: 
+    redis:
+        restart: always
         image: redis:latest
+        expose:
+            - "6379"
     
     celeryworker:
         <<: *backend
@@ -63,7 +66,7 @@ services:
             dockerfile: Dockerfile.dev
             context: ./nginx
         ports: 
-            - 8080:80
+            - 80:80
         volumes:
             - static_vol:/var/www/static/
         depends_on: 

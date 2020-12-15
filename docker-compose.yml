@@ -16,7 +16,7 @@ services:
           - static_volume:/code/static
         env_file: 
             - ./backend/.env
-        command: gunicorn --bind 0.0.0.0:8000 conf.wsgi
+        command: gunicorn --workers=3 --bind 0.0.0.0:8000 conf.wsgi
         depends_on: 
             - db
 
@@ -26,8 +26,11 @@ services:
         stdin_open: true
         command: bash -c "cd scrapers && scrapyd --pidfile="
 
-    redis: 
+    redis:
+        restart: always
         image: redis:latest
+        expose:
+            - "6379"
     
     celeryworker:
         <<: *backend

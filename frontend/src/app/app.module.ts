@@ -27,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatListModule } from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -82,6 +83,7 @@ registerLocaleData(localeEnUS, 'en');
     MatMenuModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatGridListModule,
     
 
     FlexLayoutModule,

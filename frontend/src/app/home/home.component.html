@@ -4,4 +4,30 @@
     <h1>Wyszukiwarka aukcji Copart & IAAI</h1>
     <search [ngClass.gt-md]="'search-big'" [ngClass.md]="'search'" [ngClass.lt-md]="'search-small'"></search>
   </div>
+
+  <div fxLayout="column" fxLayoutGap="40px">
+    <h1>Najczęsciej wyszukiwane marki</h1>
+    <mat-grid-list  gutterSize="20" [cols]="gridCols" rowHeight="1:1">
+      <mat-grid-tile  class='brandTile mat-elevation-z1'  *ngFor="let brand of hotBrands" (click)="clickPopularBrand(brand)">
+        <mat-grid-tile-header>
+          {{brand}}
+        </mat-grid-tile-header>
+
+        <img class='tileImg' src="/assets/logos/{{brand|lowercase}}.png" />
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex>
+        <h2>Header of content</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div fxFlex>
+        <h2>Header of content</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+    </div>
+  </div>
+
+
 </div>

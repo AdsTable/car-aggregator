@@ -22,6 +22,7 @@ export class OfferDetailsComponent implements OnInit {
   similiarCars$: Observable<Car[]>
   car: Car;
 
+  cards = [1,2,3,4]
   constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) { 
   }
 

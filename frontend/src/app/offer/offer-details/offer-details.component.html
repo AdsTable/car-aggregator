@@ -63,8 +63,9 @@
 
     <div class="similiar_cars" fxLayout="column" fxLayoutGap="50px">
       <h3 fxFlex><span>PODOBNE AUKCJE</span></h3>
-      <div fxLayout="row" fxFlex fxLayoutGap="40px">
-        <mat-card fxFlex *ngFor='let simCar of similiarCars$ | async'>
+      <div fxLayout="row wrap"   >
+        <div fxFlex="25%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" *ngFor='let simCar of similiarCars$ | async'>
+        <mat-card class='mat-elevation-z1'>
           <mat-card-header>
             <mat-card-title>{{simCar.brand}} {{simCar.model}}</mat-card-title>
             <mat-card-subtitle>{{simCar.vin}}</mat-card-subtitle>
@@ -83,12 +84,11 @@
           <mat-card-actions align="end">
             <button mat-button (click)="openDialog(simCar)">ZAPYTAJ</button>
             <button mat-raised-button color="primary" [routerLink]="['/offer', simCar.id]">SZCZEGÓŁY</button>
-            
-
-
           </mat-card-actions>
         </mat-card>
       </div>
+      </div>
+
 
     </div>
   </div>

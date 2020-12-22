@@ -39,4 +39,8 @@ export class CarService {
     return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/map/type/${vType}`);
   }
 
+  getSimiliarById(id: number): Observable<Car[]> {
+    return this.http.get<Car[]>(`${this.configuration.apiUrl}/cars/similiar/${id}`);
+  }
+
 }

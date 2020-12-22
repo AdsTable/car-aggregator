@@ -111,6 +111,35 @@ class MappingData(APIView):
         }
         return Response(data=data)
 
+class SimiliarVehicle(APIView):
+
+    @method_decorator(cache_page(60*60*24*7))
+    def get(self, request, id):
+        similars = []
+        offer = Offer.objects.get(id=id)
+        brand, model = offer.brand, offer.model
+        most_specific = Offer.objects.filter(model=model).exclude(id=id)
+        
+        for car in most_specific.iterator():
+            if len(similars) == 4:
+                return Response(data=similars)
+            similars.append(OfferSerializer(car).data)
+
+        brand_specific = Offer.objects.filter(brand=brand).exclude(id=id)
+
+        for car in brand_specific.iterator():
+            if len(similars) == 4:
+                return Response(data=similars)
+            similars.append(OfferSerializer(car).data)
+
+        return Response(data=similars)
+
+            
+
+
+
+
+
 
 @api_view(['GET'])
 def available_models_for_brand(request, brand):

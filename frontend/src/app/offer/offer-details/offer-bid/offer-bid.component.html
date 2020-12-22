@@ -2,7 +2,7 @@
 
 <mat-dialog-content class="mat-typography" fxLayout="column" [formGroup]="carForm">
 
-    <h4>{{car.brand}} {{car.model}}</h4>
+    <h4>{{car.brand}} {{car.model}}<span>{{car.auction_site|uppercase}} #{{car.offerId}}</span></h4>
 
     <mat-form-field appearance="outline">
         <mat-label>Imię i nazwisko</mat-label>

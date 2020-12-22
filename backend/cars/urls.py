@@ -1,9 +1,10 @@
 from django.urls import path
-from cars.views import MappingData ,OfferListView, OfferRetrieveView, run_spider,available_models_for_brand, available_brands_for_type, get_jobs, get_job
+from cars.views import MappingData ,OfferListView, OfferRetrieveView, run_spider,available_models_for_brand, available_brands_for_type, get_jobs, get_job, SimiliarVehicle
 
 urlpatterns = [
     path('list', OfferListView.as_view(), name='offer-list'),
     path('<int:pk>', OfferRetrieveView.as_view()),
+    path('similiar/<int:id>', SimiliarVehicle.as_view(), name="similiar-vehicle"),
     path('map', MappingData.as_view(), name="mapping-data"),
     path('map/type/<str:vehicle_type>', available_brands_for_type, name="map-type"),
     path('map/<str:brand>', available_models_for_brand, name='map-brand'),

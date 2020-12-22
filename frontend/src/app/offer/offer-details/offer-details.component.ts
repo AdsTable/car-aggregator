@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import {  Subscription } from 'rxjs';
+import {  Observable, Subscription } from 'rxjs';
 import { Car } from 'src/app/models/models';
 import { CarService } from 'src/app/services/car.service';
 import { olderThanWeekAgo } from 'src/app/shared/core';
@@ -18,19 +18,25 @@ export class OfferDetailsComponent implements OnInit {
   private carSubscription: Subscription;
   private carId: number;
   private sub: any;
+
+  similiarCars$: Observable<Car[]>
   car: Car;
 
   constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) { 
   }
 
+  // TODO: FIX THIS, SUBSCRIPTION SHOULDNT BE INSIDE SUBSCIRPTION
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.carId = +params['id'];
+      this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
+        this.car = item;
+      });
+  
+      this.similiarCars$ = this.carService.getSimiliarById(this.carId);
     });
 
-    this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
-      this.car = item;
-    });
+
 
 
   }
@@ -41,12 +47,12 @@ export class OfferDetailsComponent implements OnInit {
 
   }
 
-  openDialog() {
+  openDialog(event: Car=this.car) {
     const dialogConfig = new MatDialogConfig();
 
 
     dialogConfig.autoFocus = true;
-    dialogConfig.data = this.car;
+    dialogConfig.data = event;
     dialogConfig.width = "500px"
 
     this.dialog.open(OfferBidComponent, dialogConfig);

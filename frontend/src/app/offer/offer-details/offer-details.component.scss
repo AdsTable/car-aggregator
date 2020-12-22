@@ -3,6 +3,9 @@
   padding: 0px 20px;
 }
 
+.detail {
+  margin-bottom: 40px;
+}
 
   
   
@@ -100,4 +103,26 @@
       background: #fff;
       padding: 0 40px;
     }
+
+    .mat-card-content {
+      p {
+        font-weight: 300;
+      }
+
+      p span {
+        color: #313131;
+        display:block;
+        float: none;
+        font-weight: 500;
+      }
+  
+        .price span {
+          color: #93C327;
+          font-size:28px;
+          font-weight: 500;
+          margin-top:8px;
+        }
+    }
+
   }
+

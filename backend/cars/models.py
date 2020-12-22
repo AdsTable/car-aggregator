@@ -39,6 +39,10 @@ class Offer(models.Model):
     class Meta:
         unique_together = ('offerId', 'auction_site')
         ordering = ['-id']
+        indexes = [
+            models.Index(fields=['model']),
+            models.Index(fields=['brand'])
+        ]
 
     def __str__(self):
         return f"{self.brand} {self.model} | {self.offerId}"

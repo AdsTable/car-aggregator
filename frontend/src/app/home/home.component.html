@@ -9,8 +9,10 @@
     <h1>Najczęsciej wyszukiwane marki</h1>
     <mat-grid-list  gutterSize="20" [cols]="gridCols" rowHeight="1:1">
       <mat-grid-tile  class='brandTile mat-elevation-z1'  *ngFor="let brand of hotBrands" (click)="clickPopularBrand(brand)">
-        <mat-grid-tile-header>
-          {{brand}}
+        <mat-grid-tile-header [ngStyle]="{'background-color': 'white', 'color': '#103359'}" >
+          <div fxLayout="row" fxLayoutAlign="center center">
+            {{brand}}
+        </div>
         </mat-grid-tile-header>
 
         <img class='tileImg' src="/assets/logos/{{brand|lowercase}}.png" />

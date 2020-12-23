@@ -23,6 +23,7 @@ celery = "*"
 django-redis = "*"
 redis = "*"
 django-celery-beat = "*"
+djongo = "*"
 
 [requires]
 python_version = "3.8"

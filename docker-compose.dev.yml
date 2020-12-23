@@ -1,13 +1,13 @@
 version: '3'
 services:
-    db:
-        image: postgres
+    mongodb:
+        image: 'bitnami/mongodb:latest'
         environment:
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-        volumes:
-            - ./postgres-data:/var/lib/postgresql/data
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+            - MONGO_INITDB_DATABASE=django_mongodb_docker
+        ports:
+            - "27017:27017"
 
     backend: &backend
         build:
@@ -23,7 +23,7 @@ services:
             - ./backend/.env.dev
         command: python manage.py runserver 0.0.0.0:8000
         depends_on: 
-            - db
+            - mongodb
             - redis
 
     scrapyd:
@@ -76,3 +76,4 @@ services:
             
 volumes:
     static_vol:
+    mongo_db:

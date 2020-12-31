@@ -69,11 +69,11 @@ export class OfferComponent implements OnInit {
     private mediaObserver: MediaObserver,
     private dialog: MatDialog
   ) {
-    
+
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
       this.sideNav = this.getSideNavMode(mediaChange);
       this.hidePageSize = this.getHidePageSize(mediaChange);
-    }) 
+    })
    }
 
 
@@ -90,12 +90,12 @@ export class OfferComponent implements OnInit {
           mode: 'side',
           opened: true
         } as SideNavConfig;
-     } 
+     }
       return {
         mode: 'over',
         opened: false
       } as SideNavConfig;
-     
+
    }
 
   ngOnInit(): void {
@@ -105,7 +105,7 @@ export class OfferComponent implements OnInit {
       this.searchData = res;
       this.getOffers(this.carService.baseLink, this.createFilterData());
     });
-    
+
 
   }
 
@@ -121,7 +121,7 @@ export class OfferComponent implements OnInit {
   }
 
   createFilterData(
-    size: number = this.itemsPerPage, 
+    size: number = this.itemsPerPage,
     page: number = this.currentPage,
     ) {
     return {
@@ -149,9 +149,7 @@ export class OfferComponent implements OnInit {
 
   isOld(date: Date) {
     if(!date) return false;
-    if(olderThanDayAgo(date)) return true;
-    return false;
-
+    return olderThanDayAgo(date);
   }
 
   pageChangeEvent(event: PageEvent) {
@@ -184,7 +182,7 @@ export class OfferComponent implements OnInit {
     this.carSubscription.unsubscribe();
   }
 
-  
+
 
 
 

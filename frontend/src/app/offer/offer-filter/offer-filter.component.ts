@@ -52,7 +52,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
   }
 
-  constructor(private carService: CarService, private fb: FormBuilder) { 
+  constructor(private carService: CarService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -109,13 +109,6 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
       });
   }
 
-  splitDescription(value) {
-    if (typeof(value) === "string"){
-      return value.split(',');
-    }
-
-    return [value];
-  }
 
   typeSelected(e: string) {
     this.filterForm.controls['brand'].setValue(null);

@@ -1,5 +1,6 @@
 from django.urls import path
-from cars.views import MappingData ,OfferListView, OfferRetrieveView, run_spider,available_models_for_brand, available_brands_for_type, get_jobs, get_job, SimiliarVehicle
+from cars.views import MappingData, OfferListView, OfferRetrieveView, run_spider, available_models_for_brand, \
+    available_brands_for_type, get_jobs, get_job, SimiliarVehicle, SendEmailView
 
 urlpatterns = [
     path('list', OfferListView.as_view(), name='offer-list'),
@@ -10,5 +11,6 @@ urlpatterns = [
     path('map/<str:brand>', available_models_for_brand, name='map-brand'),
     path('scraper/jobs', get_jobs, name="scrapy-jobs"),
     path('scraper/job/<str:id>', get_job, name="scrapy-job"),
-    path('scraper/start/<str:spider>', run_spider, name="run-spider")
+    path('scraper/start/<str:spider>', run_spider, name="run-spider"),
+    path('sendform', SendEmailView.as_view(), name="send-form")
 ]

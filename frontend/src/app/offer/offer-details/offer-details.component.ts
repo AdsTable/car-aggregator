@@ -23,7 +23,7 @@ export class OfferDetailsComponent implements OnInit {
   car: Car;
 
   cards = [1,2,3,4]
-  constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) { 
+  constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) {
   }
 
   // TODO: FIX THIS, SUBSCRIPTION SHOULDNT BE INSIDE SUBSCIRPTION
@@ -33,19 +33,13 @@ export class OfferDetailsComponent implements OnInit {
       this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
         this.car = item;
       });
-  
+
       this.similiarCars$ = this.carService.getSimiliarById(this.carId);
     });
-
-
-
-
   }
 
   isOld(date: Date) {
-    if(olderThanWeekAgo(date)) return true;
-    return false;
-
+    return olderThanWeekAgo(date);
   }
 
   openDialog(event: Car=this.car) {

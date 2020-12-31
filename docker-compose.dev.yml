@@ -19,6 +19,7 @@ services:
             - static_vol:/code/static
         ports:
             - 8000:8000
+            - 587:587
         env_file: 
             - ./backend/.env.dev
         command: python manage.py runserver 0.0.0.0:8000

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from cars.serializers import OfferSerializer, OfferItemSerializer
+from cars.serializers import OfferSerializer, OfferItemSerializer, ContactFormSerializer
 from rest_framework import generics
 from cars.models import Offer
 from rest_framework.filters import OrderingFilter
@@ -18,10 +18,10 @@ from datetime import timedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from conf.core import CustomOrdering
-
+from django.core import mail
+from rest_framework import status
 
 scraper = Scraper()
-
 
 
 class CharInFilter(filters.BaseInFilter, filters.CharFilter):
@@ -48,7 +48,6 @@ class CarFilterSet(django_filters.FilterSet):
         model = Offer
         fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'include_closed', 'drive']
 
-
     def filter_closed(self, queryset, name, value):
         ''' include closed 
             if true: show all offers
@@ -69,12 +68,46 @@ class OfferListView(generics.ListAPIView):
     filterset_class = CarFilterSet
     ordering_fields = ['current_price', 'sale_date', 'mileage', 'production_year']
 
+
 class OfferRetrieveView(generics.RetrieveAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferItemSerializer
 
+
+class SendEmailView(APIView):
+
+    def post(self, request):
+        car = OfferSerializer(request.data['car']).data
+        form = ContactFormSerializer(request.data['form']).data
+
+        body = f"""
+Klient: {form['fullname']}, 
+Telefon: {form['phoneNumber']}
+========================================================
+Strona aukcyjna: {car['auction_site']}
+Numer oferty #{car['offerId']} 
+Marka i model: {car['brand']} {car['model']} 
+========================================================
+Wiadomość od klienta:
+{form['message']}
+        """
+
+        msg = mail.EmailMessage(
+            subject=f"Zapytanie o oferte [{car['brand']} {car['model']}][{car['auction_site']}][#{car['offerId']}]",
+            from_email=form['email'],
+            body=body,
+            to=['iaaicarsearch@gmail.com'],
+            reply_to=[form['email']]
+        )
+
+        msg.send()
+
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+
 def get_available_options_for_field_with_count(field):
     return list(Offer.objects.values(value=F(field)).filter(value__isnull=False).annotate(count=Count('value')).order_by("value"))
+
 
 def get_models_for_brand_with_count(brand):
     return list(Offer.objects.filter(brand=brand).values(value=F('model')).annotate(count=Count('value')))
@@ -84,13 +117,16 @@ def get_available_options_for_field(field):
     options = list(Offer.objects.values_list(field, flat=True).distinct().order_by(field))
     return list(filter(None, options))
 
+
 def get_models_for_brand(brand):
     models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct().order_by('model'))
     return list(filter(None, models))
 
+
 def get_brand_for_type(vehicle_type):
     models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct().order_by('brand'))
     return list(filter(None, models))
+
 
 class MappingData(APIView):
 
@@ -110,6 +146,7 @@ class MappingData(APIView):
             'vehicle_type': get_available_options_for_field('vehicle_type'),
         }
         return Response(data=data)
+
 
 class SimiliarVehicle(APIView):
 
@@ -134,38 +171,27 @@ class SimiliarVehicle(APIView):
 
         return Response(data=similars)
 
-            
-
-
-
-
-
 
 @api_view(['GET'])
 def available_models_for_brand(request, brand):
     return Response(get_models_for_brand(brand))
 
+
 @api_view(['GET'])
 def available_brands_for_type(request, vehicle_type):
     return Response(get_brand_for_type(vehicle_type))
+
 
 @api_view(['GET'])
 def get_jobs(request):
     return Response(scraper.get_all_jobs())
 
+
 @api_view(['GET'])
 def get_job(request, id):
     return Response(scraper.get_status_of_job(id))
 
+
 @api_view(['GET'])
 def run_spider(request, spider):
     return Response(scraper.schedule_spider(spider))
-
-
-
-
-
-
-
-
-    

@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'cars',
-    'django_celery_beat'
+    'django_celery_beat',
+    'djcelery_email'
 ]
 
 REST_FRAMEWORK = {
@@ -42,6 +43,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
     
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,6 +123,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 CACHES = {
     "default": {

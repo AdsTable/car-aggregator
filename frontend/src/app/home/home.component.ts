@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Router } from '@angular/router';
-import { CarService } from "../services/car.service";
 import { SearchService } from '../services/search.service';
 
 @Component({
@@ -12,8 +11,8 @@ import { SearchService } from '../services/search.service';
 export class HomeComponent implements OnInit {
 
   hotBrands = [
-               'BMW', 'AUDI', 'PORSCHE', 'NISSAN', 'VOLKSWAGEN', 
-               'OPEL', 'KIA', 'CHEVROLET', 'DODGE', 'FORD', 
+               'BMW', 'AUDI', 'PORSCHE', 'NISSAN', 'VOLKSWAGEN',
+               'OPEL', 'KIA', 'CHEVROLET', 'DODGE', 'FORD',
                'HONDA', 'JEEP', 'TOYOTA', 'FIAT', 'RENAULT', 'HYUNDAI'
               ]
   gridCols = 8;
@@ -21,7 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(private mediaObserver: MediaObserver, private searchService: SearchService, private router: Router) {
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
       this.gridCols = this.getGridCols();
-    }) 
+    })
    }
 
    getGridCols() {
@@ -44,5 +43,5 @@ export class HomeComponent implements OnInit {
 
   }
 
- 
+
 }

@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from "@angular/material/slider";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { HomeComponent } from './home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -65,6 +65,7 @@ registerLocaleData(localeEnUS, 'en');
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientXsrfModule.withOptions({cookieName: 'csrftoken', headerName: 'X-CSRFToken'}),
 
     MatPaginatorModule,
     MatInputModule,
@@ -84,7 +85,7 @@ registerLocaleData(localeEnUS, 'en');
     MatCheckboxModule,
     MatDialogModule,
     MatGridListModule,
-    
+
 
     FlexLayoutModule,
     MatCarouselModule.forRoot(),

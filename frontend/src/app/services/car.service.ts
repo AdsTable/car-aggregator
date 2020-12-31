@@ -13,8 +13,8 @@ import {Page, Car, CarMap} from '../models/models';
 })
 export class CarService {
 
-  controlerUrl = "/cars"
-  baseLink = `${this.controlerUrl}/list`;
+  controllerUrl = "/cars"
+  baseLink = `${this.controllerUrl}/list`;
 
   constructor(private http: HttpClient, private configuration: ConfigurationService) {}
 
@@ -41,6 +41,10 @@ export class CarService {
 
   getSimiliarById(id: number): Observable<Car[]> {
     return this.http.get<Car[]>(`${this.configuration.apiUrl}/cars/similiar/${id}`);
+  }
+
+  postEmail(data: any) {
+    return this.http.post<Car>(`${this.configuration.apiUrl}/cars/sendform`, data);
   }
 
 }

@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Car } from 'src/app/models/models';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Car} from 'src/app/models/models';
+import {CarService} from "../../../services/car.service";
 
 @Component({
   selector: 'app-offer-bid',
@@ -14,9 +15,11 @@ export class OfferBidComponent implements OnInit {
   car: Car;
 
   constructor(private fb: FormBuilder,
-    private dialogRef: MatDialogRef<OfferBidComponent>, @Inject(MAT_DIALOG_DATA) data) { 
-      this.car = data;
-    }
+              private dialogRef: MatDialogRef<OfferBidComponent>, @Inject(MAT_DIALOG_DATA) data,
+              private carService: CarService
+  ) {
+    this.car = data;
+  }
 
   ngOnInit(): void {
     this.carForm = this.fb.group({
@@ -30,6 +33,13 @@ export class OfferBidComponent implements OnInit {
   save() {
     if (this.carForm.valid) {
       // TODO: API CALL FOR SENDING MAIL
+      const formValue = {
+        'car': this.car,
+        'form': this.carForm.value
+      }
+      this.carService.postEmail(formValue).subscribe(data => {
+        console.log(data);
+      });
       this.dialogRef.close(this.carForm.value);
     }
 

@@ -118,8 +118,19 @@ def get_available_options_for_field(field):
     return list(filter(None, options))
 
 
-def get_models_for_brand(brand):
-    models = list(Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct().order_by('model'))
+def get_models_for_brand(car_type, brand):
+    # TODO: REFACTOR THIS IF ELSE LOGIC
+    if car_type and brand:
+        models = list(Offer.objects.filter(brand=brand, vehicle_type=car_type).values_list('model', flat=True).distinct().order_by('model'))
+    elif car_type and not brand:
+        models = list(
+            Offer.objects.filter(vehicle_type=car_type).values_list('model', flat=True).distinct().order_by('model'))
+    elif not car_type and brand:
+        models = list(
+            Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct().order_by('model'))
+    else:
+        models = list(
+            Offer.objects.values_list('model', flat=True).distinct().order_by('model'))
     return list(filter(None, models))
 
 
@@ -146,6 +157,16 @@ class MappingData(APIView):
             'vehicle_type': get_available_options_for_field('vehicle_type'),
         }
         return Response(data=data)
+
+class FindModels(APIView):
+
+    # @method_decorator(cache_page(6))
+    def get(self, request):
+        car_type = request.GET.get('type')
+        car_brand = request.GET.get('brand')
+        models = get_models_for_brand(car_type, car_brand)
+        return Response(data=models)
+
 
 
 class SimiliarVehicle(APIView):

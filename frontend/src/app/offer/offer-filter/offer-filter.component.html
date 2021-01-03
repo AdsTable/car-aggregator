@@ -119,7 +119,7 @@
     </mat-expansion-panel>
 
     <!-- MODEL -->
-    <mat-expansion-panel class="mat-elevation-z0">
+    <mat-expansion-panel class="mat-elevation-z0" (opened)="fillModelsList()">
       <mat-expansion-panel-header>
         <mat-panel-title>Model</mat-panel-title>
       </mat-expansion-panel-header>
@@ -147,16 +147,10 @@
         <mat-panel-title>Styl nadwozia</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-label>Typ nadwozia</mat-label>
-            <mat-select formControlName="bodyStyle" multiple>
-              <mat-option *ngFor="let body of availableFields?.body_style" [value]="body">{{body}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
+      <mat-selection-list formControlName="bodyStyle">
+          <mat-list-option *ngFor="let t of availableFields?.body_style" [value]="t">{{t}}</mat-list-option>
+      </mat-selection-list>
+
     </mat-expansion-panel>
 
     <!-- DRIVE TRAIN -->
@@ -165,32 +159,22 @@
         <mat-panel-title>Napęd</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-select formControlName="drive" multiple>
-              <mat-option *ngFor="let drive of availableFields?.drive" [value]="drive">{{drive}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
+      <mat-selection-list formControlName="drive">
+          <mat-list-option *ngFor="let t of availableFields?.drive" [value]="t">{{t}}</mat-list-option>
+      </mat-selection-list>
+
     </mat-expansion-panel>
 
-    <!-- DRIVE TRAIN -->
+    <!-- TRANSMISSION-->
     <mat-expansion-panel class="mat-elevation-z0">
       <mat-expansion-panel-header>
         <mat-panel-title>Skrzynia biegów</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-list>
-        <mat-list-item>
-          <mat-form-field fxFlex appearance="outline" class="form__field">
-            <mat-select formControlName="transmission" multiple>
-              <mat-option *ngFor="let t of availableFields?.transmission" [value]="t">{{t}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
+      <mat-selection-list formControlName="transmission">
+          <mat-list-option *ngFor="let t of availableFields?.transmission" [value]="t">{{t}}</mat-list-option>
+      </mat-selection-list>
+
     </mat-expansion-panel>
 
     <!-- FUEL -->
@@ -222,7 +206,7 @@
       </mat-list>
     </mat-expansion-panel>
 
-  
+
     <mat-list>
       <mat-list-item>
         <mat-checkbox formControlName="include_closed" fxFlex appearance="outline" class="form__field"

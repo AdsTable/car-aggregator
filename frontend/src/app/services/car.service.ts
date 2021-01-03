@@ -30,9 +30,13 @@ export class CarService {
   getAvailableFields(): Observable<CarMap> {
     return this.http.get<CarMap>(`${this.configuration.apiUrl}/cars/map`);
   }
+  //
+  // getAvailableModels(brand: string): Observable<string[]> {
+  //   return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/models/${brand}`);
+  // }
 
-  getAvailableModels(brand: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/map/${brand}`);
+  getAvailableModels(type?: string, brand?: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/models/?type=${type}&brand=${brand}`)
   }
 
   getAvailableBrands(vType: string): Observable<string[]> {

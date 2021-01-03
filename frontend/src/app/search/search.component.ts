@@ -32,8 +32,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   searchForm: FormGroup;
 
 
-  constructor(private carService: CarService, 
-    private searchService: SearchService, 
+  constructor(private carService: CarService,
+    private searchService: SearchService,
     private fb: FormBuilder,
     private router: Router) {
     this.searchForm = this.fb.group({
@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchForm.controls['model'].setValue(null);
     this.searchForm.controls['model'].enable();
 
-    this.carService.getAvailableModels(e.option.value)
+    this.carService.getAvailableModels('', e.option.value)
       .pipe(take(1))
       .subscribe(data => {
         this.models = data;
@@ -106,11 +106,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
       }
 
-      
+
 
       this.searchService.sendSearchQuery(filtered);
       this.router.navigate(['/offers'])
     }
+
 
   }
 

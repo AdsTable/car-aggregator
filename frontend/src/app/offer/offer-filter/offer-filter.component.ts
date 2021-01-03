@@ -63,7 +63,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     }
     this.filterForm = this.fb.group({
       brand: [this.search['brand']],
-      model: [{value: this.search['model'], disabled: this.search['model'] ? false : true}],
+      model: [this.search['model']],
       vehicle_type: [''],
       bodyStyle: [this.search['body_style']],
       year_min: [this.search['year_min']],
@@ -128,16 +128,6 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
   brandSelected(e: MatAutocompleteSelectedEvent) {
     this.filterForm.controls['model'].setValue(null);
     this.filterForm.controls['model'].enable();
-
-    this.carService.getAvailableModels(e.option.value)
-      .pipe(take(1))
-      .subscribe(data => {
-        this.models = data;
-        this.filteredModels = this.filterForm.get('model').valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value, this.models))
-        )
-      })
   }
 
   private _filter(value: string, collection: string[]): string[] {
@@ -178,5 +168,20 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     console.log(key);
     this.filterForm.controls[key].setValue(null);
     this.onFilter();
+  }
+
+  fillModelsList() {
+    console.log('FILL MODELS LIST');
+    const brand = this.filterForm.get('brand').value || '';
+    const type = this.filterForm.get('vehicle_type').value || '';
+    this.carService.getAvailableModels(type, brand)
+      .pipe(take(1))
+      .subscribe(data => {
+        this.models = data;
+        this.filteredModels = this.filterForm.get('model').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value, this.models))
+        )
+      })
   }
 }

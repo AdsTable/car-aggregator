@@ -23,5 +23,6 @@ RUN python manage.py collectstatic --no-input
 
 EXPOSE 8000
 EXPOSE 6800
+EXPOSE 587
 
 # CMD ["gunicorn", "--bind", "0.0.0.0:8000",  "conf.wsgi"]

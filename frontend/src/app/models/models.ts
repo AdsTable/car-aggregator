@@ -7,7 +7,7 @@ export interface Page {
     size: number;
     results: Car[];
   }
-  
+
   export interface Car {
     offerId: number;
     brand: string;
@@ -28,6 +28,7 @@ export interface Page {
     color: string;
     location: string;
     sale_date: Date;
+    sale_type: string;
     sold: boolean;
     images: string[];
     thumb_image: string;
@@ -36,8 +37,8 @@ export interface Page {
     loss_type: string;
     buy_now: number;
   }
-  
-  
+
+
   export interface CarMap {
     brand: string[];
     fuel: string[];

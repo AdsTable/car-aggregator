@@ -23,6 +23,7 @@ class Offer(models.Model):
     color = models.CharField(max_length=30, null=True)
     location = models.CharField(max_length=70, null=True)
     sale_date = models.DateTimeField(null=True)
+    sale_type = models.CharField(max_length=50, null=True)
     sold = models.BooleanField(default=False)
     thumb_image = models.URLField(max_length=500, null=True)
     images = ArrayField(models.URLField(), null=True)

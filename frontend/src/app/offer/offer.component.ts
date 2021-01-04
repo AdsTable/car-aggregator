@@ -9,6 +9,7 @@ import { take } from 'rxjs/operators';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OfferBidComponent } from './offer-details/offer-bid/offer-bid.component';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 interface SideNavConfig {
@@ -67,7 +68,8 @@ export class OfferComponent implements OnInit {
     private carService: CarService,
     private searchService: SearchService,
     private mediaObserver: MediaObserver,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
 
     this.mediaObserver.asObservable().subscribe((mediaChange: MediaChange[]) => {
@@ -117,7 +119,18 @@ export class OfferComponent implements OnInit {
     dialogConfig.data = event;
     dialogConfig.width = "500px"
 
-    this.dialog.open(OfferBidComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(OfferBidComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.snackBar.open('Formularz został wysłany', '', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          panelClass: ['mat-toolbar', 'mat-primary']
+        });
+      }
+    });
   }
 
   createFilterData(

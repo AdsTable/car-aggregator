@@ -6,6 +6,7 @@ import { Car } from 'src/app/models/models';
 import { CarService } from 'src/app/services/car.service';
 import { olderThanWeekAgo } from 'src/app/shared/core';
 import { OfferBidComponent } from './offer-bid/offer-bid.component';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -23,7 +24,7 @@ export class OfferDetailsComponent implements OnInit {
   car: Car;
 
   cards = [1,2,3,4]
-  constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private carService: CarService, private dialog: MatDialog, private snackBar: MatSnackBar) {
   }
 
   // TODO: FIX THIS, SUBSCRIPTION SHOULDNT BE INSIDE SUBSCIRPTION
@@ -50,7 +51,17 @@ export class OfferDetailsComponent implements OnInit {
     dialogConfig.data = event;
     dialogConfig.width = "500px"
 
-    this.dialog.open(OfferBidComponent, dialogConfig);
+    const dialogRef = this.dialog.open(OfferBidComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.snackBar.open('Formularz został wysłany', '', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          panelClass: ['mat-toolbar', 'mat-primary']
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {

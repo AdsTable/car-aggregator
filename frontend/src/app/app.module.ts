@@ -32,6 +32,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {LimitedGuard} from './shared/guards';
 import localePl from '@angular/common/locales/pl';
 import localeEnUS from '@angular/common/locales/en';
@@ -85,6 +86,7 @@ registerLocaleData(localeEnUS, 'en');
     MatCheckboxModule,
     MatDialogModule,
     MatGridListModule,
+    MatSnackBarModule,
 
 
     FlexLayoutModule,

@@ -10,9 +10,9 @@
   margin-bottom: 40px;
 }
 
-  
-  
-  
+
+
+
   h2  {
     font-size: 28px;
     font-weight: 700;
@@ -42,7 +42,7 @@
       font-size: 14px;
     }
 
-  
+
     span {
       color: #313131;
       float: right;
@@ -118,7 +118,7 @@
         float: none;
         font-weight: 500;
       }
-  
+
         .price span {
           color: #93C327;
           font-size:28px;
@@ -138,6 +138,10 @@
   &:hover {
     @include mat-elevation(10);
     transition: .3s;
-  
+
   }
+}
+
+.confirmation {
+  background-color: #93C327;
 }

@@ -4,10 +4,11 @@
     <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="15px">
       <div fxFlex="50%" class="vehicle_carousel">
         <mat-carousel class="carousel" timings="250ms ease-in" [autoplay]="true" interval="5000" color="primary"
-          proportion="70" maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false" [hideIndicators]="true"
-          orientation="ltr">
+                      proportion="70" maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false"
+                      [hideIndicators]="true"
+                      orientation="ltr">
           <mat-carousel-slide #matCarouselSlide *ngFor="let image of car.images; let i = index" [hideOverlay]="true"
-            [image]="image">
+                              [image]="image">
           </mat-carousel-slide>
         </mat-carousel>
       </div>
@@ -37,10 +38,10 @@
             <h3>AKTUALNA CENA</h3>
 
             <p class="price">Aktualna cena<span> $ {{ car.current_price | number: '1.0-0'
-                }}</span></p>
+              }}</span></p>
             <p *ngIf="car.buy_now" class="price">Cena "Kup teraz"<span>{{ car.buy_now | currency : 'USD' :
-                'symbol-narrow' : '1.0-0'
-                }}</span></p>
+              'symbol-narrow' : '1.0-0'
+              }}</span></p>
 
             <mat-divider></mat-divider>
             <h3>SZCZEGÓŁY SPRZEDAŻY</h3>
@@ -48,7 +49,9 @@
             <p *ngIf="car.sale_date">Data licytacji<span>{{car.sale_date | date:'medium'}}</span></p>
             <p *ngIf="!car.sale_date">Data licytacji<span>FUTURE</span></p>
 
-            <button class="bid_button" *ngIf="!car.sold" mat-raised-button color="primary" (click)="openDialog()">Licytuj</button>
+            <button class="bid_button" *ngIf="!car.sold" mat-raised-button color="primary" (click)="openDialog()">
+              Licytuj
+            </button>
           </div>
         </div>
       </div>
@@ -63,33 +66,91 @@
 
     <div class="similiar_cars" fxLayout="column" fxLayoutGap="50px">
       <h3 fxFlex><span>PODOBNE AUKCJE</span></h3>
-      <div fxLayout="row wrap"   >
+      <div fxLayout="row wrap">
         <div fxFlex="25%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" *ngFor='let simCar of similiarCars$ | async'>
-        <mat-card class='mat-elevation-z1 simcar' >
-          <mat-card-header>
-            <mat-card-title>{{simCar.brand}} {{simCar.model}}</mat-card-title>
-            <mat-card-subtitle>{{simCar.vin}}</mat-card-subtitle>
-          </mat-card-header>
+          <mat-card class='mat-elevation-z1 simcar'>
+            <mat-card-header>
+              <mat-card-title>{{simCar.brand}} {{simCar.model}}</mat-card-title>
+              <mat-card-subtitle>{{simCar.vin}}</mat-card-subtitle>
+            </mat-card-header>
 
-          <img mat-card-image [src]='simCar.thumb_image' alt="Image of {{simCar.brand}} {{simCar.model}}">
+            <img mat-card-image [src]='simCar.thumb_image' alt="Image of {{simCar.brand}} {{simCar.model}}">
 
-          <mat-card-content>
-            <p *ngIf="simCar.sale_date">Data licytacji<span>{{simCar.sale_date | date:'medium'}}</span></p>
-            <p *ngIf="!simCar.sale_date">Data licytacji<span>FUTURE</span></p>
+            <mat-card-content>
+              <p *ngIf="simCar.sale_date">Data licytacji<span>{{simCar.sale_date | date:'medium'}}</span></p>
+              <p *ngIf="!simCar.sale_date">Data licytacji<span>FUTURE</span></p>
 
-            <p class="price">Aktualna cena<span> $ {{ simCar.current_price | number: '1.0-0'
-            }}</span></p>
-          </mat-card-content>
+              <p class="price">Aktualna cena<span> $ {{ simCar.current_price | number: '1.0-0'
+                }}</span></p>
+            </mat-card-content>
 
-          <mat-card-actions align="end">
-            <button mat-button (click)="openDialog(simCar)">ZAPYTAJ</button>
-            <button mat-raised-button color="primary" [routerLink]="['/offer', simCar.id]">SZCZEGÓŁY</button>
-          </mat-card-actions>
-        </mat-card>
+            <mat-card-actions align="end">
+              <button mat-button (click)="openDialog(simCar)">ZAPYTAJ</button>
+              <button mat-raised-button color="primary" [routerLink]="['/offer', simCar.id]">SZCZEGÓŁY</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
       </div>
-      </div>
 
 
+    </div>
+
+    <div class="additional-content" fxLayout="column">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>Kalkulator</mat-expansion-panel-header>
+        <p>
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed sem et mi tincidunt consectetur sed sed
+          orci. Maecenas sem mauris, dictum a orci non, condimentum consectetur magna. Curabitur urna libero,
+          sollicitudin a ipsum vitae, imperdiet interdum nunc. Pellentesque viverra consequat turpis, ut condimentum est
+          cursus at. Aliquam sed semper ligula. Suspendisse lobortis eget leo sed ornare. Fusce ac lectus rhoncus,
+          ultrices dolor sit amet, porttitor risus. Duis vel neque vitae neque faucibus efficitur in in nisi. Curabitur
+          nec fringilla nisi. Sed ac urna imperdiet, placerat justo eu, blandit nibh. Nunc at vestibulum eros.
+
+          Phasellus pharetra lacus augue, in condimentum orci placerat eu. Sed ut congue ipsum. Nunc non maximus purus,
+          a accumsan risus. Nam non sapien ac metus interdum ultricies. Curabitur dictum imperdiet commodo. Sed tempus,
+          justo vitae hendrerit laoreet, lectus elit tincidunt neque, vel convallis nisl purus vitae dui. Integer sit
+          amet interdum ligula, eu condimentum mi. Pellentesque eget lacinia justo. Sed at libero eget purus mollis
+          feugiat. Nullam venenatis varius egestas. Maecenas placerat ex non fermentum ullamcorper. Donec nec finibus
+          quam. Etiam fringilla, tellus sed commodo tristique, arcu felis tincidunt mauris, nec facilisis libero nulla
+          condimentum libero. Nullam vel sollicitudin metus. Cras malesuada aliquet quam et accumsan.
+
+          Nulla accumsan, erat nec ornare commodo, massa tortor pulvinar lectus, vitae porttitor tellus lorem elementum
+          libero. Mauris ac feugiat ligula. Morbi eu commodo diam. Fusce efficitur metus ligula, ac ullamcorper mauris
+          maximus eu. Aliquam maximus aliquet est quis ultricies. Nam vel varius dolor. Pellentesque interdum ex non
+          enim pretium, sit amet dignissim quam semper. Integer congue nulla eget lorem congue consequat. Nulla et neque
+          at ante congue fermentum. Nulla a semper ligula. Vestibulum faucibus sagittis dolor, at scelerisque enim
+          egestas at. Integer non tempor quam. Donec ut aliquet urna. In in tortor pellentesque, aliquet erat quis,
+          vestibulum ex. </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>Procedura sprowadzania auta</mat-expansion-panel-header>
+        <p>
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed sem et mi tincidunt consectetur sed sed
+          orci. Maecenas sem mauris, dictum a orci non, condimentum consectetur magna. Curabitur urna libero,
+          sollicitudin a ipsum vitae, imperdiet interdum nunc. Pellentesque viverra consequat turpis, ut condimentum est
+          cursus at. Aliquam sed semper ligula. Suspendisse lobortis eget leo sed ornare. Fusce ac lectus rhoncus,
+          ultrices dolor sit amet, porttitor risus. Duis vel neque vitae neque faucibus efficitur in in nisi. Curabitur
+          nec fringilla nisi. Sed ac urna imperdiet, placerat justo eu, blandit nibh. Nunc at vestibulum eros.
+
+          Phasellus pharetra lacus augue, in condimentum orci placerat eu. Sed ut congue ipsum. Nunc non maximus purus,
+          a accumsan risus. Nam non sapien ac metus interdum ultricies. Curabitur dictum imperdiet commodo. Sed tempus,
+          justo vitae hendrerit laoreet, lectus elit tincidunt neque, vel convallis nisl purus vitae dui. Integer sit
+          amet interdum ligula, eu condimentum mi. Pellentesque eget lacinia justo. Sed at libero eget purus mollis
+          feugiat. Nullam venenatis varius egestas. Maecenas placerat ex non fermentum ullamcorper. Donec nec finibus
+          quam. Etiam fringilla, tellus sed commodo tristique, arcu felis tincidunt mauris, nec facilisis libero nulla
+          condimentum libero. Nullam vel sollicitudin metus. Cras malesuada aliquet quam et accumsan.
+
+          Nulla accumsan, erat nec ornare commodo, massa tortor pulvinar lectus, vitae porttitor tellus lorem elementum
+          libero. Mauris ac feugiat ligula. Morbi eu commodo diam. Fusce efficitur metus ligula, ac ullamcorper mauris
+          maximus eu. Aliquam maximus aliquet est quis ultricies. Nam vel varius dolor. Pellentesque interdum ex non
+          enim pretium, sit amet dignissim quam semper. Integer congue nulla eget lorem congue consequat. Nulla et neque
+          at ante congue fermentum. Nulla a semper ligula. Vestibulum faucibus sagittis dolor, at scelerisque enim
+          egestas at. Integer non tempor quam. Donec ut aliquet urna. In in tortor pellentesque, aliquet erat quis,
+          vestibulum ex. </p>
+      </mat-expansion-panel>
     </div>
   </div>
 </div>

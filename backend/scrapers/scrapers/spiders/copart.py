@@ -44,6 +44,7 @@ class CopartSpider(scrapy.Spider):
             o['engine'] = item.get('egn')
             o['transmission'] = item.get('tmtp', '').upper()
             o['location'] = item.get('syn')
+            o['sale_type'] = item.get('ess')
             if item.get('ess') != "Pure Sale":
                 o['sale_date'] = datetime.fromtimestamp(item.get('ad')/1e3) if item.get('ad') else None
             o['current_price'] = item.get('hb')

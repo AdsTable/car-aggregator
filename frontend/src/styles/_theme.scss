@@ -22,3 +22,7 @@ $custom-typography: mat-typography-config(
     $input: mat-typography-level(14px, 1.125, 300, 'Kanit')
 
 );
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}

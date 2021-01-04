@@ -2,15 +2,15 @@
   <div class='detail' *ngIf="car">
 
     <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="15px">
-      <div fxFlex="50%" class="vehicle_carousel">
-        <mat-carousel class="carousel" timings="250ms ease-in" [autoplay]="true" interval="5000" color="primary"
-                      proportion="70" maxWidth="auto" slides="8" [loop]="true" [hideArrows]="false"
-                      [hideIndicators]="true"
-                      orientation="ltr">
-          <mat-carousel-slide #matCarouselSlide *ngFor="let image of car.images; let i = index" [hideOverlay]="true"
-                              [image]="image">
-          </mat-carousel-slide>
-        </mat-carousel>
+
+
+      <div fxFlex="50%">
+        <img class="big_image" [attr.src]="activeImage" alt="obrazek"/>
+        <div fxLayout="row wrap">
+          <div fxFlex="20%"  *ngFor='let image of car.images'>
+            <img class="thumbnail" [attr.src]="image" (click)="activeImage = image" />
+          </div>
+        </div>
       </div>
 
 

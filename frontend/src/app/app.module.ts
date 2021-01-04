@@ -42,7 +42,6 @@ import { OfferDetailsComponent } from './offer/offer-details/offer-details.compo
 import { OfferFilterComponent } from './offer/offer-filter/offer-filter.component';
 import { OfferBidComponent } from './offer/offer-details/offer-bid/offer-bid.component';
 
-
 registerLocaleData(localePl, 'pl');
 registerLocaleData(localeEnUS, 'en');
 

@@ -19,6 +19,7 @@ export class OfferDetailsComponent implements OnInit {
   private carSubscription: Subscription;
   private carId: number;
   private sub: any;
+  public activeImage: string;
 
   similiarCars$: Observable<Car[]>
   car: Car;
@@ -29,10 +30,12 @@ export class OfferDetailsComponent implements OnInit {
 
   // TODO: FIX THIS, SUBSCRIPTION SHOULDNT BE INSIDE SUBSCIRPTION
   ngOnInit(): void {
+
     this.sub = this.route.params.subscribe(params => {
       this.carId = +params['id'];
       this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
         this.car = item;
+        this.activeImage = item.images[0];
       });
 
       this.similiarCars$ = this.carService.getSimiliarById(this.carId);
@@ -45,7 +48,6 @@ export class OfferDetailsComponent implements OnInit {
 
   openDialog(event: Car=this.car) {
     const dialogConfig = new MatDialogConfig();
-
 
     dialogConfig.autoFocus = true;
     dialogConfig.data = event;

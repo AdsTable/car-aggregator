@@ -13,11 +13,9 @@ import { ShowOnFormInvalidStateMatcher, ProductionInvalidStateMatcher, minLessTh
   templateUrl: './offer-filter.component.html',
   styleUrls: ['./offer-filter.component.scss']
 })
-export class OfferFilterComponent implements OnInit, AfterViewInit {
+export class OfferFilterComponent implements OnInit {
   @Input() search: {};
   @Output() filter = new EventEmitter();
-
-  @ViewChild(MatAutocompleteTrigger) trigger;
 
 
   readonly matcher = new ShowOnFormInvalidStateMatcher();
@@ -31,7 +29,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
 
   availableFields: CarMap;
   filterForm: FormGroup;
-  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle', 'drive']
+  multipleValuesField: string[] = ['fuel', 'damage', 'bodyStyle', 'drive', 'transmission']
 
   usedFilters;
 
@@ -74,7 +72,7 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
       damage: [this.search['damage']],
       transmission: [this.search['transmission']],
       drive: [this.search['drive']],
-      auction_site: [],
+      auction_site: [''],
       include_closed: [this.search['include_closed']],
     }, {
       validator: [minLessThanMaxMileageValidator, minLessThanMaxProductionValidator]
@@ -97,17 +95,6 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.trigger.panelClosingActions
-      .subscribe(e => {
-        if (!(e && e.source)) {
-          this.filterForm.controls['brand'].setValue(null);
-          this.filterForm.controls['model'].setValue(null);
-          this.filterForm.controls['model'].disable();
-          this.trigger.closePanel();
-        }
-      });
-  }
 
 
   typeSelected(e: string) {
@@ -135,18 +122,15 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
     return collection?.filter(item => item.toUpperCase().startsWith(filterValue));
   }
 
-
-
-  onFilter() {
-    if (this.filterForm.valid) {
-
-      this.usedFilters = this.filterForm.value;
+  prepareFormToSubmit() {
+     this.usedFilters = this.filterForm.value;
       if (this.filterForm.get('model').value) {
         this.filterForm.value['model'] = this.filterForm.get('model').value;
       }
 
       for (let field of this.multipleValuesField) {
-        if (this.filterForm.value[field]) {
+        if (this.filterForm.value[field] && Array.isArray(this.filterForm.value[field])) {
+          console.log(this.filterForm.value[field]);
           this.filterForm.value[field] = this.filterForm.value[field].join(',');
         }
       }
@@ -156,12 +140,30 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
         if (this.filterForm.value[key] || this.filterForm.value[key]===false) {
           filtered[key] = this.filterForm.value[key];
         }
-
-
-
       }
+
+      return filtered;
+  }
+
+
+  onFilter() {
+    if (this.filterForm.valid) {
+      const filtered = this.prepareFormToSubmit();
       this.filter.emit(filtered);
     }
+  }
+
+   resetFilter() {
+    for (let [key,value] of Object.entries(this.usedFilters)) {
+      if(value) {
+        if(key == "include_closed") {
+          this.filterForm.controls[key].setValue(false);
+        } else {
+          this.filterForm.controls[key].setValue(null);
+        }
+      }
+    }
+    this.onFilter();
   }
 
   deleteFilter(key: string) {
@@ -184,4 +186,6 @@ export class OfferFilterComponent implements OnInit, AfterViewInit {
         )
       })
   }
+
+
 }

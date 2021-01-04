@@ -7,7 +7,7 @@
     <mat-list class="filter-list" fxFlex>
       <ng-container *ngFor="let filter of usedFilters | keyvalue">
         <mat-list-item class="used-filters"
-          *ngIf="filter.value && filter.key!='auction_site' && filter.key!='hide_closed' && filter.key!='include_closed'">
+          *ngIf="filter.value && filter.key!='auction_site' && filter.key!='include_closed'">
           <div matLine>
             <h4>{{keyMap[filter.key]}}: <span>{{filter.value}}</span></h4>
           </div>
@@ -221,5 +221,6 @@
 
   </mat-accordion>
   <button class="submit__button" mat-raised-button color="accent" [disabled]="!filterForm.valid">FILTRUJ</button>
+  <button type="button" class="submit__button" mat-button color="primary" (click)="resetFilter()">RESETUJ</button>
 
 </form>

@@ -34,7 +34,7 @@ class CarFilterSet(django_filters.FilterSet):
     vin = django_filters.CharFilter(field_name='vin', lookup_expr="iexact")
     fuel = CharInFilter(field_name='fuel', lookup_expr="in")
     damage = CharInFilter(field_name='primary_damage', lookup_expr="in")
-    transmission = django_filters.CharFilter(field_name='transmission', lookup_expr="iexact")
+    transmission = CharInFilter(field_name="transmission", lookup_expr="in")
     bodyStyle = CharInFilter(field_name='body_style', lookup_expr="in")
     year = django_filters.RangeFilter(field_name="production_year")
     mileage = django_filters.RangeFilter(field_name="mileage")

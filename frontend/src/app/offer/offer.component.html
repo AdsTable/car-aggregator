@@ -4,7 +4,7 @@
 
 <mat-sidenav-container fxLayout="row">
   <mat-sidenav [fixedInViewport]="true" fxFlex="grow" class="vehicle-filters" [opened]="sideNav.opened"
-    [mode]="sideNav.mode">
+               [mode]="sideNav.mode">
     <offer-filter *ngIf="searchData" (filter)="onFilter($event)" [search]="searchData"></offer-filter>
   </mat-sidenav>
 
@@ -17,23 +17,27 @@
         </button>
 
 
-        <mat-form-field  appearance="fill" class="sort__field">
-              <mat-label>Sortuj</mat-label>
-              <mat-select [(ngModel)]="orderBy" (selectionChange)="onOrderChange()">
-                <mat-select-trigger>
-                  <mat-icon>{{orderBy.icon}}</mat-icon>&nbsp;{{orderBy.name}}<!-- where form is the name of your FormGroup -->
-              </mat-select-trigger>
-              <ng-container *ngFor="let order of orderList">
-                  <mat-option [value]="order"><mat-icon>{{order.icon}}</mat-icon>{{order.name}}
-                  </mat-option>
-                  <mat-divider></mat-divider>
-              </ng-container>
-            </mat-select>
+        <mat-form-field appearance="fill" class="sort__field">
+          <mat-label>Sortuj</mat-label>
+          <mat-select [(ngModel)]="orderBy" (selectionChange)="onOrderChange()">
+            <mat-select-trigger>
+              <mat-icon>{{orderBy.icon}}</mat-icon>&nbsp;{{orderBy.name}}
+              <!-- where form is the name of your FormGroup -->
+            </mat-select-trigger>
+            <ng-container *ngFor="let order of orderList">
+              <mat-option [value]="order">
+                <mat-icon>{{order.icon}}</mat-icon>
+                {{order.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-select>
 
-            </mat-form-field>
+        </mat-form-field>
 
-        <mat-paginator fxHide.lt-sm="true" [hidePageSize]="hidePageSize" fxFlex #paginatorTop (page)="pageChangeEvent($event)"
-          [length]="length" [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
+        <mat-paginator fxHide.lt-sm="true" [hidePageSize]="hidePageSize" fxFlex #paginatorTop
+                       (page)="pageChangeEvent($event)"
+                       [length]="length" [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
 
       </mat-toolbar-row>
     </mat-toolbar>
@@ -57,33 +61,77 @@
               <a [routerLink]="['/offer', car.id]"><img [attr.src]="car.thumb_image" alt="Free image"></a>
             </div>
             <div fxFlex>
-              <div fxLayout="row wrap" fxLayou.lt-md="column">
-                <div fxFlex class="description main">
-                  <h3 class="title"><a [routerLink]="['/offer', car.id]">{{car.brand}} {{car.model}}</a></h3>
-                  <p><mat-icon>article</mat-icon>Numer aukcji
-                    <span class="right">{{car.offerId}}</span>
-                  </p>
-                  <p><mat-icon>speed</mat-icon>Przebieg 
-                    <span class="right">{{car.mileage}} mi</span>
-                  </p>
+              <div fxLayout="row wrap" fxLayout.lt-md="column">
+                <div fxFlex="60%" fxLayout="column" [ngClass.xs]="'description-small main'"
+                     [ngClass.md]="'description-small main'" [ngClass.gt-md]="'description main'"
+                     [ngClass.lt-md]="'description main'">
 
-                  <p><mat-icon>drive_eta</mat-icon>Rok produkcji
-                    <span class="right">{{car.production_year}}</span>
-                  </p>
+                  <h3 class="title"><a [routerLink]="['/offer', car.id]">{{car.brand}} {{car.model}}</a></h3>
+                  <div class="car_info" fxLayout="row" fxLayout.lt-lg="column" fxLayout.lt-md="row" fxLayout.xs="column"
+                       fxLayoutGap="40px" fxLayoutGap.lt-lg="0">
+                    <div fxFlex>
+                      <p>
+                        Numer aukcji
+                        <span class="right">{{car.offerId}}</span>
+                      </p>
+                      <p>
+                        Przebieg
+                        <span class="right">{{car.mileage}} mi</span>
+                      </p>
+
+                      <p>
+                        Rok produkcji
+                        <span class="right">{{car.production_year}}</span>
+                      </p>
+                    </div>
+
+                    <div fxFlex>
+                      <p>
+                        VIN
+                        <span class="right">{{car.vin}}</span>
+                      </p>
+
+                      <p>
+                        Uszkodzenie
+                        <span class="right">{{car.primary_damage}}</span>
+                      </p>
+
+                      <p>
+                        Rok produkcji
+                        <span class="right">{{car.production_year}}</span>
+                      </p>
+                    </div>
+
+                  </div>
+
 
                 </div>
-                <div fxFlex class="description additional">
-                  <div fxLayout="column" fxLayoutAlign="end end">
-                    <p *ngIf="car.sale_date"><mat-icon>insert_invitation</mat-icon>{{car.sale_date | date:'medium':'pl'}}</p>
-                    <p *ngIf="!car.sale_date"><mat-icon>insert_invitation</mat-icon>Future</p>
-                    <h4><mat-icon>place</mat-icon>{{car.location}}</h4>
-                    <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
-                    <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"
-                      [routerLink]="['/offer', car.id]">Licytuj</button>
-                    <button *ngIf="car.sold" mat-stroked-button color="primary">Sprzedane</button>
-                    <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button
-                      color="warn">Niesprzedane</button>
-                    <a class="dialog_button" [routerLink]="" (click)="openDialog(car)">Zapytaj o ten pojazd</a>
+                <div fxFlex class="description additional" [ngClass.lt-md]="'description additional-small'">
+                  <div fxLayout="column" fxLayout.lt-md="row" fxLayoutAlign="space-between end">
+                    <div fxLayout="column">
+                      <p *ngIf="car.sale_date">
+                        <mat-icon>insert_invitation</mat-icon>
+                        {{car.sale_date | date:'medium':'pl'}}</p>
+                      <p *ngIf="!car.sale_date">
+                        <mat-icon>insert_invitation</mat-icon>
+                        Future
+                      </p>
+                      <h4>
+                        <mat-icon>place</mat-icon>
+                        {{car.location}}</h4>
+                    </div>
+                    <div fxLayout="column">
+
+                      <h3 class="price">{{car.current_price | currency : 'USD' : 'symbol-narrow' : '1.0-0'}}</h3>
+                      <button *ngIf="!car.sold && !isOld(car.sale_date)" mat-raised-button color="primary"
+                              [routerLink]="['/offer', car.id]">Licytuj
+                      </button>
+                      <button *ngIf="car.sold" mat-stroked-button color="primary">Sprzedane</button>
+                      <button *ngIf="!car.sold && isOld(car.sale_date)" mat-stroked-button
+                              color="warn">Niesprzedane
+                      </button>
+                      <a class="dialog_button" [routerLink]="" (click)="openDialog(car)">Zapytaj o ten pojazd</a>
+                    </div>
                   </div>
 
 
@@ -98,9 +146,8 @@
     </div>
 
 
-
-    <mat-paginator  #paginator (page)="pageChangeEvent($event)" [length]="length"
-      [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
+    <mat-paginator #paginator (page)="pageChangeEvent($event)" [length]="length"
+                   [pageSize]="itemsPerPage" [pageSizeOptions]="[10,20,50,100]"></mat-paginator>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

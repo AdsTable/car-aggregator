@@ -57,20 +57,20 @@
       &.mat-expansion-panel-spacing {
         margin: 0px 0px;
       }
-  
+
       .mat-expansion-panel-body {
         padding: 0px;
         background-color: rgb(241, 240, 240) !important;
 
       }
-      
-  
+
+
       .mat-expansion-panel-header {
         height: 40px;
         font-weight: 500;
         // padding: 0px 24px 0px 16px;
       }
-  
+
       .mat-expansion-panel-header-title {
         color: rgba(0,0,0,0.54);
         font-size: 14px;
@@ -139,4 +139,14 @@
 
   .mat-list-option {
     font-size: 10px;
+  }
+
+  mat-icon:hover {
+    transform: rotate(360deg);
+    color: red;
+    background-color:white;
+    cursor: pointer;
+    @include mat-elevation(1);
+    transition: .3s;
+
   }

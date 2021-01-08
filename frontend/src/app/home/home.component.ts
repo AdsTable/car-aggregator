@@ -12,8 +12,8 @@ export class HomeComponent implements OnInit {
 
   hotBrands = [
                'BMW', 'AUDI', 'PORSCHE', 'NISSAN', 'VOLKSWAGEN',
-               'OPEL', 'KIA', 'CHEVROLET', 'DODGE', 'FORD',
-               'HONDA', 'JEEP', 'TOYOTA', 'FIAT', 'RENAULT', 'HYUNDAI'
+               'CHRYSLER', 'KIA', 'CHEVROLET', 'DODGE', 'FORD',
+               'HONDA', 'JEEP', 'TOYOTA', 'VOLVO', 'MAZDA', 'HYUNDAI'
               ]
   gridCols = 8;
 

@@ -49,3 +49,17 @@ export interface Page {
     production_year: number[];
     vehicle_type: string[];
   }
+
+  export interface ScrapyState {
+    node_name: string,
+    pending: Job[],
+    running: Job[],
+    finished: Job[]
+  }
+
+  export interface Job {
+    id: string,
+    spider: string,
+    start_time: Date,
+    end_time: Date
+  }

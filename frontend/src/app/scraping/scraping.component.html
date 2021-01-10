@@ -1,0 +1,28 @@
+<div fxLayout="column">
+  <div *ngIf="state$ | async as state">
+
+    <mat-tab-group animationDuration="0ms" [backgroundColor]="'primary'">
+      <mat-tab label="Pending">
+        <jobs [data]="state.pending" [typeState]="'pending'"></jobs>
+      </mat-tab>
+      <mat-tab label="Running">
+         <jobs [data]="state.running" [typeState]="'running'"></jobs>
+      </mat-tab>
+      <mat-tab label="Finished">
+         <jobs [data]="state.finished" [typeState]="'finished'"></jobs>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button *ngFor="let spider of spiders$|async" mat-menu-item (click)="runSpider(spider)">{{spider}}</button>
+          </mat-menu>
+
+        </ng-template>
+    </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

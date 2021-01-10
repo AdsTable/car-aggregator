@@ -216,3 +216,12 @@ def get_job(request, id):
 @api_view(['GET'])
 def run_spider(request, spider):
     return Response(scraper.schedule_spider(spider))
+
+
+@api_view(['GET'])
+def get_all_spiders(request):
+    return Response(scraper.get_all_spiders())
+
+@api_view(['GET'])
+def cancel_job(request, job_id):
+    return Response(scraper.cancel_job(job_id))

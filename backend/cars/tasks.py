@@ -20,6 +20,9 @@ class Scraper:
     def get_all_jobs(self):
         return self.client.list_jobs(self.project)
 
+    def get_all_spiders(self):
+        return self.client.list_spiders(self.project)
+
 
 @shared_task
 def test_task():

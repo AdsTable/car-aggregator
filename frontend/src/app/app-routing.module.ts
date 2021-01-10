@@ -18,6 +18,7 @@ const routes: Routes = [
     }, canActivate: [LimitedGuard]
   },
   { path: 'offer/:id', component: OfferDetailsComponent },
+  { path: 'scraping', loadChildren: () => import('./scraping/scraping.module').then(m => m.ScrapingModule) },
 
   { path: '**', redirectTo: 'home' }
 ];

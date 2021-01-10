@@ -4,10 +4,6 @@ import { ConfigurationService } from './configuration.service';
 import { Observable } from 'rxjs';
 import {Page, Car, CarMap} from '../models/models';
 
-
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -30,10 +26,6 @@ export class CarService {
   getAvailableFields(): Observable<CarMap> {
     return this.http.get<CarMap>(`${this.configuration.apiUrl}/cars/map`);
   }
-  //
-  // getAvailableModels(brand: string): Observable<string[]> {
-  //   return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/models/${brand}`);
-  // }
 
   getAvailableModels(type?: string, brand?: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.configuration.apiUrl}/cars/models/?type=${type}&brand=${brand}`)

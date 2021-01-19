@@ -15,3 +15,9 @@ PostgreSQL | RDBMS
 Redis | Manage Celery Task & Cache some endpoints
 
 Thanks to Celery Beat, scheduling tasks can be done in Django Admin by intervals or cron syntax
+
+### Generate self-signed certificate
+Command to generate self-signed certificate
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/car-aggregator/frontend/nginx/nginx-selfsigned.key -out ~/car-aggregator/frontend/nginx/nginx-selfsigned.crt;
+```

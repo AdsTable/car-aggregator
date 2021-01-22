@@ -33,6 +33,7 @@ export class OfferDetailsComponent implements OnInit {
 
     this.sub = this.route.params.subscribe(params => {
       this.carId = +params['id'];
+      window.scrollTo(0, 0);
       this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
         this.car = item;
         this.activeImage = item.images[0];

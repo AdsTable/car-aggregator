@@ -21,7 +21,7 @@ body {
     color: #495057;
     background-color: #fff;
     font-size: mat-font-size($custom-typography, body-1);
-    height: 100%;
+    height: inherit !important;;
     max-width:1500px; // default width
     margin: 0 auto;
 }

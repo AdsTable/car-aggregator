@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CarService } from "../services/car.service";
 import { olderThanDayAgo } from '../shared/core';
@@ -194,10 +194,4 @@ export class OfferComponent implements OnInit {
     this.searchSubscription.unsubscribe();
     this.carSubscription.unsubscribe();
   }
-
-
-
-
-
-
 }

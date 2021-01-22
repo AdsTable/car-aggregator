@@ -5,7 +5,7 @@
     <search [ngClass.gt-md]="'search-big'" [ngClass.md]="'search'" [ngClass.lt-md]="'search-small'"></search>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="40px">
+  <div [ngClass.lt-lg]="'extra-content'" fxLayout="column" fxLayoutGap="40px">
     <h1>Najczęsciej wyszukiwane marki</h1>
     <mat-grid-list  gutterSize="20" [cols]="gridCols" rowHeight="1:1">
       <mat-grid-tile  class='brandTile mat-elevation-z1'  *ngFor="let brand of hotBrands" (click)="clickPopularBrand(brand)">

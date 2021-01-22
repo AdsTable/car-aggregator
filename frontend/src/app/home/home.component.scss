@@ -35,9 +35,9 @@ h1 {
   &:hover {
     @include mat-elevation(6);
     transition: .3s;
-  
+
   }
-  
+
 }
 
 .tileImg {
@@ -47,3 +47,11 @@ h1 {
 }
 
 .mat-grid-tile-header div{ margin: auto; }
+
+.extra-content {
+  padding: 0 20px;
+
+  p {
+      text-align: justify;
+  }
+}

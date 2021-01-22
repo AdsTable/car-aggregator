@@ -30,7 +30,7 @@ export class OfferDetailsComponent implements OnInit {
 
   // TODO: FIX THIS, SUBSCRIPTION SHOULDNT BE INSIDE SUBSCIRPTION
   ngOnInit(): void {
-
+    
     this.sub = this.route.params.subscribe(params => {
       this.carId = +params['id'];
       this.carSubscription = this.carService.getCarById(this.carId).subscribe(item => {
@@ -41,6 +41,8 @@ export class OfferDetailsComponent implements OnInit {
       this.similiarCars$ = this.carService.getSimiliarById(this.carId);
     });
   }
+
+
 
   isOld(date: Date) {
     return olderThanWeekAgo(date);

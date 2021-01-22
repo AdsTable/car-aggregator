@@ -137,8 +137,23 @@ fieldset {
   &:hover {
     @include mat-elevation(10);
     transition: .3s;
-
   }
+
+  a {
+    text-decoration: none;
+    color: mat-color($nga-primary, default);
+  }
+
+  a:visited {
+  @extend a;
+}
+
+  a:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
 }
 
 .additional-content {

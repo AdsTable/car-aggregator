@@ -70,7 +70,7 @@
         <div fxFlex="25%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" *ngFor='let simCar of similiarCars$ | async'>
           <mat-card class='mat-elevation-z1 simcar'>
             <mat-card-header>
-              <mat-card-title>{{simCar.brand}} {{simCar.model}}</mat-card-title>
+              <mat-card-title><a [routerLink]="['/offer', simCar.id]">{{simCar.brand}} {{simCar.model}}</a></mat-card-title>
               <mat-card-subtitle>{{simCar.vin}}</mat-card-subtitle>
             </mat-card-header>
 

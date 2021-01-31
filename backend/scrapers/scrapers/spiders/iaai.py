@@ -1,15 +1,10 @@
 import scrapy
 from scrapers.items import OfferItem
-from scrapy.http import FormRequest
-from pprint import pprint
-import json
-from datetime import datetime
 from scrapy.http import JsonRequest
 from dateutil import tz, parser
 from cars.models import Offer
 import pendulum
 from ..map import map_fuel, map_body, map_drive, map_damage
-
 
 tzinfos = {"CST": tz.gettz("America/Chicago")}
 

@@ -199,19 +199,19 @@
       </mat-selection-list>
     </mat-expansion-panel>
 
-
-    <mat-list>
-      <mat-list-item>
-        <mat-checkbox formControlName="include_closed" fxFlex appearance="outline" class="form__field"
-                      (change)="onFilter()">
-          Dołącz sprzedane
-        </mat-checkbox>
-      </mat-list-item>
-    </mat-list>
+    <!--    Temporarily disabled: Legal problems  -->
+    <!--    <mat-list>-->
+    <!--      <mat-list-item>-->
+    <!--        <mat-checkbox formControlName="include_closed" fxFlex appearance="outline" class="form__field"-->
+    <!--                      (change)="onFilter()">-->
+    <!--          Dołącz sprzedane-->
+    <!--        </mat-checkbox>-->
+    <!--      </mat-list-item>-->
+    <!--    </mat-list>-->
 
 
   </mat-accordion>
   <button class="submit__button" mat-raised-button color="accent" [disabled]="!filterForm.valid">FILTRUJ</button>
-  <button type="button" class="submit__button" mat-button color="primary" (click)="resetFilter()">RESETUJ</button>
+  <button type="button" class="reset__button" mat-button color="primary" (click)="resetFilter()">RESETUJ</button>
 
 </form>

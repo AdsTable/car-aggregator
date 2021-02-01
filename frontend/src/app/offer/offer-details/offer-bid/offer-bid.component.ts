@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Car} from 'src/app/models/models';
@@ -9,10 +9,10 @@ import {CarService} from "../../../services/car.service";
   templateUrl: './offer-bid.component.html',
   styleUrls: ['./offer-bid.component.scss']
 })
-export class OfferBidComponent implements OnInit {
-
+export class OfferBidComponent implements OnInit, AfterViewInit {
   carForm: FormGroup;
   car: Car;
+
 
   constructor(private fb: FormBuilder,
               private dialogRef: MatDialogRef<OfferBidComponent>, @Inject(MAT_DIALOG_DATA) data,
@@ -28,6 +28,11 @@ export class OfferBidComponent implements OnInit {
       message: ['', Validators.minLength(10)],
       phoneNumber: ['']
     })
+
+  }
+
+  ngAfterViewInit() {
+    window.parent.postMessage({'action': 'scroll', 'height': 0}, '*');
   }
 
   save() {

@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { CarService } from "../services/car.service";
-import { olderThanDayAgo } from '../shared/core';
-import { Car } from '../models/models';
-import { SearchService } from '../services/search.service';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { OfferBidComponent } from './offer-details/offer-bid/offer-bid.component';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {CarService} from "../services/car.service";
+import {olderThanDayAgo} from '../shared/core';
+import {Car} from '../models/models';
+import {SearchService} from '../services/search.service';
+import {Subscription} from 'rxjs';
+import {take} from 'rxjs/operators';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {OfferBidComponent} from './offer-details/offer-bid/offer-bid.component';
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 
@@ -27,10 +27,11 @@ export class OfferComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('paginatorTop') paginatorTop: MatPaginator;
 
+
   searchSubscription: Subscription;
   carSubscription: Subscription;
 
-  loading:boolean = true;
+  loading: boolean = true;
 
   cars: Car[];
 
@@ -76,29 +77,29 @@ export class OfferComponent implements OnInit {
       this.sideNav = this.getSideNavMode(mediaChange);
       this.hidePageSize = this.getHidePageSize(mediaChange);
     })
-   }
+  }
 
 
-   getHidePageSize(mediaChange) {
-     if (this.mediaObserver.isActive('gt-sm')){
-       return false;
-     }
-     return true;
-   }
+  getHidePageSize(mediaChange) {
+    if (this.mediaObserver.isActive('gt-sm')) {
+      return false;
+    }
+    return true;
+  }
 
-   getSideNavMode(mediaChange: MediaChange[]) {
-     if (this.mediaObserver.isActive('gt-sm')) {
-        return {
-          mode: 'side',
-          opened: true
-        } as SideNavConfig;
-     }
+  getSideNavMode(mediaChange: MediaChange[]) {
+    if (this.mediaObserver.isActive('gt-sm')) {
       return {
-        mode: 'over',
-        opened: false
+        mode: 'side',
+        opened: true
       } as SideNavConfig;
+    }
+    return {
+      mode: 'over',
+      opened: false
+    } as SideNavConfig;
 
-   }
+  }
 
   ngOnInit(): void {
     this.orderBy = this.orderList[2];
@@ -117,7 +118,9 @@ export class OfferComponent implements OnInit {
 
     dialogConfig.autoFocus = true;
     dialogConfig.data = event;
-    dialogConfig.width = "500px"
+    dialogConfig.width = "500px";
+    dialogConfig.id = 'contactDialog';
+    dialogConfig.position = {top: '10px'}
 
 
     const dialogRef = this.dialog.open(OfferBidComponent, dialogConfig);
@@ -127,19 +130,21 @@ export class OfferComponent implements OnInit {
         this.snackBar.open('Formularz został wysłany', '', {
           duration: 2000,
           horizontalPosition: 'center',
+          verticalPosition: "top",
           panelClass: ['mat-toolbar', 'mat-primary']
         });
       }
     });
+
   }
 
   createFilterData(
     size: number = this.itemsPerPage,
     page: number = this.currentPage,
-    ) {
+  ) {
     return {
       params: {
-        'page': page+1,
+        'page': page + 1,
         'size': size,
         'ordering': this.orderBy.value,
         ...this.searchData
@@ -155,13 +160,13 @@ export class OfferComponent implements OnInit {
 
       this.currentPage = page.page;
       this.totalPages = page.lastPage;
-      this.loading=false;
+      this.loading = false;
 
     });
   }
 
   isOld(date: Date) {
-    if(!date) return false;
+    if (!date) return false;
     return olderThanDayAgo(date);
   }
 
@@ -172,11 +177,11 @@ export class OfferComponent implements OnInit {
     this.paginatorTop.pageIndex = this.currentPage;
     this.paginator.pageIndex = this.currentPage;
     this.getOffers(this.carService.baseLink, this.createFilterData());
-    window.scroll(0,0);
+    window.scroll(0, 0);
   }
 
   onFilter(event) {
-    if (this.sideNav.mode === "over") this.sideNav.opened=false;
+    if (this.sideNav.mode === "over") this.sideNav.opened = false;
     this.currentPage = 0;
     this.searchData = event;
     this.paginator.firstPage();

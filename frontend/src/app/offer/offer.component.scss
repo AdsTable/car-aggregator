@@ -1,179 +1,29 @@
 @import '../../styles/theme';
 
-:host {
-  display: block;
+.sort__field {
+  margin-top: 20px;
 }
-
-.title {
-  color: #30316e;
-  font-size:22px;
-}
-
-.description-small {
-  padding: 10px;
-
-  p{
-    color: #666666;
-    font-weight: 300;
-  }
-
-  span  {
-    color: #313131;
-    font-weight: 500;
-  }
-
-  .mat-icon {
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-}
-
-.description  {
-  padding: 10px;
-
-  p {
-
-    color: #666666;
-    font-weight: 300;
-  }
-
-
-      p span {
-      color: #313131;
-      display:block;
-      float: none;
-      font-weight: 500;
-    }
-
-  .mat-icon {
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-}
-
-.right {
-  float:right;
-}
-
-.main {
-  border-right: 1px solid #e6e6e6;
-  padding-right: 20px;
-}
-
-.additional {
-  text-align: right;
-  padding-right:20px;
-  p {
-    color: #424242;
-  }
-}
-
-.additional-small {
-  text-align: left;
-  p {
-    color: #424242;
-  }
-}
-
-
-a {
-  text-decoration: none;
-  outline: none;
-}
-
-a, a:visited, a:hover, a:active {
-  color: inherit;
-}
-
-.example-container {
-    margin-top:20px;
-}
-
-.card {
-    background-color: #fafafa;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 25px;
-    box-shadow: 3px 4px 5px 0px rgba(204, 204, 204, 0.38);
-    margin-bottom:20px;
-
-    &:hover {
-      @include mat-elevation(4);
-      transition: .3s;
-
-    }
-}
-
-img {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 15px;
-    box-sizing: border-box;
-    object-fit: cover;
-    width:100%;
-    max-height: 350px;
-}
-
-.border {
-  border: 1px solid black;
-}
-
-@media(max-width:450px) {
-  p {
-    font-size: 13px;
-  }
-
-  .title {
-    font-size:16px;
-    margin-bottom: 20px;
-  }
-
-  .vin {
-    font-size: 11px;
-  }
-
-
-}
-
-.search-expansion {
-  .center-aligned-header > .mat-content {
-    justify-content: center;
-  }
-
-  .mat-content > mat-panel-title, .mat-content > mat-panel-description {
-  flex: 0 0 auto;
-  }
-}
-
-.price {
-  font-size:24px;
-  font-weight: 500;
-  color: #1a8631;
-  text-align: right;
-}
-
 
 .mat-sidenav {
   width: 300px;
   background-color: #eee;
-  border: 1px solid  rgb(221, 221, 221);
+  border: 1px solid rgb(221, 221, 221);
 }
-
-
 
 .big-sidenav {
-  padding: 0px 30px;
+  padding: 0 30px;
 }
 
-@media(max-width:450px) {
+@media(max-width: 450px) {
   .mat-sidenav {
     width: 300px;
     background-color: #eee;
-    border-radius: 0px;
+    border-radius: 0;
   }
 
   .mat-paginator {
     .mat-select-value, .mat-option-text {
-      font-size:10px;
-
+      font-size: 10px;
     }
   }
 }
@@ -183,24 +33,94 @@ img {
 }
 
 
-
-.sort__field {
+.content-container {
   margin-top: 20px;
-}
 
-.mat-icon {
-  vertical-align: middle;
-}
+  .card {
+    background-color: #fafafa;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 25px;
+    box-shadow: 3px 4px 5px 0 rgba(204, 204, 204, 0.38);
+    margin-bottom: 20px;
 
-.dialog_button {
-  margin: 10px 0px;
-}
-
-.car-info {
-      p span {
-      color: #313131;
-      display:block;
-      float: none;
-      font-weight: 500;
+    img {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 15px;
+      box-sizing: border-box;
+      object-fit: cover;
+      width: 100%;
+      max-height: 350px;
     }
+
+    .main {
+      padding: 10px;
+
+      p {
+        color: #666666;
+        font-weight: 300;
+      }
+
+      p span {
+        color: #313131;
+        font-weight: 500;
+      }
+
+      .title {
+        color: #30316e;
+        font-size: 22px;
+      }
+
+      .mat-icon {
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+
+      .car-info {
+        padding-right: 10px;
+        border-right: 1px solid #e6e6e6;
+      }
+
+      .sale-info {
+        text-align: right;
+
+        .price {
+          font-size: 24px;
+          font-weight: 500;
+          color: #1a8631;
+          text-align: right;
+        }
+
+        p {
+          color: #424242;
+        }
+
+        .dialog_button {
+          margin: 10px 0;
+        }
+      }
+
+      .sale-info-small {
+        text-align: left;
+      }
+    }
+
+    .description-small {
+      p span {
+        float: right;
+      }
+    }
+
+    .description {
+      p span {
+        display: block;
+        float: none;
+      }
+    }
+
+
+    &:hover {
+      @include mat-elevation(4);
+      transition: .3s;
+    }
+  }
 }

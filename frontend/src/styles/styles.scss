@@ -7,6 +7,11 @@
 
 @include angular-material-theme($nga-theme);
 
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+}
 
 html {
     -moz-osx-font-smoothing: grayscale;
@@ -63,6 +68,8 @@ body {
       height:35px !important;
     }
 
+
+
   }
 
 
@@ -82,15 +89,5 @@ body {
     max-width: 100vw !important;
   }
 
-//   .mat-list .mat-list-item .mat-line{
-//     word-wrap: break-word;
-//    white-space: pre-wrap;
-// }
-
-
-// .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
-// .mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
-//   border-radius: 25px;
-// }
 
 

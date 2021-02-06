@@ -1,154 +1,136 @@
 @import '../../../styles/theme';
 
-
-.form {
-  font-size: 14px;
-  font-weight: 300;
-}
-
-
-.form__submit {
-  min-width: 400px;
-  font-size: 18px;
-  padding: 10px 0px;
-}
-
-.form__submit-small {
-  min-width: 200px;
-}
-
-.mat-option {
-  font-size: 12px;
-}
-
-.input-upper {
-  text-transform: uppercase;
-}
-
 .mat-form-field-appearance-outline .mat-form-field-outline {
   background-color: white;
 }
 
-.app-nav-accordion {
-
-  h1, h2, h3, h4, p, a {
-    padding: 0px 20px;
-  }
+#form {
+  font-size: 14px;
+  font-weight: 300;
 
 
-  .mat-list-item h1, h2, h3, h4, p {
-    margin-bottom: 0px;
-  }
 
 
-  .mat-list-item p {
-    font-size: 12px;
-  }
+  .app-nav-accordion {
 
-  .mat-expansion-panel {
-    background-color: #eee;
-    border-radius: 0px !important;
-    box-shadow: none !important;
-    margin-bottom: 0px;
-    border-bottom: 1px solid rgb(206, 204, 204);
-
-    &.mat-expansion-panel-spacing {
-      margin: 0px 0px;
-    }
-
-    .mat-expansion-panel-body {
-      padding: 0px;
-      background-color: rgb(241, 240, 240) !important;
-
+    h1, h2, h3, h4, p, a {
+      padding: 0 20px;
     }
 
 
-    .mat-expansion-panel-header {
-      height: 40px;
-      font-weight: 500;
-      // padding: 0px 24px 0px 16px;
+    .mat-list-item h1, h2, h3, h4, p {
+      margin-bottom: 0;
     }
 
-    .mat-expansion-panel-header-title {
-      color: rgba(0, 0, 0, 0.54);
+
+    .mat-list-item p {
+      font-size: 12px;
+    }
+
+    .mat-expansion-panel {
+      background-color: #eee;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgb(206, 204, 204);
+
+      &.mat-expansion-panel-spacing {
+        margin: 0;
+      }
+
+      .mat-expansion-panel-body {
+        padding: 0;
+        background-color: rgb(241, 240, 240) !important;
+
+      }
+
+
+      .mat-expansion-panel-header {
+        height: 40px;
+        font-weight: 500;
+      }
+
+      .mat-expansion-panel-header-title {
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+      .used-filters {
+    span {
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .mat-icon {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+    }
+
+    h1, h2, h3, h4, p, a {
+      padding: 0;
+    }
+
+    mat-icon:hover {
+      transform: rotate(360deg);
+      color: red;
+      background-color: white;
+      cursor: pointer;
+      @include mat-elevation(1);
+      transition: .3s;
+    }
+  }
+
+  .mat-selection-list {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .form_inline {
+    vertical-align: middle;
+    text-align: center;
+
+    h4 {
+      text-align: left;
       font-size: 14px;
       font-weight: 500;
+      padding: 0;
+    }
+
+    .separator {
+      padding-top: 8px;
+    }
+
+    span {
+      vertical-align: middle;
+      font-size: 13px;
+      font-weight: 400;
     }
   }
-}
-
-mat-button-toggle-group {
-  flex: 0 0 100%;
-  margin: 10px 16px;
-  margin-bottom: 20px;
-}
 
 
-.submit__button {
-  margin: 50px 16px 0 16px;
-  padding: 10px 0;
-}
 
-.reset__button {
-  margin: 0 16px;
-  padding: 10px 0px;
-}
-
-.form_inline {
-  vertical-align: middle;
-  text-align: center;
-
-  h4 {
-    text-align: left;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 0px;
+  mat-button-toggle-group {
+    flex: 0 0 100%;
+    margin: 10px 16px 20px;
   }
 
-  .separator {
-    padding-top: 8px;
+
+
+  }
+  .submit__button {
+    margin: 50px 16px 0 16px;
+    padding: 10px 0;
   }
 
-  span {
-    vertical-align: middle;
-    font-size: 13px;
-    font-weight: 400;
-  }
-}
-
-.used-filters {
-  span {
-    font-size: 12px;
-    font-weight: 300;
+  .reset__button {
+    margin: 0 16px;
+    padding: 10px 0;
   }
 
-  .mat-icon {
-    font-size: 12px;
-    width: 12px;
-    height: 12px;
-  }
-
-  h1, h2, h3, h4, p, a {
-    padding: 0px;
-  }
 }
 
-.mat-selection-list {
-  max-height: 200px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 
-.mat-list-option {
-  font-size: 10px;
-}
 
-mat-icon:hover {
-  transform: rotate(360deg);
-  color: red;
-  background-color: white;
-  cursor: pointer;
-  @include mat-elevation(1);
-  transition: .3s;
-
-}

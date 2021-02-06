@@ -6,52 +6,50 @@ h1 {
   text-align: center;
 }
 
-.search {
-  background-color: #f1f1f1;
-  padding: 50px 50px;
+.container {
+  margin: 40px 0;
 }
-
-.search-small {
-  background-color: #f1f1f1;
-  padding: 50px 10px;
-}
-
-.search-big {
-  background-color: #f1f1f1;
-  padding: 50px 150px;
-}
-
 
 .container-border {
   border: 1px solid rgb(221, 221, 221);
-}
 
-.container {
-  margin: 40px 0px;
-}
-
-
-.brandTile {
-  &:hover {
-    @include mat-elevation(6);
-    transition: .3s;
-
+  .search {
+    background-color: #f1f1f1;
   }
 
-}
+  .search-medium {
+    padding: 50px 50px;
+  }
 
-.tileImg {
-  width:100%;
-  height: auto;
-  margin-top: 30px;
-}
+  .search-small {
+    padding: 50px 10px;
+  }
 
-.mat-grid-tile-header div{ margin: auto; }
+  .search-big {
+    padding: 50px 150px;
+  }
+}
 
 .extra-content {
-  padding: 0 20px;
+
+  .brand-tile {
+    &:hover {
+      @include mat-elevation(6);
+      transition: .3s;
+    }
+  }
+
+  .tile-img {
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+  }
+
+  .mat-grid-tile-header div {
+    margin: auto;
+  }
 
   p {
-      text-align: justify;
+    text-align: justify;
   }
 }

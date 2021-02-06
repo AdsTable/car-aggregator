@@ -1,11 +1,11 @@
-<div [ngClass.gt-md]="'detail_container'">
+<div [ngClass.gt-md]="'detail-container'">
   <div class='detail' *ngIf="car">
 
     <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="15px">
 
 
       <div fxFlex="50%">
-        <img class="big_image" [attr.src]="activeImage" alt="obrazek"/>
+        <img class="big-image" [attr.src]="activeImage" alt="car-image"/>
         <div class="thumbnails">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <div fxFlex="20%" *ngFor='let image of car.images'>
@@ -16,10 +16,10 @@
       </div>
 
 
-      <div fxLayout="column" class="vehicle_info" fxFlex="grow">
+      <div fxLayout="column" class="vehicle-info" fxFlex="grow">
         <h2>{{car.brand}} {{ car.model}}</h2>
         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px">
-          <div class="vehicle_data" fxLayout="column" fxFlex="60%">
+          <div class="vehicle-data" fxLayout="column" fxFlex="60%">
             <h3>DANE AUKCJI</h3>
             <p>Numer aukcji<span>{{car.offerId}}</span></p>
             <p>Marka<span>{{car.brand}}</span></p>
@@ -36,7 +36,7 @@
             <p>Kolor<span>{{car.color}}</span></p>
           </div>
 
-          <div class="vehicle_saleinfo" fxLayout="column" fxFlex="40%" fxLayoutAlign="space-between stretch">
+          <div class="vehicle-sale_info" fxLayout="column" fxFlex="40%" fxLayoutAlign="space-between stretch">
             <h3>AKTUALNA CENA</h3>
 
             <p class="price">Aktualna cena<span> $ {{ car.current_price | number: '1.0-0'
@@ -59,12 +59,12 @@
       </div>
     </div>
 
-    <div class="similiar_cars" fxLayout="column" fxLayoutGap="50px">
+    <div class="similiar-cars" fxLayout="column" fxLayoutGap="50px">
       <h3 fxFlex><span>PODOBNE AUKCJE</span></h3>
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <div fxFlex="calc(25%-12px)" fxFlex.lt-md="calc(50%-12px)" fxFlex.lt-sm="100%" [ngStyle]="{'margin': '6px 6px'}"
              *ngFor='let simCar of similiarCars$ | async'>
-          <mat-card class='mat-elevation-z1 simcar'>
+          <mat-card class='mat-elevation-z1 sim-car'>
             <mat-card-header>
               <mat-card-title><a [routerLink]="['/offer', simCar.id]">{{simCar.brand}} {{simCar.model}}</a>
               </mat-card-title>

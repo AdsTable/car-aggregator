@@ -5,7 +5,7 @@ from cars.views import MappingData, OfferListView, OfferRetrieveView, run_spider
 
 urlpatterns = [
     path('list', OfferListView.as_view(), name='offer-list'),
-    path('<int:pk>', OfferRetrieveView.as_view()),
+    path('<int:pk>', OfferRetrieveView.as_view(), name='offer-detail'),
     path('similiar/<int:id>', SimiliarVehicle.as_view(), name="similiar-vehicle"),
     path('models/', FindModels.as_view(), name="find-models"),
     path('map', MappingData.as_view(), name="mapping-data"),

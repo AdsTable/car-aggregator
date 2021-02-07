@@ -24,8 +24,8 @@ class MyPagination(PageNumberPagination):
             'results': data
         })
 
-class CustomOrdering(OrderingFilter):
 
+class CustomOrdering(OrderingFilter):
 
     def get_ordering(self, request, queryset, view):
         """
@@ -54,6 +54,7 @@ class CustomOrdering(OrderingFilter):
             ordering = ['-id']
             
         return queryset.order_by(*ordering)
+
 
 class LimitPagination(LimitOffsetPagination):
 

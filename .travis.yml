@@ -6,12 +6,9 @@ jobs:
     - stage: build-and-test
       name: Build and Test
       before_script:
-        - touch ./backend/.env
-        - echo SECRET_KEY=$SECRET_KEY >> ./backend/.env
-        - echo DEBUG=$DEBUG >> ./backend/.env
-        - echo ENV=$ENV >> ./backend/.env
-        - echo LOGS_ROOT=$LOGS >> ./backend/.env
-        - echo REFRESH_TOKEN_SECRET_KEY=$REFRESH_SECRET >> ./backend/.env
+        - touch ./backend/.env.dev
+        - echo SECRET_KEY=$SECRET_KEY >> ./backend/.env.dev
+        - echo DEBUG=$DEBUG >> ./backend/.env.dev
 
       script:
         ./build-and-run.sh

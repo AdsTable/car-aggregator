@@ -1,25 +1,21 @@
-from django.shortcuts import render
-from cars.serializers import OfferSerializer, OfferItemSerializer, ContactFormSerializer
-from rest_framework import generics
-from cars.models import Offer
-from rest_framework.filters import OrderingFilter
-from django.db.models import Count
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
-from django.db.models import F, Q
-from functools import reduce
 import django_filters
-from django_filters.fields import CSVWidget, MultipleChoiceField
-from django_filters import rest_framework as filters
-from cars.tasks import Scraper
+from django.core import mail
+from django.db.models import Q
 from django.utils import timezone
-from datetime import timedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from conf.core import CustomOrdering
-from django.core import mail
+from django_filters import rest_framework as filters
+from rest_framework import generics
 from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from cars.models import Offer
+from cars.serializers import OfferSerializer, OfferItemSerializer, ContactFormSerializer
+from cars.tasks import Scraper
+from cars.utils import get_available_options_for_field, get_models_for_brand, get_brand_for_type
+from conf.core import CustomOrdering
 
 scraper = Scraper()
 
@@ -42,17 +38,16 @@ class CarFilterSet(django_filters.FilterSet):
     vehicle_type = django_filters.CharFilter(field_name='vehicle_type', lookup_expr="iexact")
     include_closed = django_filters.BooleanFilter(field_name="closed", method="filter_closed")
     drive = CharInFilter(field_name="drive", lookup_expr="in")
-    # location = CharInFilter(field_name="location", lookup_expr="in")
 
     class Meta:
         model = Offer
         fields = ['brand', 'model', 'vin', 'fuel', 'damage', 'transmission', 'bodyStyle', 'year', 'mileage', 'auction_site', 'vehicle_type', 'include_closed', 'drive']
 
     def filter_closed(self, queryset, name, value):
-        ''' include closed 
+        """ include closed
             if true: show all offers
             if false: hide closed offers
-        '''
+        """
         if not value: 
             return queryset.filter(
                 Q(closed=False) & (Q(sale_date__gte=timezone.now()) | Q(sale_date__isnull=True))
@@ -64,7 +59,6 @@ class OfferListView(generics.ListAPIView):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, CustomOrdering]
-    # filter_fields = ['brand', 'model', 'vin']
     filterset_class = CarFilterSet
     ordering_fields = ['current_price', 'sale_date', 'mileage', 'production_year']
 
@@ -105,40 +99,6 @@ Wiadomość od klienta:
         return Response(status=status.HTTP_202_ACCEPTED)
 
 
-def get_available_options_for_field_with_count(field):
-    return list(Offer.objects.values(value=F(field)).filter(value__isnull=False).annotate(count=Count('value')).order_by("value"))
-
-
-def get_models_for_brand_with_count(brand):
-    return list(Offer.objects.filter(brand=brand).values(value=F('model')).annotate(count=Count('value')))
-
-
-def get_available_options_for_field(field):
-    options = list(Offer.objects.values_list(field, flat=True).distinct().order_by(field))
-    return list(filter(None, options))
-
-
-def get_models_for_brand(car_type, brand):
-    # TODO: REFACTOR THIS IF ELSE LOGIC
-    if car_type and brand:
-        models = list(Offer.objects.filter(brand=brand, vehicle_type=car_type).values_list('model', flat=True).distinct().order_by('model'))
-    elif car_type and not brand:
-        models = list(
-            Offer.objects.filter(vehicle_type=car_type).values_list('model', flat=True).distinct().order_by('model'))
-    elif not car_type and brand:
-        models = list(
-            Offer.objects.filter(brand=brand).values_list('model', flat=True).distinct().order_by('model'))
-    else:
-        models = list(
-            Offer.objects.values_list('model', flat=True).distinct().order_by('model'))
-    return list(filter(None, models))
-
-
-def get_brand_for_type(vehicle_type):
-    models = list(Offer.objects.filter(vehicle_type=vehicle_type).values_list('brand', flat=True).distinct().order_by('brand'))
-    return list(filter(None, models))
-
-
 class MappingData(APIView):
 
     @method_decorator(cache_page(60*60*24*7))
@@ -158,6 +118,7 @@ class MappingData(APIView):
         }
         return Response(data=data)
 
+
 class FindModels(APIView):
 
     # @method_decorator(cache_page(6))
@@ -166,7 +127,6 @@ class FindModels(APIView):
         car_brand = request.GET.get('brand')
         models = get_models_for_brand(car_type, car_brand)
         return Response(data=models)
-
 
 
 class SimiliarVehicle(APIView):
@@ -191,11 +151,6 @@ class SimiliarVehicle(APIView):
             similars.append(OfferSerializer(car).data)
 
         return Response(data=similars)
-
-
-@api_view(['GET'])
-def available_models_for_brand(request, brand):
-    return Response(get_models_for_brand(brand))
 
 
 @api_view(['GET'])

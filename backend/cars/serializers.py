@@ -8,11 +8,7 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        exclude = ('secondary_damage', 'drive', 'body_style')
-    
-    def to_internal_value(self, data):
-        data['images'] = data['images'][0]
-        return data
+        exclude = ('secondary_damage', 'drive', 'body_style', 'images')
 
 
 class OfferItemSerializer(serializers.ModelSerializer):

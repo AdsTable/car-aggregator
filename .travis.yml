@@ -12,3 +12,6 @@ jobs:
 
       script:
         ./build-and-run.sh
+
+      after-success:
+        - coveralls

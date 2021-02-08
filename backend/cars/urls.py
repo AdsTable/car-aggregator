@@ -1,5 +1,5 @@
 from django.urls import path
-from cars.views import MappingData, OfferListView, OfferRetrieveView, run_spider, available_models_for_brand, \
+from cars.views import MappingData, OfferListView, OfferRetrieveView, run_spider, \
     available_brands_for_type, get_jobs, get_job, SimiliarVehicle, SendEmailView, FindModels, get_all_spiders, \
     cancel_job
 

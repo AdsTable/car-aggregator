@@ -28,11 +28,13 @@ class Scraper:
 def test_task():
     print('TASK RUN')
 
+
 @shared_task
 def run_copart_scraper_everyday():
     print('RUN COPART')
     scraper = Scraper()
     scraper.schedule_spider('copart')
+
 
 @shared_task
 def run_iaai_scraper_weekly():
@@ -40,11 +42,13 @@ def run_iaai_scraper_weekly():
     print('RUN IAAI PER WEEK')
     scraper.schedule_spider('iaai')
 
+
 @shared_task
 def update_iaai():
     scraper = Scraper()
     print('RUN IAAI UPDATE')
     scraper.schedule_spider('iaai_update')
+
 
 @shared_task 
 def update_copart():

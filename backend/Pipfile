@@ -25,6 +25,7 @@ redis = "*"
 django-celery-beat = "*"
 django-celery-email = "*"
 coverage = "*"
+coveralls = "*"
 
 [requires]
 python_version = "3.8"

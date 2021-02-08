@@ -1,4 +1,4 @@
-# car-aggregator
+# car-aggregator [![Coverage Status](https://coveralls.io/repos/github/ronek22/car-aggregator/badge.svg?branch=master)](https://coveralls.io/github/ronek22/car-aggregator?branch=master)
 WebApp, Search engine for vehicle auctions from Copart and IAAI
 
 ## Technology Stack

@@ -11,7 +11,7 @@ jobs:
         - echo DEBUG=$DEBUG >> ./backend/.env.dev
 
       script:
-        ./build-and-run.sh
+        - docker-compose -f docker-compose.dev.yml run backend sh -c "coverage run manage.py test && coverage report"
 
-      after-success:
-        - coveralls
+      after_success:
+        - docker-compose -f docker-compose.dev.yml run backend sh -c "coverage run manage.py test && TRAVIS_JOB_ID=$TRAVIS_JOB_ID TRAVIS_BRANCH=$TRAVIS_BRANCH COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"

@@ -21,3 +21,13 @@ Command to generate self-signed certificate
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/car-aggregator/frontend/nginx/nginx-selfsigned.key -out ~/car-aggregator/frontend/nginx/nginx-selfsigned.crt;
 ```
+
+### .env or env.dev files should be located inside backend directory
+```
+SECRET_KEY=<SECRET_KEY>
+DJANGO_DEBUG=<DEBUG> # 0 for production, 1 for development
+EMAIL_HOST_USER=<EMAIL_ACCOUNT>
+EMAIL_HOST_PASSWORD=<EMAIL_PASSWORD>
+```
+
+
